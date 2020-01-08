@@ -2,6 +2,10 @@
 
 This is the official open source offering for Babylon Polymorph (Updated and Maintained by the Babylon Native team).
 
+## Contributing
+
+Please read [CONTRIBUTING.md](./CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests.
+
 ## Reporting Security Issues
 
 Security issues and bugs should be reported privately, via email, to the Microsoft Security
