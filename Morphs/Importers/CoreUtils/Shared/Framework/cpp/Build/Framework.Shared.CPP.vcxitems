@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{C7D7F8CD-B6A6-4539-BFA2-1CD881C32425}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\AnimationSegment.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\Async.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\Cancellation.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\Endian.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\Enums.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\ExtensionHeader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\FormatWriterUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\Frame.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\GeometryUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\GeometryWriter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\IBuffer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\ManifestParser.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\MaterialSegment.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\MaterialWriter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\Memory.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\MemoryBuffer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\MeshMaker.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\MeshSegment.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\MetadataDefinition.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\MetadataWriter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\Parser.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\PerformanceTraceLogging.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\Plugin.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\Pointers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\SceneSegment.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\SceneWriter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\ITelemetryTraceLogger.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\TelemetryTraceDualLogger.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\TelemetryTraceLoggerAliases.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\TelemetryTraceLoggerFactory.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\TelemetryTraceLoggerJson.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\TextureSegment.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\TextureWriter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\Types.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Framework\Vertex.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\FrameworkPch.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\PrivateAsync.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Async.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Cancellation.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\FormatWriterUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\FrameworkPch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\GeometryUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\GeometryWriter.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\ITelemetryTraceLogger.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\ManifestParser.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\MaterialWriter.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\MeshMaker.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\MetadataWriter.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Parser.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\PerformanceLoggingProviders.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\PerformanceTraceLogging.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\SceneWriter.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\TelemetryTraceDualLogger.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\TelemetryTraceLoggerJson.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\TextureWriter.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Win\TelemetryTraceLoggerFactoryWin.cpp" />
+  </ItemGroup>
+</Project>

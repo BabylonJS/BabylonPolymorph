@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Condition="'$(PluginSDKImported)' == 'true'" Project="Error attempting to import PluginSDKImported twice. Condition all imports on ([ProjectName]Imported) != true." />
+  <PropertyGroup Condition="'$(ProjectName)' != 'PluginSDK'">
+    <PluginSDKImported>true</PluginSDKImported>
+  </PropertyGroup>
+
+  <ImportGroup>
+    <Import Condition="'$(RootPathsPropsImported)' != 'true'" Project="$(CanvasRootDirectory)RootPaths.props" />
+    <Import Condition="'$(Asset3DImported)' != 'true'" Project="$(CoreUtilsSharedDirectory)Asset3D\cpp\Build\Asset3D.vcxproj.projimport" />
+  </ImportGroup>
+
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>
+        $(TranscodersSharedDirectory)PluginSDK\cpp\Inc;
+        %(AdditionalIncludeDirectories)
+      </AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+
+  <ItemGroup Condition="'$(ProjectName)' != 'PluginSDK'">
+    <ProjectReference Include="$(TranscodersSharedDirectory)PluginSDK\cpp\Build\PluginSDK.vcxproj">
+      <Project>{393BDFF4-998F-4F38-9ED1-D8F11A58DA96}</Project>
+      <Name>PluginSDK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyImports>false</UseLibraryDependencyImports>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemDefinitionGroup Condition="'$(ProjectName)' != 'PluginSDK'">
+    <Link>
+      <AdditionalDependencies>
+        $(CanvasBuiltLibDirectory)PluginSDK\PluginSDK$(Suffix).lib;
+        %(AdditionalDependencies)
+      </AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+</Project>

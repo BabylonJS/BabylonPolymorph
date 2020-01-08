@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{C733D3E8-E9F3-4572-936A-A1650AEC5740}</ProjectGuid>
+    <ProjectName>Framework</ProjectName>
+    <RootNamespace>Spectre.Framework</RootNamespace>
+    <SpectreConfigurationType>StaticLibrary</SpectreConfigurationType>
+  </PropertyGroup>
+  <ImportGroup Label="Shared">
+    <Import Project="Framework.Shared.CPP.vcxitems" Label="Shared" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), Root.props))\Root.props" />
+    <Import Project="$(CanvasConfigDirectory)Spectre.Configurations.props" />
+    <Import Project="$(CanvasConfigDirectory)Spectre.Cpp.props" />
+    <Import Project="$(CoreUtilsSharedDirectory)Framework\cpp\Build\Framework.vcxproj.projimport" />
+    <Import Project="..\..\..\..\..\Build\packages\rapidjson.temprelease.0.0.2.20\build\native\rapidjson.temprelease.targets" Condition="Exists('..\..\..\..\..\Build\packages\rapidjson.temprelease.0.0.2.20\build\native\rapidjson.temprelease.targets')" />
+  </ImportGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Inc\Framework\TraceLoggingCorrelationVector.hpp" />
+    <ClInclude Include="..\Source\Win\PerformanceLoggingProvidersWin.h" />
+    <ClInclude Include="..\Source\Win\TelemetryTraceLoggerWin.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Source\Win\PerformanceLoggingProvidersWin.cpp" />
+    <ClCompile Include="..\Source\Win\TelemetryTraceLoggerWin.cpp" />
+  </ItemGroup>
+  <PropertyGroup>
+    <IncludePath>$(ProjectDir)..\Source;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>FrameworkPch.h</PrecompiledHeaderFile>
+      <!-- Disable ' warning C4838: conversion from 'const uint32_t' to 'int32_t' requires a narrowing conversion' -->
+      <DisableSpecificWarnings>4838;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <EnablePREfast Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</EnablePREfast>
+      <EnablePREfast Condition="'$(Configuration)|$(Platform)'=='Prefast|x64'">false</EnablePREfast>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\..\..\..\Build\packages\rapidjson.temprelease.0.0.2.20\build\native\rapidjson.temprelease.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\Build\packages\rapidjson.temprelease.0.0.2.20\build\native\rapidjson.temprelease.targets'))" />
+  </Target>
+</Project>

@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\Source\CoreUtilsWinRtPch.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\IO.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\NativeBufferAdapter.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Path.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\MathHelpersCX.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Inc\CoreUtilsWinRT\IO.h">
+      <Filter>PublicHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\CoreUtilsWinRT\NativeBufferAdapter.h">
+      <Filter>PublicHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\CoreUtilsWinRT\Path.h">
+      <Filter>PublicHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\CoreUtilsWinRT\SmartThrow.h">
+      <Filter>PublicHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\CoreUtilsWinRtPch.h">
+      <Filter>PrivateHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\CoreUtilsWinRT\MathHelpersCX.h">
+      <Filter>PublicHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\CoreUtilsWinRT\RandomAccessStreamBackedStream.h">
+      <Filter>PublicHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\CoreUtilsWinRT\Pointers.h">
+      <Filter>PublicHeaders</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{fa1eeecd-6ad9-44cc-9f56-405d29c92e4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PublicHeaders">
+      <UniqueIdentifier>{946772e7-cfe3-4f6c-b05a-724d88e6442f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PrivateHeaders">
+      <UniqueIdentifier>{db45938d-dc67-4d9e-8167-3e98dd0060ce}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Import Condition="'$(TranscodersImported)' == 'true'" Project="Error attempting to import TranscodersImported twice. Condition all imports on ([ProjectName]Imported) != true." />
+  <PropertyGroup Condition="'$(ProjectName)' != 'Transcoders'">
+    <TranscodersImported>true</TranscodersImported>
+  </PropertyGroup>
+
+  <ImportGroup>
+    <Import Condition="'$(RootPathsPropsImported)' != 'true'" Project="$(CanvasRootDirectory)RootPaths.props" />
+    <Import Condition="'$(Asset3DImported)' != 'true'" Project="$(CoreUtilsSharedDirectory)Asset3D\cpp\Build\Asset3D.vcxproj.projimport" />
+    <Import Condition="'$(CoreUtilsImported)'!='true'" Project="$(CoreUtilsSharedDirectory)CoreUtils\cpp\Build\CoreUtils.vcxproj.projimport" />
+    <Import Condition="'$(PluginSDKImported)' != 'true'" Project="$(TranscodersSharedDirectory)PluginSDK\cpp\Build\PluginSDK.vcxproj.projimport" />
+  </ImportGroup>
+
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>
+        $(TranscodersSharedDirectory)Transcoders\Inc;
+        %(AdditionalIncludeDirectories)
+      </AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+
+  <ItemDefinitionGroup Condition="'$(SpectreTestProject)' == 'true'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>
+        $(TranscodersSharedDirectory)Transcoders\Source;
+        %(AdditionalIncludeDirectories)
+      </AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  
+  <ItemGroup Condition="'$(ProjectName)' != 'Transcoders'">
+    <ProjectReference Include="$(TranscodersSharedDirectory)Transcoders\Build\Transcoders.vcxproj">
+      <Project>{7750E443-B04C-4CED-B71B-D6B690289C4D}</Project>
+      <Name>Transcoders</Name>
+      <CopyLocal>true</CopyLocal>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyImports>false</UseLibraryDependencyImports>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemDefinitionGroup Condition="'$(ProjectName)' != 'Transcoders'">
+    <Link>
+      <AdditionalDependencies>
+        $(CanvasBuiltLibDirectory)Transcoders\Transcoders$(Suffix).lib;
+        xmllite.lib;
+        %(AdditionalDependencies)
+      </AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+
+</Project>

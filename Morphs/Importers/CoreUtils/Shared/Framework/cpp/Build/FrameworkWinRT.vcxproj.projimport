@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Import Condition="'$(FrameworkWinRTImported)' == 'true'" Project="Error attempting to import FrameworkWinRT twice. Condition all imports on ([ProjectName]Imported) != true." />
+  <PropertyGroup Condition="'$(ProjectName)' != 'FrameworkWinRT'">
+    <FrameworkWinRTImported>true</FrameworkWinRTImported>
+  </PropertyGroup>
+
+  <ImportGroup>
+    <Import Condition="'$(RootPathsPropsImported)' != 'true'" Project="$(CanvasRootDirectory)RootPaths.props" />
+    <Import Condition="'$(CoreUtilsImported)' != 'true'" Project="$(CoreUtilsSharedDirectory)CoreUtils\cpp\Build\CoreUtils.vcxproj.projimport" />
+  </ImportGroup>
+
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>
+        $(CoreUtilsSharedDirectory)Framework\cpp\Inc;
+        %(AdditionalIncludeDirectories)
+      </AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+
+  <ItemGroup Condition="'$(ProjectName)' != 'FrameworkWinRT' and ('$(ConfigurationType)' != 'StaticLibrary' or '$(SpectreDeploymentType)' != 'None')">
+    <ProjectReference Include="$(CoreUtilsSharedDirectory)Framework\cpp\Build\FrameworkWinRT.vcxproj">
+      <Project>{D6FB61C5-3274-433B-83C7-898B61BCD4A7}</Project>
+      <Name>FrameworkWinRT</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyImports>false</UseLibraryDependencyImports>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemDefinitionGroup Condition="'$(ConfigurationType)' != 'StaticLibrary' and '$(ProjectName)' != 'FrameworkWinRT'">
+    <Link>
+      <AdditionalDependencies>
+        $(CanvasBuiltLibDirectory)FrameworkWinRT\FrameworkWinRT$(Suffix).lib;
+        %(AdditionalDependencies)
+      </AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+
+  <ItemDefinitionGroup Condition="'$(ProjectName)' != 'FrameworkWinRT' and '$(ConfigurationType)' == 'StaticLibrary' and '$(SpectreDeploymentType)' == 'Project'">
+    <Lib>
+      <AdditionalDependencies>
+        $(CanvasBuiltLibDirectory)FrameworkWinRT\FrameworkWinRT$(Suffix).lib;
+        %(AdditionalDependencies)
+      </AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+
+</Project>

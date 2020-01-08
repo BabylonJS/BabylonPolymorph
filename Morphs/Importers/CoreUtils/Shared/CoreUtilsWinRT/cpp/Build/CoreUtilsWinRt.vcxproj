@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{FB9FCE92-DFF4-44B1-9456-C0444B06A99F}</ProjectGuid>
+    <ProjectName>CoreUtilsWinRt</ProjectName>
+    <RootNamespace>Spectre.CoreUtilsWinRt</RootNamespace>
+    <SpectreConfigurationType>SpectreWinRTStaticLibrary</SpectreConfigurationType>
+  </PropertyGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Source\MathHelpersCX.cpp" />
+    <ClCompile Include="..\Source\IO.cpp" />
+    <ClCompile Include="..\Source\Path.cpp" />
+    <ClCompile Include="..\Source\CoreUtilsWinRtPch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Source\NativeBufferAdapter.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Inc\CoreUtilsWinRT\MathHelpersCX.h" />
+    <ClInclude Include="..\Inc\CoreUtilsWinRT\Pointers.h" />
+    <ClInclude Include="..\Inc\CoreUtilsWinRT\RandomAccessStreamBackedStream.h" />
+    <ClInclude Include="..\Inc\CoreUtilsWinRT\IO.h" />
+    <ClInclude Include="..\Inc\CoreUtilsWinRT\NativeBufferAdapter.h" />
+    <ClInclude Include="..\Inc\CoreUtilsWinRT\Path.h" />
+    <ClInclude Include="..\Inc\CoreUtilsWinRT\SmartThrow.h" />
+    <ClInclude Include="..\Source\CoreUtilsWinRtPch.h" />
+  </ItemGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), Root.props))\Root.props" />
+    <Import Project="$(CanvasConfigDirectory)Spectre.Configurations.props" />
+    <Import Project="$(CanvasConfigDirectory)Spectre.Cpp.props" />
+    <Import Project="$(CoreUtilsSharedDirectory)CoreUtilsWinRt\cpp\Build\CoreUtilsWinRt.vcxproj.projimport" />
+    <Import Condition="'$(CoreUtilsImported)' != 'true'" Project="$(CoreUtilsSharedDirectory)CoreUtils\cpp\Build\CoreUtils.vcxproj.projimport" />
+  </ImportGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>CoreUtilsWinRtPch.h</PrecompiledHeaderFile>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+</Project>

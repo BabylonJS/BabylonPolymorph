@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{7a696f51-539c-4306-a9f5-9b5fd07331b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{eca26690-705c-4c85-b7bb-410be7aea924}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Tweening">
+      <UniqueIdentifier>{f097bc43-916b-4204-941d-76d1f668ccb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Tweening">
+      <UniqueIdentifier>{9218e1f4-e17a-4266-89aa-e8d7c0dcd8a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Math">
+      <UniqueIdentifier>{cc2eb963-d08e-4ff5-a2b3-a1299a7af4a0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\Assert.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\Cancellation.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\IO.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\LexicalCast.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\PlatformLogger.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\Memory.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\SimpleMath.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\SmartThrow.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\SpectreTelemetryException.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\StringUtils.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\TelemetryManager.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\ThreadPool.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\Trace.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\Tracked.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\Version.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\Tweening\CurveFactory.cpp">
+      <Filter>Source\Tweening</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\Tweening\Curves.cpp">
+      <Filter>Source\Tweening</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\Tweening\TweenManager.cpp">
+      <Filter>Source\Tweening</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\Tweening\TweenPropertySpecializations.cpp">
+      <Filter>Source\Tweening</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\ThreadHelpers.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\Gltf.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\CRC64.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\GLTFChannelAnimations.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\GLTFSkins.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\CoreUtilsPch.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Assert.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Cancellation.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\DirectProperty.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\EnumFlagSet.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Hash.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\IndirectProperty.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\IO.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\ITelemetryManager.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\LexicalCast.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Memory.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Optional.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Property.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\ScopeWarden.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\SmartThrow.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\SpectreSDK.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\SpectreTelemetryException.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\StringUtils.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\ThreadHelpers.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\ThreadPool.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Trace.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Tracked.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Version.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Tweening\CurveFactory.h">
+      <Filter>Headers\Tweening</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Tweening\Curves.h">
+      <Filter>Headers\Tweening</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Tweening\ICurve.h">
+      <Filter>Headers\Tweening</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Tweening\ITweenable.h">
+      <Filter>Headers\Tweening</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Tweening\Tween.h">
+      <Filter>Headers\Tweening</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Tweening\TweenManager.h">
+      <Filter>Headers\Tweening</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Tweening\TweenOptions.h">
+      <Filter>Headers\Tweening</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Tweening\TweenProperty.h">
+      <Filter>Headers\Tweening</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Tweening\TweenPropertySpecializations.h">
+      <Filter>Headers\Tweening</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Math\SimpleMath.h">
+      <Filter>Headers\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\BasicMemoryStream.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\SpectreSal.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Math\SpectreMath.h">
+      <Filter>Headers\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\SpectreConstExpr.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Pimpl.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\PimplImpl.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\BasicVectorStream.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Math\SimpleMath.inl">
+      <Filter>Headers\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Enum.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Pointers.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\SharedMutex.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Gltf.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\StreamUtils.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\RapidJson.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Cast.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\CRC64.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\GLTFChannelAnimations.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\GLTFSkins.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\AnimationNameChecker.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Align.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Platform.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

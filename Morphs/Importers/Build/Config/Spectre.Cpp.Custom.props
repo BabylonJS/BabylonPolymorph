@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- Inlcuding this file will set up all the Spectre specific properties and also then set all
+      the Spectre specific C++ defines. However, it will not change the build in anyway (unless those
+      said properties are manually used and so can be included in any vcxproj project -->
+
+  <PropertyGroup>
+    <CppCustomPropsImported>true</CppCustomPropsImported>
+  </PropertyGroup>
+
+  <!-- Bring in all the custom feature flags -->
+  <Import Project="$(CanvasConfigDirectory)Spectre.Custom.props" />
+
+  <!-- Setup cpp specific 'Feature' #DEFINES from the Feature flags -->
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <LanguageStandard Condition="'$(LanguageStandard)'==''">stdcpp14</LanguageStandard>
+      
+      <!-- There is currently no define for 'FeatureOptimizationsEnabled' -->
+
+      <PreprocessorDefinitions Condition="'$(FeatureAssertsEnabled)'=='true'">%(PreprocessorDefinitions);FEATURE_ASSERTS_ENABLED=1</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(FeatureAssertsEnabled)'!='true'">%(PreprocessorDefinitions);FEATURE_ASSERTS_ENABLED=0</PreprocessorDefinitions>
+
+      <PreprocessorDefinitions Condition="'$(FeaturePrefast)'=='true'">%(PreprocessorDefinitions);FEATURE_PREFAST=1</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(FeaturePrefast)'!='true'">%(PreprocessorDefinitions);FEATURE_PREFAST=0</PreprocessorDefinitions>
+
+      <PreprocessorDefinitions Condition="'$(FeatureTraceEnabled)'=='true'">%(PreprocessorDefinitions);FEATURE_TRACEENABLED=1</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(FeatureTraceEnabled)'!='true'">%(PreprocessorDefinitions);FEATURE_TRACEENABLED=0</PreprocessorDefinitions>
+
+      <PreprocessorDefinitions Condition="'$(FeatureTelemetryEnabled)'=='true'">%(PreprocessorDefinitions);FEATURE_TELEMETRYENABLED=1</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(FeatureTelemetryEnabled)'!='true'">%(PreprocessorDefinitions);FEATURE_TELEMETRYENABLED=0</PreprocessorDefinitions>
+
+      <PreprocessorDefinitions Condition="'$(FeatureTelemetryExceptionsEnabled)'=='true'">%(PreprocessorDefinitions);FEATURE_TELEMETRYEXCEPTIONSENABLED=1</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(FeatureTelemetryExceptionsEnabled)'!='true'">%(PreprocessorDefinitions);FEATURE_TELEMETRYEXCEPTIONSENABLED=0</PreprocessorDefinitions>
+      
+      <!-- FLAVOR defines -->
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Debug'">FLAVOR_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)'!='Debug'">FLAVOR_DEBUG=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Release'">FLAVOR_RELEASE=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)'!='Release'">FLAVOR_RELEASE=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Performance'">FLAVOR_PERFORMANCE=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)'!='Performance'">FLAVOR_PERFORMANCE=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+
+      <!-- PLATFORM_X defines -->
+      <PreprocessorDefinitions Condition="'$(Platform)'=='x64'">PLATFORM_WIN_X64=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Platform)'!='x64'">PLATFORM_WIN_X64=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+
+      <PreprocessorDefinitions Condition="'$(Platform)'=='Win32'">PLATFORM_WIN32=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Platform)'!='Win32'">PLATFORM_WIN32=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+
+      <PreprocessorDefinitions Condition="'$(Platform)'=='ARM'">PLATFORM_ARM=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Platform)'!='ARM'">PLATFORM_ARM=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+
+      <PreprocessorDefinitions Condition="'$(Platform)'=='ARM64'">PLATFORM_ARM64=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Platform)'!='ARM64'">PLATFORM_ARM64=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+
+      <!-- Endianness -->
+      <PreprocessorDefinitions>LITTLE_ENDIAN=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BIG_ENDIAN=2;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ENDIANNESS=LITTLE_ENDIAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+
+    </ClCompile>
+  </ItemDefinitionGroup>
+</Project>

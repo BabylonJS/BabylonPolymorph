@@ -1,0 +1,281 @@
+/**
+  * Custom Doxygen Style Overrides
+  */
+
+body, table, div, p, dl {
+	font-family: 'Segoe UI', sans-serif;
+	font-size: 16px;
+}
+
+body {
+	color: rgb(34, 34, 34);
+	background-color: #fdfdfd;
+}
+
+/* Fonts */
+body, #projectname {
+	font-family: 'Segoe UI', sans-serif;
+}
+
+#projectname {
+	font-weight: bold;
+	font-size: 32px;
+}
+
+#projectbrief {
+	color: #808080;
+}
+
+/* Header */
+#top #titlearea {
+	box-sizing: border-box;
+	padding-left: 6px;
+	background-color: white;
+	border: 0;
+}
+
+#top .tabs {
+	background-color: white;
+	box-shadow: 0 3px 2px -1px rgba(0, 0, 0, 0.15);
+}
+
+#titlearea {
+	padding: 20px 0;
+}
+
+/* Tabs */
+div.headertitle {
+	padding-top: 0;	
+}
+
+.tabs, .tabs2, .tabs3 {
+	font-family: 'Segoe UI', sans-serif;
+    background-image: none;
+}
+
+.tablist li, 
+.tablist a, 
+.tablist a:hover,
+.tablist li.current a {
+    background-image: none;
+	color: rgb(34, 34, 34);
+	font-weight: normal;
+	text-shadow: none;
+}
+
+.tablist li:first-child a {
+	padding-left: 12px;	
+}
+
+.tablist a:hover {
+	text-decoration: underline;	
+}
+
+.tablist li.current a {
+	font-weight: bold;
+}
+#top .tabs {
+	font-size: 16px;
+}
+
+#top .tabs2 {
+	font-size: 16px;
+	margin-top: 5px;
+	border-bottom: 1px solid #eee;
+}
+
+#top .tabs3 {
+	font-size: 14px;
+}
+
+/* Page Styles */
+div.header {
+    background-image: none;
+	background-color: transparent;
+	border: none;
+}
+
+.title {
+	font-weight: bold;
+	font-family: 'Segoe UI', sans-serif;
+	font-size: 24px;
+}
+
+div.contents {
+	box-sizing: border-box;
+	padding: 19px;
+	background-color: #fff;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+}
+
+/* Directory */
+
+.directory tr {
+	border-top: 1px solid #eee;
+}
+
+.directory tr.even {
+	background-color: transparent;
+}
+
+.arrow, .icon {
+	font-family: Roboto, sans-serif;
+}
+
+/* Nav Path */
+
+.navpath ul {
+	background-image: none;	
+	border: none;
+	height: auto;
+	font-size: 16px;
+}
+
+.navpath li.navelem {
+	padding: 0;
+	display: inline-block;
+	background-image: none;	
+	color: rgb(34, 34, 34);
+}
+
+.navpath li.navelem:first-child {
+	margin-left: 2px;
+}
+
+.navpath li.navelem a { 
+	display: inline-block;
+	padding-left: 10px;
+    padding-right: 15px;
+	font-family: 'Segoe UI', sans-serif;
+    height: 24px;
+}
+
+.navpath li.navelem:not(:first-child):before {
+	content: ">";	
+	display: inline-block;
+}
+
+/* Classes */
+
+h2.groupheader {
+    border-bottom: none;
+	color: rgb(34, 34, 34);
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.memitem {
+	margin-bottom: 15px;
+	border: 1px solid #eee;
+}
+
+.mdescLeft, .mdescRight, .memItemLeft, .memItemRight, .memTemplItemLeft, .memTemplItemRight, .memTemplParams {
+    background-color: transparent;
+}
+
+.memproto, dl.reflist dt {
+	padding: 10px 5px;
+	background-image: none;
+	background-color: transparent;
+	box-shadow: none;
+	border: 0;
+	border-bottom: 1px solid #eee;
+	text-shadow: none;
+	color: rgb(34, 34, 34);
+}
+
+.memdoc, dl.reflist dd {
+	padding: 0 16px;
+	box-shadow: none;
+	background-image: none;
+	border: 0;
+}
+
+.memname {
+	font-size: 18px;
+}
+
+.fieldtable {
+	margin: 10px 0;
+}
+
+.fieldtable th {
+	background-image: none;
+	background-color: transparent;
+}
+
+/* Side Nav */
+
+#side-nav {
+	width: 250px;
+}
+
+#nav-tree {
+	background-image: none;
+	background-color: transparent;
+}
+
+#nav-tree .label {
+	font-family: 'Segoe UI', sans-serif;
+	font-size: 14px;
+}
+
+#nav-tree .selected, #nav-tree .selected a {
+	background-image: none;
+	text-shadow: none;
+	color: rgb(34, 34, 34);
+	font-weight: bold;
+}
+
+#nav-tree .item > a {
+	margin-left: 8px;
+}
+
+.ui-resizable-e {
+	background-image: none;
+	background-color: transparent;
+}
+
+/* Brighter links */
+
+a,
+.navpath li.navelem a,
+.contents a {
+ color: #3D85CC;
+}
+
+.contents a:visited {
+    color: #4596E6;
+}
+
+a:hover,
+.navpath li.navelem a:hover,
+.contents a:hover {
+    color: #4DA6FF;
+}
+
+/* Misc */
+
+hr.footer {
+	border: none;
+}
+
+.navpath li.footer {
+	 font-size: 14px;
+}
+
+div.summary {
+	padding-right: 8px;
+	font-size: 12px;
+}
+
+span.mlabel {
+	font-family: Roboto, sans-serif;
+	border: none;
+}
+
+div.ah, span.ah {
+	background-image: none;	
+	background-color: #666;
+	border: none;
+}

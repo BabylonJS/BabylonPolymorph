@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{F2E51023-D6FF-4FBA-ACA9-56BE2A92BCE0}</ProjectGuid>
+    <ProjectName>ImagingComponentWinRT</ProjectName>
+    <RootNamespace>Spectre.ImagingComponent</RootNamespace>
+    <SpectreConfigurationType>SpectreWinRTStaticLibrary</SpectreConfigurationType>
+  </PropertyGroup>
+  <ImportGroup Label="Shared">
+    <Import Project="ImagingComponent.Shared.CPP.vcxitems" Label="Shared" />
+    <Import Project="ImagingComponent.Shared.Windows.CPP.vcxitems" Label="Shared" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), Root.props))\Root.props" />
+    <Import Project="$(CanvasConfigDirectory)Spectre.Configurations.props" />
+    <Import Project="$(CanvasConfigDirectory)Spectre.Cpp.props" />
+    <Import Project="$(CoreUtilsSharedDirectory)ImagingComponent\cpp\Build\ImagingComponentWinRT.vcxproj.projimport" />
+  </ImportGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>
+        %(AdditionalIncludeDirectories)
+      </AdditionalIncludeDirectories>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup>
+    <Lib>
+      <AdditionalDependencies>
+        windowscodecs.lib;
+        %(AdditionalDependencies)
+      </AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+  </Target>
+</Project>

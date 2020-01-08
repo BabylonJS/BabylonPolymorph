@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7750E443-B04C-4CED-B71B-D6B690289C4D}</ProjectGuid>
+    <ProjectName>Transcoders</ProjectName>
+    <RootNamespace>Spectre.Transcoder</RootNamespace>
+    <SpectreConfigurationType>StaticLibrary</SpectreConfigurationType>
+    <SpectreDeploymentType>Plugin</SpectreDeploymentType>
+  </PropertyGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), Root.props))\Root.props" />
+    <Import Project="$(CanvasConfigDirectory)Spectre.Configurations.props" />
+    <Import Project="$(CanvasConfigDirectory)Spectre.Cpp.props" />
+    <Import Project="$(TranscodersSharedDirectory)Transcoders\Build\Transcoders.vcxproj.projimport" />
+  </ImportGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Source\TranscodersTelemetryHelper.cpp" />
+    <ClCompile Include="..\Source\ExporterGLTF\Asset3DToGLTFConverter.cpp" />
+    <ClCompile Include="..\Source\ExporterGLTF\ExporterGLB.cpp" />
+    <ClCompile Include="..\Source\ExporterGLTF\ExporterGLTF.cpp" />
+    <ClCompile Include="..\Source\ExporterGLTF\ExtensionsMSFT.cpp" />
+    <ClCompile Include="..\Source\ExporterOBJ\ExporterObj.cpp" />
+    <ClCompile Include="..\Source\ExporterSTL\ExporterAsciiStl.cpp" />
+    <ClCompile Include="..\Source\ExporterTexture\ExporterTexture.cpp" />
+    <ClCompile Include="..\Source\TranscoderException.cpp" />
+    <ClCompile Include="..\Source\TranscoderGLTF\GLTFToAsset3DConverter.cpp" />
+    <ClCompile Include="..\Source\TranscoderGLTF\ImporterGLB.cpp" />
+    <ClCompile Include="..\Source\TranscoderGLTF\ImporterGLTF.cpp" />
+    <ClCompile Include="..\Source\TranscoderGLTF\TranscoderGLB.cpp" />
+    <ClCompile Include="..\Source\TranscoderGLTF\TranscoderGLTF.cpp" />
+    <ClCompile Include="..\Source\TranscoderOBJ\GeometryParser.cpp" />
+    <ClCompile Include="..\Source\TranscoderOBJ\MaterialParser.cpp" />
+    <ClCompile Include="..\Source\TranscoderOBJ\TranscoderOBJ.cpp" />
+    <ClCompile Include="..\Source\TranscoderPLY\PLYParser.cpp" />
+    <ClCompile Include="..\Source\TranscoderPLY\TranscoderPLY.cpp" />
+    <ClCompile Include="..\Source\Transcoders.cpp" />
+    <ClCompile Include="..\Source\TranscodersPch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Source\TranscoderSTL\StlAsciiParser.cpp" />
+    <ClCompile Include="..\Source\TranscoderSTL\StlBinaryParser.cpp" />
+    <ClCompile Include="..\Source\TranscoderSTL\TranscoderSTL.cpp" />
+    <ClCompile Include="..\Source\TranscodersV2Json.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Inc\ExporterGLTF\Asset3DToGLTFConverter.h" />
+    <ClInclude Include="..\Inc\ExporterGLTF\ExtensionsMSFT.h" />
+    <ClInclude Include="..\Inc\ExporterGLTF\ExporterGLB.h" />
+    <ClInclude Include="..\Inc\ExporterGLTF\ExporterGLTF.h" />
+    <ClInclude Include="..\Inc\ExporterGLTF\GLTFExportOptions.h" />
+    <ClInclude Include="..\Inc\ExporterOBJ\ExporterObj.h" />
+    <ClInclude Include="..\Inc\ExporterSTL\ExporterAsciiStl.h" />
+    <ClInclude Include="..\Inc\ExporterTexture\ExporterTexture.h" />
+    <ClInclude Include="..\Inc\TranscoderException.h" />
+    <ClInclude Include="..\Inc\TranscoderGLTF\GLTFToAsset3DConverter.h" />
+    <ClInclude Include="..\Inc\TranscoderGLTF\GLTFImportOptions.h" />
+    <ClInclude Include="..\Inc\TranscoderGLTF\ImporterGLB.h" />
+    <ClInclude Include="..\Inc\TranscoderGLTF\ImporterGLTF.h" />
+    <ClInclude Include="..\Inc\TranscoderGLTF\IStreamReaderRSAdapter.h" />
+    <ClInclude Include="..\Inc\TranscoderGLTF\IStreamWriterOSFAdapter.h" />
+    <ClInclude Include="..\Inc\TranscoderGLTF\StringUtils.h" />
+    <ClInclude Include="..\Inc\TranscoderGLTF\TransformMatrixUtils.h" />
+    <ClInclude Include="..\Inc\TranscoderGLTF\TranscoderGLB.h" />
+    <ClInclude Include="..\Inc\TranscoderGLTF\TranscoderGLTF.h" />
+    <ClInclude Include="..\Inc\TranscoderOBJ\AuthorType.h" />
+    <ClInclude Include="..\Inc\TranscoderOBJ\GeometryLineType.h" />
+    <ClInclude Include="..\Inc\TranscoderOBJ\GeometryParser.h" />
+    <ClInclude Include="..\Inc\TranscoderOBJ\MaterialParser.h" />
+    <ClInclude Include="..\Inc\TranscoderOBJ\MtlLineType.h" />
+    <ClInclude Include="..\Inc\TranscoderOBJ\MtlTextureMapOptions.h" />
+    <ClInclude Include="..\Inc\TranscoderOBJ\TranscoderOBJ.h" />
+    <ClInclude Include="..\Inc\TranscoderPLY\PLYParser.h" />
+    <ClInclude Include="..\Inc\TranscoderPLY\TranscoderPLY.h" />
+    <ClInclude Include="..\Inc\Transcoders.h" />
+    <ClInclude Include="..\Inc\TranscoderSTL\StlAsciiParser.h" />
+    <ClInclude Include="..\Inc\TranscoderSTL\StlBinaryParser.h" />
+    <ClInclude Include="..\Inc\TranscoderSTL\TranscoderSTL.h" />
+    <ClInclude Include="..\Source\TranscodersPch.h" />
+    <ClInclude Include="..\Source\TranscodersTelemetryHelper.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>TranscodersPch.h</PrecompiledHeaderFile>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary Condition="'$(Configuration)' == 'Debug'">MultiThreadedDebugDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <PropertyGroup Label="NuGet">
+    <Linkage-Microsoft_glTF_CPP>static</Linkage-Microsoft_glTF_CPP>
+    <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+    <RuntimeLibrary Condition="'$(Configuration)' == 'Debug'">MultiThreadedDebugDLL</RuntimeLibrary>
+  </PropertyGroup>
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\..\..\..\Build\packages\rapidjson.temprelease.0.0.2.20\build\native\rapidjson.temprelease.targets" Condition="Exists('..\..\..\..\Build\packages\rapidjson.temprelease.0.0.2.20\build\native\rapidjson.temprelease.targets')" />
+    <Import Project="..\..\..\..\Build\packages\directxtex_desktop_win10.2019.5.31.1\build\native\directxtex_desktop_win10.targets" Condition="Exists('..\..\..\..\Build\packages\directxtex_desktop_win10.2019.5.31.1\build\native\directxtex_desktop_win10.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\..\..\Build\packages\rapidjson.temprelease.0.0.2.20\build\native\rapidjson.temprelease.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\Build\packages\rapidjson.temprelease.0.0.2.20\build\native\rapidjson.temprelease.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\Build\packages\directxtex_desktop_win10.2019.5.31.1\build\native\directxtex_desktop_win10.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\Build\packages\directxtex_desktop_win10.2019.5.31.1\build\native\directxtex_desktop_win10.targets'))" />
+  </Target>
+</Project>

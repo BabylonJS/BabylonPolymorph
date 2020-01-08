@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{06b5ba3e-22c9-4945-a911-1a5c75ae50e3}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)..\Inc</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Asset3D.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Asset3DPch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Asset3DTraverser.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\BoundingBox.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Geometry.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\ITraversableBase.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\MaterialConversionUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\MaterialDescriptor.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Mesh.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\SceneNode.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\TextureDescriptor.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\TexturePackingUtils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Asset3D\Animation.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Asset3D\Asset3D.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Asset3D\Asset3DTraverser.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Asset3D\BoundingBox.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Asset3D\Camera.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Asset3D\ExtensionsPayloadData.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Asset3D\Geometry.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Asset3D\IAsset3DProcessor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Asset3D\ITraversable.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Asset3D\MaterialConversionUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Asset3D\MaterialDescriptor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Asset3D\MaterialLayer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Asset3D\Mesh.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Asset3D\Projection.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Asset3D\SceneNode.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Asset3D\TextureDescriptor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Asset3D\TexturePackingUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Asset3DPch.h" />
+  </ItemGroup>
+</Project>

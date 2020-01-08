@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Condition="'$(CoreUtilsWinRtImported)' == 'true'" Project="Error attempting to import CoreUtilsWinRtImported twice. Condition all imports on ([ProjectName]Imported) != true." />
+  <PropertyGroup Condition="'$(ProjectName)' != 'CoreUtilsWinRt'">
+    <CoreUtilsWinRtImported>true</CoreUtilsWinRtImported>
+  </PropertyGroup>
+
+  <Import Condition="'$(RootPathsPropsImported)' != 'true'" Project="$(CanvasRootDirectory)RootPaths.props" />
+
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>
+        $(CoreUtilsSharedDirectory)CoreUtilsWinRt\cpp\Inc;
+        %(AdditionalIncludeDirectories)
+      </AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+
+  <ItemGroup Condition="'$(ConfigurationType)'!='StaticLibrary' and '$(ProjectName)' != 'CoreUtilsWinRt'">
+    <ProjectReference Include="$(CoreUtilsSharedDirectory)CoreUtilsWinRt\cpp\Build\CoreUtilsWinRt.vcxproj">
+      <Project>{FB9FCE92-DFF4-44B1-9456-C0444B06A99F}</Project>
+      <Name>CoreUtilsWinRt</Name>
+      <CopyLocal>true</CopyLocal>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyImports>false</UseLibraryDependencyImports>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemDefinitionGroup Condition="'$(ConfigurationType)'!='StaticLibrary' and '$(ProjectName)' != 'CoreUtilsWinRt'">
+    <Link>
+      <AdditionalDependencies>
+        $(CanvasBuiltLibDirectory)CoreUtilsWinRt\CoreUtilsWinRt$(Suffix).lib;
+        %(AdditionalDependencies)
+      </AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+</Project>
