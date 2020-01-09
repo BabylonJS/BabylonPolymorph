@@ -62,7 +62,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GLTFSDK", "GLTFSDK", "{6947
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GLTFSDK", "..\CoreUtils\Shared\GLTFSDK\cpp\Build\GLTFSDK.vcxproj", "{7CDB7138-98CD-4C94-9EEC-B656451A2392}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GLTFSDK.Shared.CPP", "..\Submodules\glTF-SDK\GLTFSDK.Shared.CPP\GLTFSDK.Shared.CPP.vcxitems", "{63E50A1A-6A16-4A6E-AA9B-D53F0C425567}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GLTFSDK.Shared.CPP", "..\CoreUtils\Shared\GLTFSDK\cpp\Build\GLTFSDK.Shared.CPP.vcxitems", "{E5DBB3BB-E056-4377-B517-BA1C499966D8}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -72,8 +72,7 @@ Global
 		..\CoreUtils\Shared\CanvasTex\cpp\Build\CanvasTex.Shared.CPP.vcxitems*{244ef5cd-466e-4134-b136-a06742518572}*SharedItemsImports = 4
 		..\CoreUtils\Shared\CanvasTex\cpp\Build\CanvasTex.Shared.Windows.CPP.vcxitems*{244ef5cd-466e-4134-b136-a06742518572}*SharedItemsImports = 4
 		..\CoreUtils\Shared\CoreUtils.Shared.CPP\CoreUtils.Shared.CPP.vcxitems*{45d41acc-2c3c-43d2-bc10-02aa73ffc7c7}*SharedItemsImports = 9
-		..\Submodules\glTF-SDK\GLTFSDK.Shared.CPP\GLTFSDK.Shared.CPP.vcxitems*{63e50a1a-6a16-4a6e-aa9b-d53f0c425567}*SharedItemsImports = 9
-		..\Submodules\glTF-SDK\GLTFSDK.Shared.CPP\GLTFSDK.Shared.CPP.vcxitems*{7cdb7138-98cd-4c94-9eec-b656451a2392}*SharedItemsImports = 4
+		..\CoreUtils\Shared\GLTFSDK\cpp\Build\GLTFSDK.Shared.CPP.vcxitems*{7cdb7138-98cd-4c94-9eec-b656451a2392}*SharedItemsImports = 4
 		..\CoreUtils\Shared\ImagingComponent\cpp\Build\ImagingComponent.Shared.CPP.vcxitems*{84a8dd57-b92b-4607-ab54-c4c4bf87a7d7}*SharedItemsImports = 9
 		..\CoreUtils\Shared\CanvasTex\cpp\Build\CanvasTex.Shared.CPP.vcxitems*{8903643b-5a04-4ebc-be4b-e55422e6489f}*SharedItemsImports = 4
 		..\CoreUtils\Shared\CanvasTex\cpp\Build\CanvasTex.Shared.Windows.CPP.vcxitems*{8903643b-5a04-4ebc-be4b-e55422e6489f}*SharedItemsImports = 4
@@ -84,6 +83,7 @@ Global
 		..\CoreUtils\Shared\Framework\cpp\Build\Framework.Shared.CPP.vcxitems*{c733d3e8-e9f3-4572-936a-a1650aec5740}*SharedItemsImports = 4
 		..\CoreUtils\Shared\Framework\cpp\Build\Framework.Shared.CPP.vcxitems*{c7d7f8cd-b6a6-4539-bfa2-1cd881c32425}*SharedItemsImports = 9
 		..\CoreUtils\Shared\Framework\cpp\Build\Framework.Shared.CPP.vcxitems*{d6fb61c5-3274-433b-83c7-898b61bcd4a7}*SharedItemsImports = 4
+		..\CoreUtils\Shared\GLTFSDK\cpp\Build\GLTFSDK.Shared.CPP.vcxitems*{e5dbb3bb-e056-4377-b517-ba1c499966d8}*SharedItemsImports = 9
 		..\CoreUtils\Shared\ImagingComponent\cpp\Build\ImagingComponent.Shared.CPP.vcxitems*{f2e51023-d6ff-4fba-aca9-56be2a92bce0}*SharedItemsImports = 4
 		..\CoreUtils\Shared\ImagingComponent\cpp\Build\ImagingComponent.Shared.Windows.CPP.vcxitems*{f2e51023-d6ff-4fba-aca9-56be2a92bce0}*SharedItemsImports = 4
 		..\CoreUtils\Shared\CoreUtils.Shared.CPP\CoreUtils.Shared.CPP.vcxitems*{ff7208f2-9ada-416a-a9b6-e25b143560de}*SharedItemsImports = 4
@@ -647,7 +647,7 @@ Global
 		{DAC64F65-74AC-43B1-AC2D-542AA085BAFC} = {119B2712-E4B0-46F0-A024-9A4925573DF8}
 		{6947FC4F-FDB3-4E1D-BFD4-92818865D646} = {68B71A08-D65C-47D3-B5C5-D60037426DCF}
 		{7CDB7138-98CD-4C94-9EEC-B656451A2392} = {6947FC4F-FDB3-4E1D-BFD4-92818865D646}
-		{63E50A1A-6A16-4A6E-AA9B-D53F0C425567} = {6947FC4F-FDB3-4E1D-BFD4-92818865D646}
+		{E5DBB3BB-E056-4377-B517-BA1C499966D8} = {6947FC4F-FDB3-4E1D-BFD4-92818865D646}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {861750B9-FB7F-4575-A0E9-5B9ACF0DB20F}

@@ -10,7 +10,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalIncludeDirectories>
-	    $(SolutionDir)..\Submodules\glTF-SDK\GLTFSDK\Inc;
+	    $(CoreUtilsSharedDirectory)GLTFSDK\cpp\Inc;
         $(CoreUtilsSharedDirectory)CoreUtils\cpp\Inc;
         %(AdditionalIncludeDirectories)
       </AdditionalIncludeDirectories>

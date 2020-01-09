@@ -1,0 +1,305 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\AnimationUtils.cpp">
+      <Filter>Source Files\GLTFSDK</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\BufferBuilder.cpp">
+      <Filter>Source Files\GLTFSDK</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Color.cpp">
+      <Filter>Source Files\GLTFSDK</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Deserialize.cpp">
+      <Filter>Source Files\GLTFSDK</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Document.cpp">
+      <Filter>Source Files\GLTFSDK</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Extension.cpp">
+      <Filter>Source Files\GLTFSDK</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\ExtensionHandlers.cpp">
+      <Filter>Source Files\GLTFSDK</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\ExtensionsKHR.cpp">
+      <Filter>Source Files\GLTFSDK</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\GLBResourceReader.cpp">
+      <Filter>Source Files\GLTFSDK</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\GLBResourceWriter.cpp">
+      <Filter>Source Files\GLTFSDK</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\GLTFResourceWriter.cpp">
+      <Filter>Source Files\GLTFSDK</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\MeshPrimitiveUtils.cpp">
+      <Filter>Source Files\GLTFSDK</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\MicrosoftGeneratorVersion.cpp">
+      <Filter>Source Files\GLTFSDK</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\PBRUtils.cpp">
+      <Filter>Source Files\GLTFSDK</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\ResourceWriter.cpp">
+      <Filter>Source Files\GLTFSDK</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Schema.cpp">
+      <Filter>Source Files\GLTFSDK</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\SchemaValidation.cpp">
+      <Filter>Source Files\GLTFSDK</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Serialize.cpp">
+      <Filter>Source Files\GLTFSDK</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Validation.cpp">
+      <Filter>Source Files\GLTFSDK</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Version.cpp">
+      <Filter>Source Files\GLTFSDK</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Math.cpp">
+      <Filter>Source Files\GLTFSDK</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\AnimationUtils.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\BufferBuilder.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\Color.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\Constants.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\Deserialize.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\Document.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\Exceptions.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\Extension.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\ExtensionHandlers.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\ExtensionsKHR.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\ExtrasDocument.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\GLBResourceReader.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\GLBResourceWriter.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\GLTF.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\GLTFResourceReader.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\GLTFResourceWriter.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\IndexedContainer.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\IStreamCache.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\IStreamReader.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\IStreamWriter.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\Math.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\MeshPrimitiveUtils.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\MicrosoftGeneratorVersion.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\Optional.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\PBRUtils.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\RapidJsonUtils.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\ResourceReaderUtils.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\ResourceWriter.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\Schema.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\SchemaValidation.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\Serialize.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\StreamCache.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\StreamCacheLRU.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\StreamUtils.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\Traverse.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\Validation.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\Version.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\GLTFSDK\Visitor.h">
+      <Filter>Header Files\GLTFSDK</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\accessor.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\accessor.sparse.indices.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\accessor.sparse.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\accessor.sparse.values.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\animation.channel.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\animation.channel.target.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\animation.sampler.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\animation.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\asset.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\buffer.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\bufferView.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\camera.orthographic.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\camera.perspective.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\camera.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\extension.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\extras.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\glTF.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\glTFChildOfRootProperty.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\glTFid.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\glTFProperty.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\image.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\material.normalTextureInfo.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\material.occlusionTextureInfo.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\material.pbrMetallicRoughness.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\material.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\mesh.primitive.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\mesh.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\node.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\sampler.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\scene.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\skin.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\texture.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schema\textureInfo.schema.json">
+      <Filter>Schema</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{8f2065f2-3364-46e2-921f-26675e217b8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GLTFSDK">
+      <UniqueIdentifier>{32784aa1-8c99-4220-b2a5-d9bb70e6cae5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Schema">
+      <UniqueIdentifier>{17f6d59a-6ed9-40e9-b783-02af1fa7a687}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Schema\Extension">
+      <UniqueIdentifier>{79975237-4a32-44e9-b2ab-386fa2522ad2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{52af2afc-f3bf-46b1-baf6-b7f8cf8c5eb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GLTFSDK">
+      <UniqueIdentifier>{c6643f62-3105-4e64-a6a2-ddd0c10a3925}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
