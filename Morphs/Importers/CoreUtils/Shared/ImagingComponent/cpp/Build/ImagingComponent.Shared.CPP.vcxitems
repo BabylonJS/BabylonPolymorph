@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{84a8dd57-b92b-4607-ab54-c4c4bf87a7d7}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)..\Inc</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Common.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Detection.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Encoding.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Processing.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\SpriteSheet.cpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Common.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\ImagingComponent\Detection.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\ImagingComponent\Encoding.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\ImagingComponent\Gif.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\ImagingComponent\ImagingComponent.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\ImagingComponent\Processing.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\ImagingComponent\SpriteSheet.h" />
+  </ItemGroup>
+</Project>

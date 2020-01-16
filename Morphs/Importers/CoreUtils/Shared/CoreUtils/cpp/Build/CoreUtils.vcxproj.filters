@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\Source\Win\CoreUtilsPch.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Win\FileIO.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Win\PlatformLogger.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Win\SharedMutexWin.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\ConfigurationValue.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\ConfigurationManagerJson.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\ConfigurationManagerBase.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{aa4252f9-d372-4944-a12f-95becdf7b954}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{2593eb7a-1a42-4981-a840-488525313860}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Inc\CoreUtils\FileIO.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\CoreUtils\ConfigurationValue.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\CoreUtils\IConfigurationManager.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\CoreUtils\ConfigurationManagerJson.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>

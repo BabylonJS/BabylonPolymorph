@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7CDB7138-98CD-4C94-9EEC-B656451A2392}</ProjectGuid>
+    <ProjectName>GLTFSDK</ProjectName>
+    <RootNamespace>GLTFSDK</RootNamespace>
+    <BabylonConfigurationType>StaticLibrary</BabylonConfigurationType>
+  </PropertyGroup>
+  <ImportGroup Label="Shared">
+    <Import Project="..\..\..\..\..\Submodules\glTF-SDK\GLTFSDK.Shared.CPP\GLTFSDK.Shared.CPP.vcxitems" Label="Shared" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), Root.props))\Root.props" />
+    <Import Project="$(CanvasConfigDirectory)Babylon.Configurations.props" />
+    <Import Project="$(CanvasConfigDirectory)Babylon.Cpp.props" />
+    <Import Project="$(CoreUtilsSharedDirectory)GLTFSDK\cpp\Build\GLTFSDK.vcxproj.projimport" />
+  </ImportGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <PreBuildEvent>
+      <Command>powershell -ExecutionPolicy Bypass $(ProjectDir)GenerateSchemaJson.ps1 -scriptPath "$(SolutionDir)..\Submodules\glTF-SDK\GLTFSDK\GenerateSchemaJsonHeader.ps1" -outPath $(CoreUtilsSharedDirectory)GLTFSDK\cpp\Inc;</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <PreBuildEvent>
+      <Message>Autogenerate SchemaJson.h header.</Message>
+    </PreBuildEvent>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Performance|ARM'">
+    <PreBuildEvent>
+      <Command>powershell -ExecutionPolicy Bypass $(ProjectDir)GenerateSchemaJson.ps1 -scriptPath "$(SolutionDir)..\Submodules\glTF-SDK\GLTFSDK\GenerateSchemaJsonHeader.ps1" -outPath $(CoreUtilsSharedDirectory)GLTFSDK\cpp\Inc;</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Performance|ARM'">
+    <PreBuildEvent>
+      <Message>Autogenerate SchemaJson.h header.</Message>
+    </PreBuildEvent>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Prefast|ARM'">
+    <PreBuildEvent>
+      <Command>powershell -ExecutionPolicy Bypass $(ProjectDir)GenerateSchemaJson.ps1 -scriptPath "$(SolutionDir)..\Submodules\glTF-SDK\GLTFSDK\GenerateSchemaJsonHeader.ps1" -outPath $(CoreUtilsSharedDirectory)GLTFSDK\cpp\Inc;</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Prefast|ARM'">
+    <PreBuildEvent>
+      <Message>Autogenerate SchemaJson.h header.</Message>
+    </PreBuildEvent>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <PreBuildEvent>
+      <Command>powershell -ExecutionPolicy Bypass $(ProjectDir)GenerateSchemaJson.ps1 -scriptPath "$(SolutionDir)..\Submodules\glTF-SDK\GLTFSDK\GenerateSchemaJsonHeader.ps1" -outPath $(CoreUtilsSharedDirectory)GLTFSDK\cpp\Inc;</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <PreBuildEvent>
+      <Message>Autogenerate SchemaJson.h header.</Message>
+    </PreBuildEvent>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <PreBuildEvent>
+      <Command>powershell -ExecutionPolicy Bypass $(ProjectDir)GenerateSchemaJson.ps1 -scriptPath "$(SolutionDir)..\Submodules\glTF-SDK\GLTFSDK\GenerateSchemaJsonHeader.ps1" -outPath $(CoreUtilsSharedDirectory)GLTFSDK\cpp\Inc;</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <PreBuildEvent>
+      <Message>Autogenerate SchemaJson.h header.</Message>
+    </PreBuildEvent>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Performance|ARM64'">
+    <PreBuildEvent>
+      <Command>powershell -ExecutionPolicy Bypass $(ProjectDir)GenerateSchemaJson.ps1 -scriptPath "$(SolutionDir)..\Submodules\glTF-SDK\GLTFSDK\GenerateSchemaJsonHeader.ps1" -outPath $(CoreUtilsSharedDirectory)GLTFSDK\cpp\Inc;</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Performance|ARM64'">
+    <PreBuildEvent>
+      <Message>Autogenerate SchemaJson.h header.</Message>
+    </PreBuildEvent>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Prefast|ARM64'">
+    <PreBuildEvent>
+      <Command>powershell -ExecutionPolicy Bypass $(ProjectDir)GenerateSchemaJson.ps1 -scriptPath "$(SolutionDir)..\Submodules\glTF-SDK\GLTFSDK\GenerateSchemaJsonHeader.ps1" -outPath $(CoreUtilsSharedDirectory)GLTFSDK\cpp\Inc;</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Prefast|ARM64'">
+    <PreBuildEvent>
+      <Message>Autogenerate SchemaJson.h header.</Message>
+    </PreBuildEvent>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <PreBuildEvent>
+      <Command>powershell -ExecutionPolicy Bypass $(ProjectDir)GenerateSchemaJson.ps1 -scriptPath "$(SolutionDir)..\Submodules\glTF-SDK\GLTFSDK\GenerateSchemaJsonHeader.ps1" -outPath $(CoreUtilsSharedDirectory)GLTFSDK\cpp\Inc;</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <PreBuildEvent>
+      <Message>Autogenerate SchemaJson.h header.</Message>
+    </PreBuildEvent>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <PreBuildEvent>
+      <Command>powershell -ExecutionPolicy Bypass $(ProjectDir)GenerateSchemaJson.ps1 -scriptPath "$(SolutionDir)..\Submodules\glTF-SDK\GLTFSDK\GenerateSchemaJsonHeader.ps1" -outPath $(CoreUtilsSharedDirectory)GLTFSDK\cpp\Inc;</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <PreBuildEvent>
+      <Message>Autogenerate SchemaJson.h header.</Message>
+    </PreBuildEvent>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Performance|Win32'">
+    <PreBuildEvent>
+      <Command>powershell -ExecutionPolicy Bypass $(ProjectDir)GenerateSchemaJson.ps1 -scriptPath "$(SolutionDir)..\Submodules\glTF-SDK\GLTFSDK\GenerateSchemaJsonHeader.ps1" -outPath $(CoreUtilsSharedDirectory)GLTFSDK\cpp\Inc;</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Performance|Win32'">
+    <PreBuildEvent>
+      <Message>Autogenerate SchemaJson.h header.</Message>
+    </PreBuildEvent>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Prefast|Win32'">
+    <PreBuildEvent>
+      <Command>powershell -ExecutionPolicy Bypass $(ProjectDir)GenerateSchemaJson.ps1 -scriptPath "$(SolutionDir)..\Submodules\glTF-SDK\GLTFSDK\GenerateSchemaJsonHeader.ps1" -outPath $(CoreUtilsSharedDirectory)GLTFSDK\cpp\Inc;</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Prefast|Win32'">
+    <PreBuildEvent>
+      <Message>Autogenerate SchemaJson.h header.</Message>
+    </PreBuildEvent>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <PreBuildEvent>
+      <Command>powershell -ExecutionPolicy Bypass $(ProjectDir)GenerateSchemaJson.ps1 -scriptPath "$(SolutionDir)..\Submodules\glTF-SDK\GLTFSDK\GenerateSchemaJsonHeader.ps1" -outPath $(CoreUtilsSharedDirectory)GLTFSDK\cpp\Inc;</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <PreBuildEvent>
+      <Message>Autogenerate SchemaJson.h header.</Message>
+    </PreBuildEvent>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <PreBuildEvent>
+      <Command>powershell -ExecutionPolicy Bypass $(ProjectDir)GenerateSchemaJson.ps1 -scriptPath "$(SolutionDir)..\Submodules\glTF-SDK\GLTFSDK\GenerateSchemaJsonHeader.ps1" -outPath $(CoreUtilsSharedDirectory)GLTFSDK\cpp\Inc;</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <PreBuildEvent>
+      <Message>Autogenerate SchemaJson.h header.</Message>
+    </PreBuildEvent>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Performance|x64'">
+    <PreBuildEvent>
+      <Command>powershell -ExecutionPolicy Bypass $(ProjectDir)GenerateSchemaJson.ps1 -scriptPath "$(SolutionDir)..\Submodules\glTF-SDK\GLTFSDK\GenerateSchemaJsonHeader.ps1" -outPath $(CoreUtilsSharedDirectory)GLTFSDK\cpp\Inc;</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Performance|x64'">
+    <PreBuildEvent>
+      <Message>Autogenerate SchemaJson.h header.</Message>
+    </PreBuildEvent>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Prefast|x64'">
+    <PreBuildEvent>
+      <Command>powershell -ExecutionPolicy Bypass $(ProjectDir)GenerateSchemaJson.ps1 -scriptPath "$(SolutionDir)..\Submodules\glTF-SDK\GLTFSDK\GenerateSchemaJsonHeader.ps1" -outPath $(CoreUtilsSharedDirectory)GLTFSDK\cpp\Inc;</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Prefast|x64'">
+    <PreBuildEvent>
+      <Message>Autogenerate SchemaJson.h header.</Message>
+    </PreBuildEvent>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <PreBuildEvent>
+      <Command>powershell -ExecutionPolicy Bypass $(ProjectDir)GenerateSchemaJson.ps1 -scriptPath "$(SolutionDir)..\Submodules\glTF-SDK\GLTFSDK\GenerateSchemaJsonHeader.ps1" -outPath $(CoreUtilsSharedDirectory)GLTFSDK\cpp\Inc;</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <PreBuildEvent>
+      <Message>Autogenerate SchemaJson.h header.</Message>
+    </PreBuildEvent>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="GenerateSchemaJson.ps1" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <!--<Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />-->
+  <!--<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>-->
+  <!--<Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />-->
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\..\..\..\..\Build\packages\rapidjson.temprelease.0.0.2.20\build\native\rapidjson.temprelease.targets" Condition="Exists('..\..\..\..\..\Build\packages\rapidjson.temprelease.0.0.2.20\build\native\rapidjson.temprelease.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\..\..\..\Build\packages\rapidjson.temprelease.0.0.2.20\build\native\rapidjson.temprelease.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\Build\packages\rapidjson.temprelease.0.0.2.20\build\native\rapidjson.temprelease.targets'))" />
+  </Target>
+</Project>

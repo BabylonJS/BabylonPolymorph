@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Import Condition="'$(Asset3DImported)' == 'true'" Project="Error attempting to import Asset3DImported twice. Condition all imports on ([ProjectName]Imported) != true." />
+  <PropertyGroup Condition="'$(ProjectName)' != 'Asset3D'">
+    <Asset3DImported>true</Asset3DImported>
+  </PropertyGroup>
+
+  <ImportGroup>
+    <Import Condition="'$(RootPathsPropsImported)' != 'true'" Project="$(CanvasRootDirectory)RootPaths.props" />
+    <Import Condition="'$(AppContainerApplication)'=='true' and '$(ImagingComponentWinRTImported)' != 'true'" Project="$(CoreUtilsSharedDirectory)ImagingComponent\cpp\Build\ImagingComponentWinRT.vcxproj.projimport" />
+    <Import Condition="'$(AppContainerApplication)'!='true' and '$(ImagingComponentImported)' != 'true'" Project="$(CoreUtilsSharedDirectory)ImagingComponent\cpp\Build\ImagingComponent.vcxproj.projimport" />
+    <Import Condition="'$(AppContainerApplication)'=='true' and '$(FrameworkWinRTImported)' != 'true'" Project="$(CoreUtilsSharedDirectory)Framework\cpp\Build\FrameworkWinRT.vcxproj.projimport" />
+    <Import Condition="'$(AppContainerApplication)'!='true' and '$(FrameworkImported)' != 'true'" Project="$(CoreUtilsSharedDirectory)Framework\cpp\Build\Framework.vcxproj.projimport" />
+    <Import Condition="'$(CoreUtilsImported)' != 'true'" Project="$(CoreUtilsSharedDirectory)CoreUtils\cpp\Build\CoreUtils.vcxproj.projimport" />
+  </ImportGroup>
+
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>
+        $(CoreUtilsSharedDirectory)Asset3D\cpp\Inc;
+        %(AdditionalIncludeDirectories)
+      </AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+
+  <ItemGroup Condition="'$(ProjectName)' != 'Asset3D' and ('$(ConfigurationType)' != 'StaticLibrary' or '$(BabylonDeploymentType)' != 'None')">
+    <ProjectReference Include="$(CoreUtilsSharedDirectory)Asset3D\cpp\Build\Asset3D.vcxproj">
+      <Project>{200f46e5-0f85-43e2-b99a-303c621f944b}</Project>
+      <Name>Asset3D</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyImports>false</UseLibraryDependencyImports>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemDefinitionGroup Condition="'$(ConfigurationType)' != 'StaticLibrary' and '$(ProjectName)' != 'Asset3D'">
+    <Link>
+      <AdditionalDependencies>
+        $(CanvasBuiltLibDirectory)Asset3D\Asset3D$(Suffix).lib;
+        %(AdditionalDependencies)
+      </AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+
+  <ItemDefinitionGroup Condition="'$(ProjectName)' != 'Asset3D' and '$(ConfigurationType)' == 'StaticLibrary' and '$(BabylonDeploymentType)' == 'Project'">
+    <Lib>
+      <AdditionalDependencies>
+        $(CanvasBuiltLibDirectory)Asset3D\Asset3D$(Suffix).lib;
+        %(AdditionalDependencies)
+      </AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+
+</Project>

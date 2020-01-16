@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- This file is a replacement for Microsoft.Cpp.Default.Props and also Microsoft.Cpp.props -->
+
+  <Import Condition="'$(RootPathsPropsImported)' != 'true'" Project="$(CanvasRootDirectory)RootPaths.props" />
+
+  <PropertyGroup>
+    <Configuration Condition="'$(Configuration)'==''">Debug</Configuration>
+    <Platform Condition="'$(Platform)'==''">Win32</Platform>
+    <WindowsStoreModule Condition="'$(BabylonConfigurationType)'=='BabylonWinRTDynamicLibrary' or '$(BabylonConfigurationType)'=='BabylonWinRTStaticLibrary' or '$(BabylonConfigurationType)'=='BabylonWinRtApplication'  or '$(BabylonConfigurationType)'=='BabylonWinRtUnitTest'">true</WindowsStoreModule>
+    <DisableEmbeddedXbf Condition="'$(BabylonConfigurationType)'=='BabylonWinRTDynamicLibrary' or '$(BabylonConfigurationType)'=='BabylonWinRTStaticLibrary' or '$(BabylonConfigurationType)'=='BabylonWinRtApplication'  or '$(BabylonConfigurationType)'=='BabylonWinRtUnitTest'">false</DisableEmbeddedXbf>
+  </PropertyGroup>
+
+  <!-- Show an error box if either Configuration OR Platform is empty. The rest of the build system
+       simply cannot handle this so make sure this never happens -->
+  <PropertyGroup>
+    <Errorstring Condition="'$(Configuration)'==''">No Configuration Set</Errorstring>
+    <Errorstring Condition="'$(Platform)'==''">No Platform Set</Errorstring>
+    <Errorstring Condition="'$(BabylonConfigurationType)'==''">No Babylon Configuration Type</Errorstring>
+    <AnErrorOccurred>0</AnErrorOccurred>
+    <AnErrorOccurred Condition="'$(Errorstring)'!=''">%0A***********************************************************%0A************************************************************%0A******************** AN ERROR OCCURRED *********************%0A************************************************************%0A****************** $(Errorstring) ********************%0A************************************************************%0A************************************************************%0A</AnErrorOccurred>
+    <ErrorReport Condition="$(AnErrorOccurred)>=0"></ErrorReport>
+  </PropertyGroup>
+
+  <!-- PRE DEFAULTS -->
+  <PropertyGroup Label="Globals">
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <Keyword>Win32Proj</Keyword>
+
+    <MinimumVisualStudioVersion>$(VisualStudioVersion)</MinimumVisualStudioVersion>
+    <GeneratedFilesDir>$(CanvasBuiltDirectory)Int\$(PlatformToolset)\$(Platform)\$(Configuration)\$(MSBuildProjectName)\GeneratedFiles\</GeneratedFilesDir>
+
+    <TargetPlatformVersion>10.0.17134.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion Condition="'$(Platform)' != 'ARM64'">10.0.10240.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion Condition="'$(Platform)' == 'ARM64'">10.0.16299.0</TargetPlatformMinVersion>
+
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion Condition="'$(Platform)' != 'ARM64'">10.0.10240.0</WindowsTargetPlatformMinVersion>
+    <WindowsTargetPlatformMinVersion Condition="'$(Platform)' == 'ARM64'">10.0.16299.0</WindowsTargetPlatformMinVersion>
+
+    <UnitTestPlatformVersion>14.0</UnitTestPlatformVersion>
+
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(WindowsStoreModule)'=='true'">
+    <ApplicationEnvironment>title</ApplicationEnvironment>
+
+    <!-- These following 3 lines decide if project will have Windows Store support and consume CX extensions -->
+    <AppContainerApplication>true</AppContainerApplication>
+    <ApplicationType>Windows Store</ApplicationType>
+    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+
+  </PropertyGroup>
+
+  <!-- Add our own custom props. These should NOT affect any built in or used MSBuild properties, just define new ones. -->
+  <Import Condition="'$(CppCustomPropsImported)' != 'true'" Project="Babylon.Cpp.Custom.Props" />
+
+  <!-- Include the Default MS props -->
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+
+  <!-- Set up all the bits that the main props file needs -->
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType Condition="'$(WindowsStoreModule)'!='true'">$(BabylonConfigurationType)</ConfigurationType>
+    <ConfigurationType Condition="'$(BabylonConfigurationType)'=='BabylonWinRTDynamicLibrary' or '$(BabylonConfigurationType)'=='BabylonNativeUnitTest'">DynamicLibrary</ConfigurationType>
+    <ConfigurationType Condition="'$(BabylonConfigurationType)'=='BabylonWinRTStaticLibrary' or '$(BabylonConfigurationType)' == 'StaticLibrary'">StaticLibrary</ConfigurationType>
+    <ConfigurationType Condition="'$(BabylonConfigurationType)'=='BabylonWinRtApplication' or '$(BabylonConfigurationType)'=='BabylonWinRtUnitTest' or '$(BabylonConfigurationType)'=='BabylonWin32Application'">Application</ConfigurationType>
+
+    <UseDebugLibraries>$(DebugEnabled)</UseDebugLibraries>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <EmbedManifest>false</EmbedManifest>
+    <GenerateManifest>false</GenerateManifest>
+
+    <!-- If BabylonDeploymentType is not set then set it to None -->
+    <BabylonDeploymentType Condition="'$(BabylonDeploymentType)'==''">None</BabylonDeploymentType>
+
+  </PropertyGroup>
+  
+  <!-- Static analysis enabled for prefast only -->
+  <PropertyGroup  Condition="'$(FeaturePrefast)'=='true'">    
+    <CodeAnalysisRuleSet>Sdl7.0.ruleset</CodeAnalysisRuleSet>
+    <!-- Set to true when Sdl is installed on build machines -->
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  
+  <!-- Now just include the main MS props file -->
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+
+  <!-- PS CHECK THAT -->
+  <PropertyGroup>
+    <LinkIncremental>$(DebugEnabled)</LinkIncremental>
+
+    <AddLayoutDir Condition="'$(BabylonConfigurationType)'=='BabylonWinRtApplication'">false</AddLayoutDir>
+    <AddLayoutDir Condition="'$(BabylonConfigurationType)'=='BabylonWinRTDynamicLibrary'">false</AddLayoutDir>
+  </PropertyGroup>
+
+  <!-- CLCOMPILE AND LINK -->
+  <ItemDefinitionGroup>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem Condition="'$(SubSystem)'==''">Windows</SubSystem>
+      <EnableCOMDATFolding Condition="'$(FeatureOptimizationsEnabled)'=='true'">true</EnableCOMDATFolding>
+      <OptimizeReferences Condition="'$(FeatureOptimizationsEnabled)'=='true'">true</OptimizeReferences>
+      <GenerateWindowsMetadata Condition="'$(BabylonConfigurationType)'!='BabylonWinRTDynamicLibrary'">false</GenerateWindowsMetadata>
+      <DetectOneDefinitionRule Condition="'$(FeaturePrefast)'=='true'">true</DetectOneDefinitionRule>
+
+      <!-- Add WinRt unit test framework dependencies -->
+      <AdditionalLibraryDirectories Condition="'$(BabylonConfigurationType)'=='BabylonWinRtUnitTest'">$(VCInstallDir)UnitTest\lib\UWP;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+
+      <!-- Add native unit test framework dependencies -->
+      <AdditionalLibraryDirectories Condition="'$(BabylonConfigurationType)'=='BabylonNativeUnitTest'">$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+     
+    </Link>
+    <Lib>
+      <TreatLibWarningAsErrors>true</TreatLibWarningAsErrors>
+      
+      <!-- Turn off: warning LNK4264: archiving object file compiled with /ZW into a static library; note that when authoring Windows Runtime types it is not recommended to link with a static library that contains Windows Runtime metadata.-->
+      <!-- It seems like the librarian has different syntax for disabling warnings from the linker, so I'm just adding this as a command link additional option -->
+      <!-- <DisableSpecificWarnings>4264;%(DisableSpecificWarnings)</DisableSpecificWarnings> -->
+      <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+
+      <!-- This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library (W4221) -->
+      <AdditionalOptions>/IGNORE:4221 %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
+    <ClCompile>
+      <UseFullPaths>false</UseFullPaths>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+        <AdditionalUsingDirectories Condition="'$(Platform)'=='x64'">$(NativeExecutablePath);$(WindowsSDK_MetadataPath);%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <AdditionalUsingDirectories Condition="'$(Platform)'=='Win32'">$(WindowsSDK_MetadataPath);$(WinmdUsingPath)%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <AdditionalUsingDirectories Condition="'$(Platform)'=='ARM'">$(VCInstallDir)\lib\store\arm; $(VCInstallDir)\lib\arm;%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <AdditionalUsingDirectories Condition="'$(Platform)'=='ARM64'">$(VCInstallDir)\lib\store\arm64; $(VCInstallDir)\lib\arm64;%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+
+        <!-- Add intermediate directory where BabylonVersion.h is written -->
+      <AdditionalIncludeDirectories>$(RootIntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      
+        <!-- Add WinRt unit test framework dependencies -->
+      <AdditionalIncludeDirectories Condition="'$(BabylonConfigurationType)'=='BabylonWinRtUnitTest' or '$(BabylonConfigurationType)'=='BabylonWinRTDynamicLibrary' or '$(BabylonConfigurationType)'=='BabylonWinRTStaticLibrary'">$(VCInstallDir)UnitTest\include\UWP;$(ProjectDir);$(IntermediateOutputPath);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(BabylonConfigurationType)'=='BabylonNativeUnitTest' or '$(BabylonConfigurationType)'=='DynamicLibrary' or '$(ConfigurationType)'=='StaticLibrary' ">$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+
+      <Optimization Condition="'$(FeatureOptimizationsEnabled)'=='true'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(FeatureOptimizationsEnabled)'!='true'">Disabled</Optimization>
+      <BasicRuntimeChecks Condition="'$(FeatureOptimizationsEnabled)'=='true'"></BasicRuntimeChecks>
+
+      <PreprocessorDefinitions Condition="'$(DebugEnabled)'=='true'">_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(DebugEnabled)'!='true'">NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(FeatureProfiling)'=='true'">PROFILE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(ConfigurationType)'=='StaticLibrary'">_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(BabylonConfigurationType)'=='DynamicLibrary'">_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(BabylonConfigurationType)'=='BabylonWinRTDynamicLibrary'">_WINRT_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Platform)'=='x64'">WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Platform)'=='Win32'">WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(WindowsStoreModule)'!='true'">WINVER=0x0601;_WIN32_WINNT=0x0601;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;_SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING;PLUGIN_PATH=LR"*($(CanvasBuiltDirectory)Image\Plugins\$(Platform)\$(Configuration)\)*";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+
+      <WarningLevel>Level4</WarningLevel>
+      <FunctionLevelLinking Condition="'$(FeatureOptimizationsEnabled)'=='true'">true</FunctionLevelLinking>
+      <IntrinsicFunctions Condition="'$(FeatureOptimizationsEnabled)'=='true'">true</IntrinsicFunctions>
+
+      <!-- TODO: Task 303:Clean up msbuild properties 
+        Check if CompileAsWinRT is needed for VS2015
+      -->
+      <CompileAsWinRT Condition="'$(BabylonConfigurationType)'=='BabylonWinRTDynamicLibrary'">true</CompileAsWinRT>
+
+      <!-- Disable 'conditional expression is constant' warning (W4127)' -->
+      <DisableSpecificWarnings>4127;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+
+      <!-- Disable 'function' : unreferenced local function has been removed (C4505)-->
+      <DisableSpecificWarnings>4505;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+
+      <!-- Disable 'assignment operator could not be generated' (C4512)-->
+      <DisableSpecificWarnings>4512;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+
+      <!-- Disable ''XXX' : macro redefinition' (C4005) as the ppltasks.h header does this :-( -->
+      <DisableSpecificWarnings>4005;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+
+      <!-- Disable warning C4345: behavior change: an object of POD type constructed with an initializer of the form () will be default-initialized -->
+      <DisableSpecificWarnings>4345;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+
+      <!-- 'typedef ': ignored on left of 'tagGPFIDL_FLAGS' when no variable is declared -->
+      <DisableSpecificWarnings>4091;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+
+      <!-- declaration of 'FVF' hides class member -->
+      <DisableSpecificWarnings>4458;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+
+      <DisableSpecificWarnings Condition="'$(BabylonConfigurationType)'=='BabylonWinRtUnitTest'">4453;28204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+
+      <!-- Enable warning C5038: order of initialization in initializer lists -->
+      <!-- Don't enable on WinRT projects as the auto-generated XAML contains code that produces the warning -->
+      <AdditionalOptions Condition="'$(BabylonConfigurationType)'!='BabylonWinRtApplication' and '$(BabylonConfigurationType)'!='BabylonWinRtUnitTest' and '$(BabylonConfigurationType)'!='BabylonWinRTDynamicLibrary' and '$(BabylonConfigurationType)'!='BabylonWinRTStaticLibrary'">/we5038 %(AdditionalOptions)</AdditionalOptions>
+
+      <AdditionalOptions>/d2Zi+ %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+
+      <!-- error C3859: virtual memory range for PCH exceeded -->
+      <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
+
+      <!-- add the flags prefast/analyze needs -->
+      <AdditionalOptions Condition="'$(FeaturePrefast)'=='true'">/analyze /analyze:stacksize32767 %(AdditionalOptions)</AdditionalOptions>
+
+      <!-- Force synchronous PDB writes -->
+      <AdditionalOptions>/FS %(AdditionalOptions)</AdditionalOptions>
+	  
+	  <!-- Enable Security Development Lifecycle checks -->
+      <SDLCheck>true</SDLCheck>
+	  
+      <!-- Enable Guard Security Checks -->
+      <ControlFlowGuard>Guard</ControlFlowGuard>
+
+      <!-- add the flags prefast/analyze needs -->
+      <AdditionalOptions Condition="'$(FeaturePrefast)'=='true'">/analyze /analyze:stacksize32767 %(AdditionalOptions)</AdditionalOptions>
+	  
+    </ClCompile>
+
+    <!-- Copy weakly linked dependencies to project output directory -->
+    <PostBuildEvent Condition="'$(BabylonCopyLocal)' != ''">
+      <Command Condition="'$(BabylonCopyToAppX)' == 'true'">
+        %(Command) 
+        Powershell -ExecutionPolicy ByPass -NonInteractive -File "$(CanvasBuildDirectory)Deployment\Dependency.ps1" -babylonRoot "$(CanvasRootDirectory.TrimEnd('\'))" -projectName "$(AssemblyName)" -compiler "$(PlatformToolset)" -platform "$(Platform)" -configuration "$(Configuration)" -projectsToCopy "$(BabylonCopyLocal)" -deployToAppX
+      </Command>
+      <Command Condition="'$(BabylonCopyToAppX)' == 'false'">
+        %(Command)
+        Powershell -ExecutionPolicy ByPass -NonInteractive -File "$(CanvasBuildDirectory)Deployment\Dependency.ps1" -babylonRoot "$(CanvasRootDirectory.TrimEnd('\'))" -projectName "$(AssemblyName)" -compiler "$(PlatformToolset)" -platform "$(Platform)" -configuration "$(Configuration)" -projectsToCopy "$(BabylonCopyLocal)"
+      </Command>
+    </PostBuildEvent>
+    
+    <PostBuildEvent Condition="'$(BabylonDeploymentType)' == 'Plugin' or '$(BabylonDeploymentType)' == 'Project'">
+      <Command Condition="'$(BabylonDeploymentType)' == 'Plugin'">
+        %(Command)
+        Powershell -ExecutionPolicy ByPass -NonInteractive -File "$(CanvasBuildDirectory)Deployment\Deploy.ps1" -babylonRoot "$(CanvasRootDirectory.TrimEnd('\'))" -projectName "$(ProjectName)" -compiler "$(PlatformToolset)" -platform "$(Platform)" -configuration "$(Configuration)" -type "plugin" -clean
+      </Command>
+      <Command Condition="'$(BabylonDeploymentType)' == 'Project' and '$(BabylonDeployProjects)' != 'false'">
+        %(Command)
+        Powershell -ExecutionPolicy ByPass -NonInteractive -File "$(CanvasBuildDirectory)Deployment\Deploy.ps1" -babylonRoot "$(CanvasRootDirectory.TrimEnd('\'))" -projectName "$(ProjectName)" -compiler "$(PlatformToolset)" -platform "$(Platform)" -configuration "$(Configuration)" -type "project" -clean
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+
+  <!-- Add in the paths. This is factored out here as more than just CPP needs these -->
+  <Import Condition="'$(PathPropsImported)' != 'true'" Project="Babylon.Path.props" />
+
+  <PropertyGroup>
+    <TargetName>$(ProjectName)$(Suffix)</TargetName>
+    <TargetName Condition="('$(BabylonTestProject)'=='true' or '$(BabylonConfigurationType)' != 'BabylonNativeUnitTest') and '$(BabylonConfigurationType)' != 'BabylonWinRtUnitTest'">$(ProjectName)$(SuffixTestProject)</TargetName>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ExecutablePath>$(BULLSEYE_INSTALL_PATH)\bin;$(ExecutablePath)</ExecutablePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ExecutablePath>$(BULLSEYE_INSTALL_PATH)\bin;$(ExecutablePath)</ExecutablePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <ExecutablePath>$(BULLSEYE_INSTALL_PATH)\bin;$(ExecutablePath)</ExecutablePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <ExecutablePath>$(BULLSEYE_INSTALL_PATH)\bin;$(ExecutablePath)</ExecutablePath>
+  </PropertyGroup>
+
+</Project>

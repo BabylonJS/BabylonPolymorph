@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  
+  <Import Condition="'$(GLTFSDKImported)' == 'true'" Project="Error attempting to import CoreUtilsImported twice. Condition all imports on ([ProjectName]Imported) != true." />
+  <PropertyGroup Condition="'$(ProjectName)' != 'GLTFSDK'">
+    <GLTFSDKImported>true</GLTFSDKImported>
+  </PropertyGroup>
+
+  <ImportGroup>
+    <Import Condition="'$(RootPathsPropsImported)' != 'true'" Project="$(CanvasRootDirectory)RootPaths.props" />
+  </ImportGroup>
+
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>
+	    $(CoreUtilsSharedDirectory)GLTFSDK\cpp\Inc;
+        $(SolutionDir)..\Submodules\glTF-SDK\GLTFSDK\Inc;
+        %(AdditionalIncludeDirectories)
+      </AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+
+  <ItemGroup Condition="'$(ProjectName)' != 'GLTFSDK' and ('$(ConfigurationType)' != 'StaticLibrary' or '$(BabylonDeploymentType)' != 'None')">
+    <ProjectReference Include="$(CoreUtilsSharedDirectory)GLTFSDK\cpp\Build\GLTFSDK.vcxproj">
+      <Project>{7CDB7138-98CD-4C94-9EEC-B656451A2392}</Project>
+      <Name>GLTFSDK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyImports>false</UseLibraryDependencyImports>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemDefinitionGroup Condition="'$(ConfigurationType)' != 'StaticLibrary' and '$(ProjectName)' != 'GLTFSDK'">
+    <Link>
+      <AdditionalDependencies>
+        $(CanvasBuiltLibDirectory)GLTFSDK\GLTFSDK$(Suffix).lib;
+        %(AdditionalDependencies)
+      </AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+
+  <ItemDefinitionGroup Condition="'$(ProjectName)' != 'GLTFSDK' and '$(ConfigurationType)' == 'StaticLibrary' and '$(BabylonDeploymentType)' == 'Project'">
+    <Lib>
+      <AdditionalDependencies>
+        $(CanvasBuiltLibDirectory)GLTFSDK\GLTFSDK$(Suffix).lib;
+        %(AdditionalDependencies)
+      </AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+</Project>

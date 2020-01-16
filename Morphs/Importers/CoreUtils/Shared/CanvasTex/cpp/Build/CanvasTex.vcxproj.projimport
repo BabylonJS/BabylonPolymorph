@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Condition="'$(CanvasTexImported)' == 'true'" Project="Error attempting to import CanvasTex twice. Condition all imports on ([ProjectName]Imported) != true." />
+
+  <PropertyGroup>
+    <CanvasTexProjectName Condition="'$(AppContainerApplication)'!='true'">CanvasTex</CanvasTexProjectName>
+    <CanvasTexProjectName Condition="'$(AppContainerApplication)'=='true'">CanvasTex.WinRT.CPP</CanvasTexProjectName>
+    <CanvasTexProjectGUID Condition="'$(AppContainerApplication)'!='true'">{244ef5cd-466e-4134-b136-a06742518572}</CanvasTexProjectGUID>
+    <CanvasTexProjectGUID Condition="'$(AppContainerApplication)'=='true'">{8903643b-5a04-4ebc-be4b-e55422e6489f}</CanvasTexProjectGUID>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(ProjectName)' != '$(CanvasTexProjectName)'">
+    <CanvasTexImported>true</CanvasTexImported>
+  </PropertyGroup>
+  <ImportGroup>
+    <Import Condition="'$(RootPathsPropsImported)' != 'true'" Project="$(CanvasRootDirectory)RootPaths.props" />
+    <Import Condition="'$(AppContainerApplication)'=='true' and '$(FrameworkWinRTImported)' != 'true'" Project="$(CoreUtilsSharedDirectory)Framework\cpp\Build\FrameworkWinRT.vcxproj.projimport" />
+    <Import Condition="'$(AppContainerApplication)'!='true' and '$(FrameworkImported)' != 'true'" Project="$(CoreUtilsSharedDirectory)Framework\cpp\Build\Framework.vcxproj.projimport" />
+    <Import Condition="'$(CoreUtilsImported)'!='true'" Project="$(CoreUtilsSharedDirectory)CoreUtils\cpp\Build\CoreUtils.vcxproj.projimport" />
+  </ImportGroup>
+
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>
+        $(CoreUtilsSharedDirectory)CanvasTex\cpp\Inc;
+        %(AdditionalIncludeDirectories)
+      </AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+
+  <ItemGroup Condition="'$(ProjectName)' != '$(CanvasTexProjectName)' and ('$(ConfigurationType)' != 'StaticLibrary' or '$(BabylonDeploymentType)' != 'None')">
+    <ProjectReference Include="$(CoreUtilsSharedDirectory)CanvasTex\cpp\Build\$(CanvasTexProjectName).vcxproj">
+      <Project>$(CanvasTexProjectGUID)</Project>
+      <Name>$(CanvasTexProjectName)</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyImports>false</UseLibraryDependencyImports>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemDefinitionGroup Condition="'$(ConfigurationType)' != 'StaticLibrary' and '$(ProjectName)' != '$(CanvasTexProjectName)'">
+    <Link>
+      <AdditionalDependencies>
+        $(CanvasBuiltLibDirectory)$(CanvasTexProjectName)\$(CanvasTexProjectName)$(Suffix).lib;
+        %(AdditionalDependencies)
+      </AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+
+  <ItemDefinitionGroup Condition="'$(ProjectName)' != '$(CanvasTexProjectName)' and '$(ConfigurationType)' == 'StaticLibrary' and '$(BabylonDeploymentType)' == 'Project'">
+    <Lib>
+      <AdditionalDependencies>
+        $(CanvasBuiltLibDirectory)$(CanvasTexProjectName)\$(CanvasTexProjectName)$(Suffix).lib;
+        %(AdditionalDependencies)
+      </AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+</Project>

@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{63e50a1a-6a16-4a6e-aa9b-d53f0c425567}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\Assert.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\Cancellation.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\CRC64.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\Gltf.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\GLTFChannelAnimations.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\GLTFSkins.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\IO.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\LexicalCast.cpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Align.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Platform.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\PlatformLogger.h" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\Memory.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\SimpleMath.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\SmartThrow.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\BabylonTelemetryException.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\StringUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\TelemetryManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\ThreadHelpers.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\ThreadPool.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\Trace.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\Tracked.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\Tweening\CurveFactory.cpp">
+      <PrecompiledHeaderFile>..\CoreUtilsPch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\Tweening\Curves.cpp">
+      <PrecompiledHeaderFile>..\CoreUtilsPch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\Tweening\TweenManager.cpp">
+      <PrecompiledHeaderFile>..\CoreUtilsPch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\Tweening\TweenPropertySpecializations.cpp">
+      <PrecompiledHeaderFile>..\CoreUtilsPch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\Version.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\AnimationNameChecker.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Assert.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\BasicMemoryStream.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\BasicVectorStream.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Cancellation.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Cast.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\CRC64.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Enum.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Gltf.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Pointers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\RapidJson.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\SharedMutex.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\BabylonConstExpr.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\DirectProperty.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\EnumFlagSet.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\GLTFChannelAnimations.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\GLTFSkins.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Hash.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\IndirectProperty.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\IO.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\ITelemetryManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\LexicalCast.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Math\BabylonMath.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Math\SimpleMath.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Memory.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Optional.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Pimpl.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\PimplImpl.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Property.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\ScopeWarden.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\SmartThrow.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\BabylonSal.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\BabylonSDK.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\BabylonTelemetryException.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\StreamUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\StringUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\ThreadHelpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\ThreadPool.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Trace.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Tracked.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Tweening\CurveFactory.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Tweening\Curves.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Tweening\ICurve.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Tweening\ITweenable.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Tweening\Tween.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Tweening\TweenManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Tweening\TweenOptions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Tweening\TweenProperty.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Tweening\TweenPropertySpecializations.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Version.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Source\CoreUtilsPch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\CoreUtils\cpp\Inc\CoreUtils\Math\SimpleMath.inl">
+      <FileType>Document</FileType>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Public Headers">
+      <UniqueIdentifier>{a680b109-68b3-475f-8189-eeab3c432c9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{d7afe961-6aa1-47e8-84a6-0d56df0b8898}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Common.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Detection.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Encoding.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Processing.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\SpriteSheet.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Common.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\ImagingComponent\Detection.h">
+      <Filter>Public Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\ImagingComponent\Encoding.h">
+      <Filter>Public Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\ImagingComponent\Gif.h">
+      <Filter>Public Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\ImagingComponent\ImagingComponent.h">
+      <Filter>Public Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\ImagingComponent\Processing.h">
+      <Filter>Public Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\ImagingComponent\SpriteSheet.h">
+      <Filter>Public Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

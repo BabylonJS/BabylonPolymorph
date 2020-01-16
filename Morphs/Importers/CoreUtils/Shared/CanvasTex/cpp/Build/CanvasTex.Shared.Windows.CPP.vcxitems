@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{b5b27b33-b68c-4fad-bd3e-77b618dee4a5}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Win\CanvasTex.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Win\DxDevice.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Win\FormatConversion.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Win\Image.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Win\MedianCutQuantizer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Win\ScratchImage.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Win\TextureMetadata.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Win\WindowsCommon.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Win\CanvasTexPch.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Win\DxDevice.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Win\FormatConversion.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Win\Image.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Win\MedianCutQuantizer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Win\ScratchImage.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Win\TextureMetadata.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Win\WindowsCommon.h" />
+  </ItemGroup>
+</Project>

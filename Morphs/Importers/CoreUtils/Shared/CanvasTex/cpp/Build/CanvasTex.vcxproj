@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{244ef5cd-466e-4134-b136-a06742518572}</ProjectGuid>
+    <ProjectName>CanvasTex</ProjectName>
+    <RootNamespace>CanvasTex</RootNamespace>
+    <BabylonConfigurationType>StaticLibrary</BabylonConfigurationType>
+  </PropertyGroup>
+  <ImportGroup Label="Shared">
+    <Import Project="CanvasTex.Shared.CPP.vcxitems" Label="Shared" />
+    <Import Project="CanvasTex.Shared.Windows.CPP.vcxitems" Label="Shared" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), Root.props))\Root.props" />
+    <Import Project="$(CanvasConfigDirectory)Babylon.Configurations.props" />
+    <Import Project="$(CanvasConfigDirectory)Babylon.Cpp.props" />
+    <Import Project="$(CoreUtilsSharedDirectory)CanvasTex\cpp\Build\CanvasTex.vcxproj.projimport" />
+    <Import Project="..\..\..\..\..\Build\packages\directxtex_desktop_win10.2019.5.31.1\build\native\directxtex_desktop_win10.targets" Condition="Exists('..\..\..\..\..\Build\packages\directxtex_desktop_win10.2019.5.31.1\build\native\directxtex_desktop_win10.targets')" />
+  </ImportGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Source\Win\CanvasTexPch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>CanvasTexPch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Lib>
+      <AdditionalDependencies>
+        windowscodecs.lib;
+        %(AdditionalDependencies)
+      </AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\..\..\..\Build\packages\directxtex_desktop_win10.2019.5.31.1\build\native\directxtex_desktop_win10.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\Build\packages\directxtex_desktop_win10.2019.5.31.1\build\native\directxtex_desktop_win10.targets'))" />
+  </Target>
+</Project>

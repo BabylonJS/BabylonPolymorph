@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <RootNamespace>Babylon.Utils</RootNamespace>
+    <ProjectGuid>{FF7208F2-9ADA-416A-A9B6-E25B143560DE}</ProjectGuid>
+    <BabylonConfigurationType>StaticLibrary</BabylonConfigurationType>
+  </PropertyGroup>
+  <ImportGroup Label="Shared">
+    <Import Project="..\..\..\CoreUtils.Shared.CPP\CoreUtils.Shared.CPP.vcxitems" Label="Shared" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), Root.props))\Root.props" />
+    <Import Project="$(CanvasConfigDirectory)Babylon.Configurations.props" />
+    <Import Project="$(CanvasConfigDirectory)Babylon.Cpp.props" />
+    <Import Project="$(CoreUtilsSharedDirectory)CoreUtils\cpp\Build\CoreUtils.vcxproj.projimport" />
+  </ImportGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Source\ConfigurationManagerBase.cpp" />
+    <ClCompile Include="..\Source\ConfigurationManagerJson.cpp" />
+    <ClCompile Include="..\Source\ConfigurationValue.cpp" />
+    <ClCompile Include="..\Source\Win\CoreUtilsPch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeaderFile>..\CoreUtilsPch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="..\Source\Win\FileIO.cpp">
+      <PrecompiledHeaderFile>..\CoreUtilsPch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="..\Source\Win\PlatformLogger.cpp">
+      <PrecompiledHeaderFile>..\CoreUtilsPch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="..\Source\Win\SharedMutexWin.cpp">
+      <PrecompiledHeaderFile>..\CoreUtilsPch.h</PrecompiledHeaderFile>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Inc\CoreUtils\ConfigurationManagerJson.h" />
+    <ClInclude Include="..\Inc\CoreUtils\ConfigurationValue.h" />
+    <ClInclude Include="..\Inc\CoreUtils\FileIO.h" />
+    <ClInclude Include="..\Inc\CoreUtils\IConfigurationManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\GLTFSDK\cpp\Build\GLTFSDK.vcxproj">
+      <Project>{7cdb7138-98cd-4c94-9eec-b656451a2392}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>CoreUtilsPch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Performance|ARM'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Prefast|ARM'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Performance|ARM64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Prefast|ARM64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Performance|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Prefast|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Performance|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Prefast|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\..\..\..\..\Build\packages\rapidjson.temprelease.0.0.2.20\build\native\rapidjson.temprelease.targets" Condition="Exists('..\..\..\..\..\Build\packages\rapidjson.temprelease.0.0.2.20\build\native\rapidjson.temprelease.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\..\..\..\Build\packages\rapidjson.temprelease.0.0.2.20\build\native\rapidjson.temprelease.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\Build\packages\rapidjson.temprelease.0.0.2.20\build\native\rapidjson.temprelease.targets'))" />
+  </Target>
+</Project>

@@ -1,0 +1,3 @@
+[submodule "Morphs/Importers/Submodules/glTF-SDK"]
+	path = Morphs/Importers/Submodules/glTF-SDK
+	url = https://github.com/microsoft/glTF-SDK.git

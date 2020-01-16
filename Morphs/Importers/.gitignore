@@ -1,0 +1,66 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+obj/
+bin/
+Library/
+Temp/
+Built/
+Release/
+Debug/
+ipch/
+Build/.vs/
+Build/packages/
+bootstrap_temp/
+bower_components/
+node_modules/
+Generated Files/
+[Pp]ackages/
+Submodules/
+# Android Studio
+.idea/
+.build/
+
+*.vsp
+*.user
+*.csproj.user
+*.vcxproj.user
+*.suo
+*.pdb
+*.dll.config
+*.dll
+*.sdf
+*.opensdf
+*.GhostDoc.xml
+sublime-gulp.log
+*.sublime-workspace
+*.sublime-gulp.cache
+*.exe
+*.vspx
+*.compiled
+*.aps
+*.hlsl.h
+*.analysis.hlsl
+/Build/TestResults
+
+*.lock.json
+*.opendb
+*.VC.db
+/Build/Scripts/VersionNumberModifier.ignore
+Build/AppPackages/
+/Shared/*.Test/BundleArtifacts/*.txt
+.vscode/
+*.nuget.props
+*.nuget.targets
+
+imgui.ini
+
+# iOS related files
+*.payload.desc
+
+# XCode related files
+xcuserdata/
+.DS_Store
+
+/.vs

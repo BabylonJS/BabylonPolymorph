@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Condition="'$(PathPropsImported)' == 'true'" Project="Error attempting to import $(MSBuildThisFile) twice. Condition import on (PathPropsImported) != true." />
+  <PropertyGroup>
+    <PathPropsImported>true</PathPropsImported>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Directories" >
+    <RootIntDir>$(CanvasBuiltDirectory)Int\</RootIntDir>
+    <IntDir>$(RootIntDir)$(PlatformToolset)\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</IntDir>
+    <OutDir>$(CanvasBuiltLibDirectory)$(MSBuildProjectName)\</OutDir>
+    <!-- AppxPackageTestDir will be deleted during the Appx package build so it must be unique -->
+    <AppxPackageTestDir>$(OutDir)AppPackage\</AppxPackageTestDir>
+    <!-- BaseIntermediateOutputPath cannot be platform/configuration specific -->
+    <BaseIntermediateOutputPath>$(RootIntDir)$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+  </PropertyGroup>
+</Project>
