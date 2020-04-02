@@ -1,6 +1,6 @@
 # Babylon Polymorph
 
-This is the official open source offering for Babylon Polymorph (Updated and Maintained by the Babylon Native team).
+This is the official open source offering for Babylon Polymorph (Updated and Maintained by the Babylon Native team). See [this](https://medium.com/@babylonjs/introducing-polymorph-a55588df6cee) for more details.
 
 *This repo is under heavy development. Don't use this in production.*
 
