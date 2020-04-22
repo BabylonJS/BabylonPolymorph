@@ -14,10 +14,6 @@
     <Import Condition="'$(CanvasRootDirectory)' == ''" Project="CanvasRootDirectory not defined. Define this property before importing $(MSBuildThisFile)." />
   </ImportGroup>
 
-  <PropertyGroup>
-    <PlatformToolset Condition="'$(PlatformToolset)' == ''">v141</PlatformToolset>
-  </PropertyGroup>
-
   <PropertyGroup Label="Directories" >
     <CanvasBuildDirectory Condition="'$(CanvasBuildDirectory)' == ''">$(CanvasRootDirectory)Build\</CanvasBuildDirectory>
     <CanvasConfigDirectory Condition="'$(CanvasConfigDirectory)' == ''">$(CanvasBuildDirectory)Config\</CanvasConfigDirectory>

@@ -1,7 +1,5 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 16
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CoreUtils", "CoreUtils", "{E68E7826-65E0-47E9-BB41-A4BF7508517B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{68B71A08-D65C-47D3-B5C5-D60037426DCF}"

@@ -34,12 +34,9 @@
     <TargetPlatformMinVersion Condition="'$(Platform)' != 'ARM64'">10.0.10240.0</TargetPlatformMinVersion>
     <TargetPlatformMinVersion Condition="'$(Platform)' == 'ARM64'">10.0.16299.0</TargetPlatformMinVersion>
 
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformMinVersion Condition="'$(Platform)' != 'ARM64'">10.0.10240.0</WindowsTargetPlatformMinVersion>
-    <WindowsTargetPlatformMinVersion Condition="'$(Platform)' == 'ARM64'">10.0.16299.0</WindowsTargetPlatformMinVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
 
     <UnitTestPlatformVersion>14.0</UnitTestPlatformVersion>
-
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(WindowsStoreModule)'=='true'">
@@ -74,6 +71,7 @@
     <!-- If BabylonDeploymentType is not set then set it to None -->
     <BabylonDeploymentType Condition="'$(BabylonDeploymentType)'==''">None</BabylonDeploymentType>
 
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   
   <!-- Static analysis enabled for prefast only -->
