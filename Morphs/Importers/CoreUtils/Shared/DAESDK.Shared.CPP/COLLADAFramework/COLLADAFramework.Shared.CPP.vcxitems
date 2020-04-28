@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{1ae6581c-e006-4fc2-b4d1-5fb131f96e87}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWAnimationClip.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWAxisInfo.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWCamera.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWColor.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWConstants.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWEffect.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWEffectCommon.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWFileInfo.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWFloatOrDoubleArray.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWFormula.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWFormulas.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWGeometry.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWImage.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWInstanceKinematicsScene.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWKinematicsController.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWKinematicsModel.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWKinematicsScene.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWLight.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWLoaderUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWMaterial.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWMatrix.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWMesh.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWMeshPrimitive.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWMorphController.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWNode.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWPrecompiledHeaders.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWRenderState.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWRoot.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWRotate.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWSampler.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWScale.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWSkinController.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWSkinControllerData.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWSpline.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWTexture.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWTransformation.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWTranslate.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWUniqueId.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWValidate.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWVisualScene.cpp" />
+  </ItemGroup>
+</Project>
