@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{af56e5fd-5de9-42e1-b032-c51ddae0dc74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\AST">
+      <UniqueIdentifier>{bf2a67cb-7ae2-430a-b521-a0928543ade9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\MathMLSolver\src\MathMLEvaluatorVisitor.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\MathMLSolver\src\MathMLSerializationUtil.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\MathMLSolver\src\MathMLSerializationVisitor.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\MathMLSolver\src\MathMLSolverFunctionExtensions.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\MathMLSolver\src\MathMLSolverPrecompiled.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\MathMLSolver\src\MathMLString.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\MathMLSolver\src\MathMLSymbolTable.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\MathMLSolver\src\AST\MathMLASTArithmeticExpression.cpp">
+      <Filter>Source\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\MathMLSolver\src\AST\MathMLASTBinaryComparisionExpression.cpp">
+      <Filter>Source\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\MathMLSolver\src\AST\MathMLASTConstantExpression.cpp">
+      <Filter>Source\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\MathMLSolver\src\AST\MathMLASTFragmentExpression.cpp">
+      <Filter>Source\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\MathMLSolver\src\AST\MathMLASTFunctionExpression.cpp">
+      <Filter>Source\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\MathMLSolver\src\AST\MathMLASTLogicExpression.cpp">
+      <Filter>Source\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\MathMLSolver\src\AST\MathMLASTStringVisitor.cpp">
+      <Filter>Source\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\MathMLSolver\src\AST\MathMLASTUnaryArithmeticExpression.cpp">
+      <Filter>Source\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\MathMLSolver\src\AST\MathMLASTVariableExpression.cpp">
+      <Filter>Source\AST</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

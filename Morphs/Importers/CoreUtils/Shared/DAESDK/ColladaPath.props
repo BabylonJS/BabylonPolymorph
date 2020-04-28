@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+ <Import Condition="'$(COLLADAPathsPropsImported)' == 'true'" Project="Error attempting to import $(MSBuildThisFile) twice. Condition import on (COLLADAPathsPropsImported) != true." />
+  <PropertyGroup>
+    <COLLADAPathsPropsImported>true</COLLADAPathsPropsImported>
+  </PropertyGroup>
+  <ImportGroup Label="PropertySheets" />
+  <ItemDefinitionGroup>
+    <ClCompile>
+     <AdditionalIncludeDirectories>
+	 $(SolutionDir)..\Submodules\OpenCOLLADA\COLLADABaseUtils\include;
+	 $(SolutionDir)..\Submodules\OpenCOLLADA\COLLADABaseUtils\include\Math;
+	 $(SolutionDir)..\Submodules\OpenCOLLADA\COLLADAFramework\include;
+	 $(SolutionDir)..\Submodules\OpenCOLLADA\COLLADASaxFrameworkLoader\include;
+	 $(SolutionDir)..\Submodules\OpenCOLLADA\COLLADASaxFrameworkLoader\include\generated14;
+	 $(SolutionDir)..\Submodules\OpenCOLLADA\COLLADASaxFrameworkLoader\include\generated15;
+	 $(SolutionDir)..\Submodules\OpenCOLLADA\GeneratedSaxParser\include;
+	 $(SolutionDir)..\Submodules\OpenCOLLADA\Externals\pcre\include;
+	 $(SolutionDir)..\Submodules\OpenCOLLADA\Externals\UTF\include;
+	 $(SolutionDir)..\Submodules\OpenCOLLADA\Externals\MathMLSolver\include;
+	 $(SolutionDir)..\Submodules\OpenCOLLADA\Externals\MathMLSolver\include\AST;
+	 $(SolutionDir)..\Submodules\OpenCOLLADA\Externals\LibXML\include;
+	 $(SolutionDir)..\Submodules\OpenCOLLADA\Externals\expat\lib;
+ 	 %(AdditionalIncludeDirectories)
+	 </AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>

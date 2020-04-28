@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{4791f829-b879-44fc-a51c-39981b6cc75d}</ItemsProjectGuid>
+    <ItemsProjectName>pcre.Shared.CPP</ItemsProjectName>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\pcre\src\pcre_chartables.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\pcre\src\pcre_compile.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\pcre\src\pcre_exec.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\pcre\src\pcre_globals.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\pcre\src\pcre_newline.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\pcre\src\pcre_tables.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\pcre\src\pcre_try_flipped.c" />
+  </ItemGroup>
+</Project>
