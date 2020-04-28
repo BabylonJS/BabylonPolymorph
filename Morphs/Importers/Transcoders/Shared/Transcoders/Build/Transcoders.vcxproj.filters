@@ -70,6 +70,12 @@
     <Filter Include="Public Headers\Importers\ImporterSTL">
       <UniqueIdentifier>{309afda4-cd8b-4e45-b031-fbb428c200ab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Public Headers\Importers\ImporterDAE">
+      <UniqueIdentifier>{88e2ed19-2b65-41fb-94bb-e600ac23294d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Importers\ImporterDAE">
+      <UniqueIdentifier>{3d05deee-e25a-458e-bc59-d58d369b2d3c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -149,6 +155,12 @@
     </ClCompile>
     <ClCompile Include="..\Source\ExporterGLTF\ExtensionsMSFT.cpp">
       <Filter>Source\Exporters\ExporterGLTF</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\TranscoderDAE\TranscoderDAE.cpp">
+      <Filter>Source\Importers\ImporterDAE</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset3DColladaFWWriter.cpp">
+      <Filter>Source\Importers\ImporterDAE</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -254,6 +266,12 @@
     </ClInclude>
     <ClInclude Include="..\Inc\ExporterGLTF\ExtensionsMSFT.h">
       <Filter>Public Headers\Exporters\ExporterGLTF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\TranscoderDAE\Asset3DColladaFWWriter.h">
+      <Filter>Public Headers\Importers\ImporterDAE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\TranscoderDAE\TranscoderDAE.h">
+      <Filter>Public Headers\Importers\ImporterDAE</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -61,6 +61,7 @@
     <Import Project="$(CanvasConfigDirectory)Babylon.Configurations.props" />
     <Import Project="$(CanvasConfigDirectory)Babylon.Cpp.props" />
     <Import Project="$(TranscodersSharedDirectory)Transcoders\Build\Transcoders.vcxproj.projimport" />
+    <Import Project="$(CoreUtilsSharedDirectory)DAESDK\DAESDK.vcxproj.projimport" />
   </ImportGroup>
   <ItemGroup>
     <None Include="packages.config">
@@ -68,6 +69,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Source\TranscoderDAE\TranscoderDAE.cpp" />
     <ClCompile Include="..\Source\TranscodersTelemetryHelper.cpp" />
     <ClCompile Include="..\Source\ExporterGLTF\Asset3DToGLTFConverter.cpp" />
     <ClCompile Include="..\Source\ExporterGLTF\ExporterGLB.cpp" />
@@ -95,6 +97,7 @@
     <ClCompile Include="..\Source\TranscoderSTL\StlBinaryParser.cpp" />
     <ClCompile Include="..\Source\TranscoderSTL\TranscoderSTL.cpp" />
     <ClCompile Include="..\Source\TranscodersV2Json.cpp" />
+    <ClCompile Include="Asset3DColladaFWWriter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Inc\ExporterGLTF\Asset3DToGLTFConverter.h" />
@@ -105,6 +108,8 @@
     <ClInclude Include="..\Inc\ExporterOBJ\ExporterObj.h" />
     <ClInclude Include="..\Inc\ExporterSTL\ExporterAsciiStl.h" />
     <ClInclude Include="..\Inc\ExporterTexture\ExporterTexture.h" />
+    <ClInclude Include="..\Inc\TranscoderDAE\Asset3DColladaFWWriter.h" />
+    <ClInclude Include="..\Inc\TranscoderDAE\TranscoderDAE.h" />
     <ClInclude Include="..\Inc\TranscoderException.h" />
     <ClInclude Include="..\Inc\TranscoderGLTF\GLTFToAsset3DConverter.h" />
     <ClInclude Include="..\Inc\TranscoderGLTF\GLTFImportOptions.h" />
@@ -140,6 +145,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeLibrary Condition="'$(Configuration)' == 'Debug'">MultiThreadedDebugDLL</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</TreatWarningAsError>
     </ClCompile>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
