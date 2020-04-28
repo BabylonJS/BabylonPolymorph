@@ -27,7 +27,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
+    <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -77,27 +77,36 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <TargetExt>.lib</TargetExt>
-    <OutDir>$(ProjectDir)built\out\$(CONFIGURATION)\$(PLATFORM)\</OutDir>
-    <IntDir>$(ProjectDir)built\int\$(CONFIGURATION)\$(PLATFORM)\</IntDir>
+    <OutDir>$(ProjectDir)built\out\$(PlatformToolset)\$(PLATFORM)\$(CONFIGURATION)\</OutDir>
+    <IntDir>$(ProjectDir)built\int\$(PlatformToolset)\$(PLATFORM)\$(CONFIGURATION)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetExt>.lib</TargetExt>
-    <OutDir>$(ProjectDir)built\out\$(CONFIGURATION)\$(PLATFORM)\</OutDir>
-    <IntDir>$(ProjectDir)built\int\$(CONFIGURATION)\$(PLATFORM)\</IntDir>
+    <OutDir>$(ProjectDir)built\out\$(PlatformToolset)\$(PLATFORM)\$(CONFIGURATION)\</OutDir>
+    <IntDir>$(ProjectDir)built\int\$(PlatformToolset)\$(PLATFORM)\$(CONFIGURATION)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <TargetExt>.lib</TargetExt>
-    <OutDir>$(ProjectDir)built\out\$(CONFIGURATION)\$(PLATFORM)\</OutDir>
-    <IntDir>$(ProjectDir)built\int\$(CONFIGURATION)\$(PLATFORM)\</IntDir>
+    <OutDir>$(ProjectDir)built\out\$(PlatformToolset)\$(PLATFORM)\$(CONFIGURATION)\</OutDir>
+    <IntDir>$(ProjectDir)built\int\$(PlatformToolset)\$(PLATFORM)\$(CONFIGURATION)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <SDLCheck>true</SDLCheck>
-      <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>WIN32;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>
+      </SDLCheck>
+      <ConformanceMode>false</ConformanceMode>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;PCRE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)..\Submodules\OpenCOLLADA\Externals\pcre\include;%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+      <LanguageStandard>Default</LanguageStandard>
+      <CompileAs>Default</CompileAs>
+      <SupportJustMyCode>false</SupportJustMyCode>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader />
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -121,7 +130,7 @@
     </Link>
     <Lib />
     <Lib>
-      <OutputFile>$(ProjectDir)built\out\$(CONFIGURATION)\$(PLATFORM)\$(TargetName)$(TargetExt)</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -142,7 +151,7 @@
     </Link>
     <Lib />
     <Lib>
-      <OutputFile>$(ProjectDir)built\out\$(CONFIGURATION)\$(PLATFORM)\$(TargetName)$(TargetExt)</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -163,7 +172,7 @@
     </Link>
     <Lib />
     <Lib>
-      <OutputFile>$(ProjectDir)built\out\$(CONFIGURATION)\$(PLATFORM)\$(TargetName)$(TargetExt)</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>

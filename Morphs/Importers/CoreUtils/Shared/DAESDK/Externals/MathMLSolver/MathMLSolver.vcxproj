@@ -76,18 +76,18 @@
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(ProjectDir)built\out\$(CONFIGURATION)\$(PLATFORM)\</OutDir>
-    <IntDir>$(ProjectDir)built\int\$(CONFIGURATION)\$(PLATFORM)\</IntDir>
+    <OutDir>$(ProjectDir)built\out\$(PlatformToolset)\$(PLATFORM)\$(CONFIGURATION)\</OutDir>
+    <IntDir>$(ProjectDir)built\int\$(PlatformToolset)\$(PLATFORM)\$(CONFIGURATION)\</IntDir>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(ProjectDir)built\out\$(CONFIGURATION)\$(PLATFORM)\</OutDir>
-    <IntDir>$(ProjectDir)built\int\$(CONFIGURATION)\$(PLATFORM)\</IntDir>
+    <OutDir>$(ProjectDir)built\out\$(PlatformToolset)\$(PLATFORM)\$(CONFIGURATION)\</OutDir>
+    <IntDir>$(ProjectDir)built\int\$(PlatformToolset)\$(PLATFORM)\$(CONFIGURATION)\</IntDir>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(ProjectDir)built\out\$(CONFIGURATION)\$(PLATFORM)\</OutDir>
-    <IntDir>$(ProjectDir)built\int\$(CONFIGURATION)\$(PLATFORM)\</IntDir>
+    <OutDir>$(ProjectDir)built\out\$(PlatformToolset)\$(PLATFORM)\$(CONFIGURATION)\</OutDir>
+    <IntDir>$(ProjectDir)built\int\$(PlatformToolset)\$(PLATFORM)\$(CONFIGURATION)\</IntDir>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -117,7 +117,7 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <Lib>
-      <OutputFile>$(ProjectDir)built\out\$(CONFIGURATION)\$(PLATFORM)\$(TargetName)$(TargetExt)</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -136,7 +136,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <OutputFile>$(ProjectDir)built\out\$(CONFIGURATION)\$(PLATFORM)\$(TargetName)$(TargetExt)</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -155,7 +155,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <OutputFile>$(ProjectDir)built\out\$(CONFIGURATION)\$(PLATFORM)\$(TargetName)$(TargetExt)</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>

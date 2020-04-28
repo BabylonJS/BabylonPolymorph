@@ -19,6 +19,7 @@
 #include <TranscoderGLTF/TranscoderGLB.h>
 #include <TranscoderGLTF/GLTFImportOptions.h>
 #include <TranscoderSTL/TranscoderSTL.h>
+#include <TranscoderDAE/TranscoderDAE.h>
 
 #include <ExporterOBJ/ExporterObj.h>
 #include <ExporterSTL/ExporterAsciiStl.h>
@@ -48,6 +49,8 @@ namespace Transcoder
         {"obj",  { ImportOBJ,         ExporterObj::ExportStatic,        nullptr,                          nullptr,                      }},
         {"ply",  { ImportPLY,         nullptr,                          nullptr,                          nullptr,                      }},
         {"stl",  { ImportSTL,         ExporterAsciiStl::ExportStatic,   nullptr,                          nullptr,                      }},
+        {"dae",  { ImportDAE,         nullptr                       ,   nullptr,                          nullptr,                      }},
+
         #ifdef _WIN32
         {"png",  { nullptr,           ExporterTexture::ExportStaticPNG, nullptr,                          nullptr,                      }},
         {"jpg",  { nullptr,           ExporterTexture::ExportStaticJPG, nullptr,                          nullptr,                      }},
