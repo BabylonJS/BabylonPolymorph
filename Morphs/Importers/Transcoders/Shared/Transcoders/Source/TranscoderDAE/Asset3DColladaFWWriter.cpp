@@ -7,15 +7,23 @@
 
 
 #include <iostream>
-#include <Asset3D\Asset3D.h>
 #include <TranscoderDAE/Asset3DColladaFWWriter.h>
+#include <TranscoderDAE/DAEGeometryConverter.h>
+
+#include <Asset3D\Asset3D.h>
+
 #include <COLLADAFWGeometry.h>
 #include <COLLADASaxFWLIError.h>
 
-using namespace Babylon::Transcoder;
+using namespace Babylon::Transcoder; 
+using namespace Babylon::Framework;
 
 
-Asset3DColladaFWWriter:: Asset3DColladaFWWriter() : m_asset3D(std::make_shared<Asset3D>()) {
+Asset3DColladaFWWriter:: Asset3DColladaFWWriter(IResourceServer* resourceServer, ICancellationTokenPtr cancellationToken) : 
+	m_asset3D(std::make_shared<Asset3D>()), 
+	m_cancellationToken(cancellationToken), 
+	m_resourceServer(resourceServer)
+{
 }
 
 Asset3DColladaFWWriter::~Asset3DColladaFWWriter() {
@@ -80,6 +88,12 @@ bool Asset3DColladaFWWriter::writeLibraryNodes(const COLLADAFW::LibraryNodes* li
 @return The writer should return true, if writing succeeded, false otherwise.*/
 bool Asset3DColladaFWWriter::writeGeometry(const COLLADAFW::Geometry* geometry) {
 	std::cout << "writeGeometry " << geometry->getName() << "\r\n";
+
+	DAEGeometryConverter c(m_resourceServer,m_cancellationToken);
+	std::shared_ptr<Geometry*> g = c.GetNode(geometry);
+	if (g) {
+
+	}
 	return true;
 }
 

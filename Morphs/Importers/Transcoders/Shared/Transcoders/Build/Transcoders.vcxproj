@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\TranscoderDAE\Asset3DColladaFWWriter.cpp" />
+    <ClCompile Include="..\Source\TranscoderDAE\DAEGeometryConverter.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\TranscoderDAE.cpp" />
     <ClCompile Include="..\Source\TranscodersTelemetryHelper.cpp" />
     <ClCompile Include="..\Source\ExporterGLTF\Asset3DToGLTFConverter.cpp" />
@@ -109,6 +110,8 @@
     <ClInclude Include="..\Inc\ExporterSTL\ExporterAsciiStl.h" />
     <ClInclude Include="..\Inc\ExporterTexture\ExporterTexture.h" />
     <ClInclude Include="..\Inc\TranscoderDAE\Asset3DColladaFWWriter.h" />
+    <ClInclude Include="..\Inc\TranscoderDAE\DAEGeometryConverter.h" />
+    <ClInclude Include="..\Inc\TranscoderDAE\AbstractDAEConverter.h" />
     <ClInclude Include="..\Inc\TranscoderDAE\TranscoderDAE.h" />
     <ClInclude Include="..\Inc\TranscoderException.h" />
     <ClInclude Include="..\Inc\TranscoderGLTF\GLTFToAsset3DConverter.h" />

@@ -33,7 +33,6 @@ std::shared_ptr<Asset3D> Babylon::Transcoder::ImportDAE(
 {
 	/// avoid unused param warning.
 	UNUSED(progress);
-	UNUSED(cancellationToken);
 	UNUSED(options);
 
 	auto istream = resourceServer->RequestTextFileResource(filename);
@@ -59,7 +58,7 @@ std::shared_ptr<Asset3D> Babylon::Transcoder::ImportDAE(
 			throw TranscoderResourceFailedException("unable to read. " + filename);
 		}
 
-		Asset3DColladaFWWriter writer ;
+		Asset3DColladaFWWriter writer(resourceServer,cancellationToken) ;
 		COLLADASaxFWL::IErrorHandler* errorHandler = (COLLADASaxFWL::IErrorHandler*) &writer;
 		COLLADASaxFWL::Loader* loader = new COLLADASaxFWL::Loader(errorHandler);
 		loader->registerExternalReferenceDeciderCallbackFunction(ShouldBeLoaded);

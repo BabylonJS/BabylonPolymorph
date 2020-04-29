@@ -6,6 +6,7 @@
 #pragma once
 
 #include <map>
+
 #include <COLLADAFWIWriter.h>
 #include <COLLADASaxFWLLoader.h>
 #include <COLLADASaxFWLIErrorHandler.h>
@@ -14,8 +15,9 @@ namespace Babylon
 {
     namespace Transcoder
     {
-        class Asset3D;
-		
+		class Asset3D;
+		class IResourceServer;
+
 		/**
 		 * Use this class to handle parsed collada assets 
 		 */
@@ -23,9 +25,11 @@ namespace Babylon
 
         private :
 			std::shared_ptr<Asset3D> m_asset3D;
+			Framework::ICancellationTokenPtr m_cancellationToken;
+			IResourceServer * m_resourceServer = nullptr;
 
 		public :
-			Asset3DColladaFWWriter();
+			Asset3DColladaFWWriter(IResourceServer* resourceServer, Framework::ICancellationTokenPtr cancellationToken);
 			~Asset3DColladaFWWriter();
 
 			inline std::shared_ptr<Asset3D> GetAsset3D() const { return m_asset3D; }
