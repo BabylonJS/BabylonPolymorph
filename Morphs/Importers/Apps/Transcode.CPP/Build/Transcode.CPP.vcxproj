@@ -95,6 +95,10 @@
  %(AdditionalIncludeDirectories)
       </AdditionalIncludeDirectories>
     </ClCompile>
+    <PreBuildEvent>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <PropertyGroup Label="NuGet">
