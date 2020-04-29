@@ -34,15 +34,14 @@ namespace Babylon
 			~AbstractDAEConverter() {
 			}
 
-			inline std::shared_ptr<T*> GetNode(const F* from) {
+			inline std::shared_ptr<T> GetNode(const F* from) {
 				if (m_cancellationToken) {
 					m_cancellationToken->CheckCancelledAndThrow();
 				}
-				T * t = this->Convert(from);
-				return std::make_shared<T*>(t);
+				return  this->Convert(from);
 			}
 
-			virtual T* Convert(const F* from) = 0;
+			virtual std::shared_ptr<T> Convert(const F* from) = 0;
 		};
 
 	}
