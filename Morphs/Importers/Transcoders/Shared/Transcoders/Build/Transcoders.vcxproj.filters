@@ -159,7 +159,7 @@
     <ClCompile Include="..\Source\TranscoderDAE\TranscoderDAE.cpp">
       <Filter>Source\Importers\ImporterDAE</Filter>
     </ClCompile>
-    <ClCompile Include="Asset3DColladaFWWriter.cpp">
+    <ClCompile Include="..\Source\TranscoderDAE\Asset3DColladaFWWriter.cpp">
       <Filter>Source\Importers\ImporterDAE</Filter>
     </ClCompile>
   </ItemGroup>

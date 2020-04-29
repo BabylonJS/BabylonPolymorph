@@ -69,6 +69,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Source\TranscoderDAE\Asset3DColladaFWWriter.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\TranscoderDAE.cpp" />
     <ClCompile Include="..\Source\TranscodersTelemetryHelper.cpp" />
     <ClCompile Include="..\Source\ExporterGLTF\Asset3DToGLTFConverter.cpp" />
@@ -97,7 +98,6 @@
     <ClCompile Include="..\Source\TranscoderSTL\StlBinaryParser.cpp" />
     <ClCompile Include="..\Source\TranscoderSTL\TranscoderSTL.cpp" />
     <ClCompile Include="..\Source\TranscodersV2Json.cpp" />
-    <ClCompile Include="Asset3DColladaFWWriter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Inc\ExporterGLTF\Asset3DToGLTFConverter.h" />
