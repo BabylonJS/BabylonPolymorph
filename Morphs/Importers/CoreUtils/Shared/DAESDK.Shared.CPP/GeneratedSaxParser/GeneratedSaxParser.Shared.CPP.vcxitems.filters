@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{dcc73fa5-4cda-4da5-ad68-7b899f82b701}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\GeneratedSaxParser\src\GeneratedSaxParserCoutErrorHandler.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\GeneratedSaxParser\src\GeneratedSaxParserExpatSaxParser.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\GeneratedSaxParser\src\GeneratedSaxParserLibxmlSaxParser.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\GeneratedSaxParser\src\GeneratedSaxParserNamespaceStack.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\GeneratedSaxParser\src\GeneratedSaxParserParser.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\GeneratedSaxParser\src\GeneratedSaxParserParserError.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\GeneratedSaxParser\src\GeneratedSaxParserParserTemplate.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\GeneratedSaxParser\src\GeneratedSaxParserParserTemplateBase.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\GeneratedSaxParser\src\GeneratedSaxParserRawUnknownElementHandler.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\GeneratedSaxParser\src\GeneratedSaxParserSaxParser.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\GeneratedSaxParser\src\GeneratedSaxParserStackMemoryManager.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\GeneratedSaxParser\src\GeneratedSaxParserUtils.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

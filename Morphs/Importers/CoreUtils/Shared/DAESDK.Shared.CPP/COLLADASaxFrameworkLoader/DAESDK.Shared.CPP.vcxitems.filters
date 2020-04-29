@@ -1,0 +1,346 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{2c4324bd-cca6-469b-9c7f-0537e50e1535}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\generated14">
+      <UniqueIdentifier>{da51710d-2734-4c2d-bc44-c445d7677e49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\generated15">
+      <UniqueIdentifier>{4ef9f7b4-043d-4375-92b3-9618d18fabd6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLAssetLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLCOLLADACsymbol.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLDocumentProcessor.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLExtraDataElementHandler.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLExtraDataLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLFileLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLFilePartLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLFormulasLinker.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLFormulasLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLGeometryLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLGeometryMaterialIdInfo.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLIError.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLIErrorHandler.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLIExtraDataCallbackHandler.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLIFilePartLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLInputUnshared.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLInstanceArticulatedSystemLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLInstanceKinematicsModelLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLIParserImpl14.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLIParserImpl15.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLJointsLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLKinematicsIntermediateData.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLKinematicsSceneCreator.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLLibraryAnimationClipsLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLLibraryAnimationsLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLLibraryArticulatedSystemsLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLLibraryCamerasLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLLibraryControllersLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLLibraryEffectsLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLLibraryFormulasLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLLibraryImagesLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLLibraryJointsLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLLibraryKinematicsModelsLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLLibraryKinematicsScenesLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLLibraryLightsLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLLibraryMaterialsLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLLibraryNodesLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLMeshLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLMeshPrimitiveInputList.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLNodeLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLPostProcessor.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLPrecompiledHeaders.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLRootParser14.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLRootParser15.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLSaxFWLError.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLSaxParserError.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLSaxParserErrorHandler.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLSceneLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLSidAddress.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLSidTreeNode.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLSourceArrayLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLSplineLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLTransformationLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLTypes.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLVersionParser.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\COLLADASaxFWLVisualSceneLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated14\COLLADASaxFWLAssetLoader14.cpp">
+      <Filter>Source\generated14</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated14\COLLADASaxFWLColladaParserAutoGen14Private.cpp">
+      <Filter>Source\generated14</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated14\COLLADASaxFWLColladaParserAutoGen14PrivateEnums.cpp">
+      <Filter>Source\generated14</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated14\COLLADASaxFWLColladaParserAutoGen14PrivateFindElementHash.cpp">
+      <Filter>Source\generated14</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated14\COLLADASaxFWLColladaParserAutoGen14PrivateFunctionMap.cpp">
+      <Filter>Source\generated14</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated14\COLLADASaxFWLColladaParserAutoGen14PrivateFunctionMapFactory.cpp">
+      <Filter>Source\generated14</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated14\COLLADASaxFWLColladaParserAutoGen14PrivateNameMap.cpp">
+      <Filter>Source\generated14</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated14\COLLADASaxFWLColladaParserAutoGen14PrivateValidation.cpp">
+      <Filter>Source\generated14</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated14\COLLADASaxFWLGeometryLoader14.cpp">
+      <Filter>Source\generated14</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated14\COLLADASaxFWLLibraryAnimationClipsLoader14.cpp">
+      <Filter>Source\generated14</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated14\COLLADASaxFWLLibraryAnimationsLoader14.cpp">
+      <Filter>Source\generated14</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated14\COLLADASaxFWLLibraryCamerasLoader14.cpp">
+      <Filter>Source\generated14</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated14\COLLADASaxFWLLibraryControllersLoader14.cpp">
+      <Filter>Source\generated14</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated14\COLLADASaxFWLLibraryEffectsLoader14.cpp">
+      <Filter>Source\generated14</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated14\COLLADASaxFWLLibraryImagesLoader14.cpp">
+      <Filter>Source\generated14</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated14\COLLADASaxFWLLibraryLightsLoader14.cpp">
+      <Filter>Source\generated14</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated14\COLLADASaxFWLLibraryMaterialsLoader14.cpp">
+      <Filter>Source\generated14</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated14\COLLADASaxFWLLibraryNodesLoader14.cpp">
+      <Filter>Source\generated14</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated14\COLLADASaxFWLMeshLoader14.cpp">
+      <Filter>Source\generated14</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated14\COLLADASaxFWLNodeLoader14.cpp">
+      <Filter>Source\generated14</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated14\COLLADASaxFWLSceneLoader14.cpp">
+      <Filter>Source\generated14</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated14\COLLADASaxFWLSourceArrayLoader14.cpp">
+      <Filter>Source\generated14</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated14\COLLADASaxFWLSplineLoader14.cpp">
+      <Filter>Source\generated14</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated14\COLLADASaxFWLVisualSceneLoader14.cpp">
+      <Filter>Source\generated14</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated15\COLLADASaxFWLAssetLoader15.cpp">
+      <Filter>Source\generated15</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated15\COLLADASaxFWLColladaParserAutoGen15Private.cpp">
+      <Filter>Source\generated15</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated15\COLLADASaxFWLColladaParserAutoGen15PrivateEnums.cpp">
+      <Filter>Source\generated15</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated15\COLLADASaxFWLColladaParserAutoGen15PrivateFindElementHash.cpp">
+      <Filter>Source\generated15</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated15\COLLADASaxFWLColladaParserAutoGen15PrivateFunctionMap.cpp">
+      <Filter>Source\generated15</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated15\COLLADASaxFWLColladaParserAutoGen15PrivateFunctionMapFactory.cpp">
+      <Filter>Source\generated15</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated15\COLLADASaxFWLColladaParserAutoGen15PrivateNameMap.cpp">
+      <Filter>Source\generated15</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated15\COLLADASaxFWLColladaParserAutoGen15PrivateValidation.cpp">
+      <Filter>Source\generated15</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated15\COLLADASaxFWLFormulasLoader15.cpp">
+      <Filter>Source\generated15</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated15\COLLADASaxFWLGeometryLoader15.cpp">
+      <Filter>Source\generated15</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated15\COLLADASaxFWLLibraryAnimationClipsLoader15.cpp">
+      <Filter>Source\generated15</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated15\COLLADASaxFWLLibraryAnimationsLoader15.cpp">
+      <Filter>Source\generated15</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated15\COLLADASaxFWLLibraryArticulatedSystemsLoader15.cpp">
+      <Filter>Source\generated15</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated15\COLLADASaxFWLLibraryCamerasLoader15.cpp">
+      <Filter>Source\generated15</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated15\COLLADASaxFWLLibraryControllersLoader15.cpp">
+      <Filter>Source\generated15</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated15\COLLADASaxFWLLibraryEffectsLoader15.cpp">
+      <Filter>Source\generated15</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated15\COLLADASaxFWLLibraryFormulasLoader15.cpp">
+      <Filter>Source\generated15</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated15\COLLADASaxFWLLibraryImagesLoader15.cpp">
+      <Filter>Source\generated15</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated15\COLLADASaxFWLLibraryJointsLoader15.cpp">
+      <Filter>Source\generated15</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated15\COLLADASaxFWLLibraryKinematicsModelsLoader15.cpp">
+      <Filter>Source\generated15</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated15\COLLADASaxFWLLibraryKinematicsScenesLoader15.cpp">
+      <Filter>Source\generated15</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated15\COLLADASaxFWLLibraryLightsLoader15.cpp">
+      <Filter>Source\generated15</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated15\COLLADASaxFWLLibraryMaterialsLoader15.cpp">
+      <Filter>Source\generated15</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated15\COLLADASaxFWLLibraryNodesLoader15.cpp">
+      <Filter>Source\generated15</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated15\COLLADASaxFWLMeshLoader15.cpp">
+      <Filter>Source\generated15</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated15\COLLADASaxFWLNodeLoader15.cpp">
+      <Filter>Source\generated15</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated15\COLLADASaxFWLSceneLoader15.cpp">
+      <Filter>Source\generated15</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated15\COLLADASaxFWLSourceArrayLoader15.cpp">
+      <Filter>Source\generated15</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADASaxFrameworkLoader\src\generated15\COLLADASaxFWLVisualSceneLoader15.cpp">
+      <Filter>Source\generated15</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
