@@ -10,8 +10,11 @@
 #include <Framework\Pointers.h>
 
 #include <Asset3D/SceneNode.h>
+
 #include <COLLADAFWUniqueId.h>
 #include <COLLADAFWObject.h>
+
+#include <TranscoderDAE/Asset3DColladaFWWriter.h>
 
 namespace Babylon
 {
@@ -21,13 +24,11 @@ namespace Babylon
 		class AbstractDAEConverter {
 
 		private:
-			Babylon::Framework::ICancellationTokenPtr m_cancellationToken;
-			IResourceServer * m_resourceServer;
+			Asset3DWriterContext* m_context;
 
 		public:
-			AbstractDAEConverter(IResourceServer * resourceServer, Babylon::Framework::ICancellationTokenPtr cancellationToken) :
-				m_cancellationToken(cancellationToken),
-				m_resourceServer(resourceServer)
+			AbstractDAEConverter(Asset3DWriterContext * context) :
+				m_context(context)
 			{
 			}
 
@@ -35,8 +36,8 @@ namespace Babylon
 			}
 
 			inline std::shared_ptr<T> GetNode(const F* from) {
-				if (m_cancellationToken) {
-					m_cancellationToken->CheckCancelledAndThrow();
+				if (m_context) {
+					m_context->CheckCancelledAndThrow();
 				}
 				return  this->Convert(from);
 			}

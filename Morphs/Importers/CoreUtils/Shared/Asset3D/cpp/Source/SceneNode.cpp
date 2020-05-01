@@ -311,9 +311,11 @@ std::unordered_set<std::shared_ptr<TextureDescriptor>> SceneNode::GetUniqueTextu
     {
         for (const auto& geometry : m_mesh->GetGeometries())
         {
-            for (auto& texture : geometry.GetMaterial()->GetTextures())
-            {
-                textures.insert(texture.second);
+            if (geometry.GetMaterial()) {
+                for (auto& texture : geometry.GetMaterial()->GetTextures())
+                {
+                    textures.insert(texture.second);
+                }
             }
         }
     }

@@ -911,9 +911,10 @@ void Asset3DToGLTFConverter::AddPrimitiveToMesh(glTF::BufferBuilder& bufferBuild
 
     // TODO: Support nullptr material by not writing out any material
     std::shared_ptr<MaterialDescriptor> material = geometry.GetMaterial();
-    materials[material->GetId()] = material.get();
-    primitive.materialId = material.get()->GetIdString();
-
+    if (material) {
+        materials[material->GetId()] = material.get();
+        primitive.materialId = material.get()->GetIdString();
+    }
     CopyToGltfProperty(geometry, *m_gltfDocument, primitive);
 
     gltfMesh.primitives.push_back(std::move(primitive));

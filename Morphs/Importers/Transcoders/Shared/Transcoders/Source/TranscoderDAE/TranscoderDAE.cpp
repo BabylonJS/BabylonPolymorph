@@ -70,7 +70,34 @@ std::shared_ptr<Asset3D> Babylon::Transcoder::ImportDAE(
 		}
 
 		free(buffer);
-		return writer.GetAsset3D();
+
+		std::shared_ptr<Asset3D> asset = writer.getAsset3D();
+	
+		Asset3DWriterContextPtr ctx = writer.getContext();
+		if (ctx) {
+			/** 
+			 * some Collada file does NOT define visual scenes, then do NOT instantiate models.
+			 * this appear to be a default behaviors of some transcoder. In this case, only save the model as
+			 * direct child node of the Asset3D, without any transformation.
+			 */
+			if (!ctx->hasVisualScenes()) {
+				/// bind geometries to the asset.
+				if (ctx->hasGeometries()) {
+					std::map<std::string, std::shared_ptr<Mesh>>& lib = ctx->getGeometryLibrary();
+					std::map<std::string, std::shared_ptr<Mesh>>::iterator it = lib.begin();
+					while (it != lib.end())
+					{
+						std::shared_ptr<Mesh> m = it->second;
+						std::shared_ptr<SceneNode> n = asset->CreateChildNode();
+						if (n) {
+							n->SetMesh(m);
+						}
+						it++;
+					}
+				}
+			}
+		}
+		return asset;
 	}
 	catch (const std::exception& e) {
 		free(buffer);

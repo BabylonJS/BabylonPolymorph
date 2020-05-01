@@ -16,7 +16,48 @@ namespace Babylon
     namespace Transcoder
     {
 		class Asset3D;
+		class Mesh;
 		class IResourceServer;
+
+		class Asset3DWriterContext {
+		private:
+			std::shared_ptr<Asset3D> m_asset3D;
+			Framework::ICancellationTokenPtr m_cancellationToken;
+			IResourceServer* m_resourceServer = nullptr;
+
+			std::map<std::string, std::shared_ptr<Mesh>> m_geometryLibrary;
+			std::map<std::string, std::shared_ptr<Asset3D>> m_visualSceneLibrary;
+
+		public:
+			Asset3DWriterContext(IResourceServer* resourceServer, Framework::ICancellationTokenPtr cancellationToken);
+			~Asset3DWriterContext();
+
+			inline std::shared_ptr<Asset3D> getAsset3D() const { return m_asset3D; }
+			
+			void CheckCancelledAndThrow() {
+				if (m_cancellationToken) {
+					m_cancellationToken->CheckCancelledAndThrow();
+				}
+			}
+
+			std::map<std::string, std::shared_ptr<Mesh>>& getGeometryLibrary() {
+				return m_geometryLibrary;
+			}			
+			
+			std::map<std::string, std::shared_ptr<Asset3D>>& getVisualSceneLibrary() {
+				return m_visualSceneLibrary;
+			}
+
+			bool hasGeometries() {
+				return m_geometryLibrary.size() != 0;
+			}			
+			
+			bool hasVisualScenes() {
+				return m_visualSceneLibrary.size() != 0;
+			}
+		};
+
+		typedef Asset3DWriterContext* Asset3DWriterContextPtr;
 
 		/**
 		 * Use this class to handle parsed collada assets 
@@ -24,15 +65,14 @@ namespace Babylon
         class Asset3DColladaFWWriter : public COLLADAFW::IWriter, COLLADASaxFWL::IErrorHandler {
 
         private :
-			std::shared_ptr<Asset3D> m_asset3D;
-			Framework::ICancellationTokenPtr m_cancellationToken;
-			IResourceServer * m_resourceServer = nullptr;
+			Asset3DWriterContext m_context;
 
 		public :
 			Asset3DColladaFWWriter(IResourceServer* resourceServer, Framework::ICancellationTokenPtr cancellationToken);
 			~Asset3DColladaFWWriter();
 
-			inline std::shared_ptr<Asset3D> GetAsset3D() const { return m_asset3D; }
+			inline const Asset3DWriterContextPtr getContext() { return &(this->m_context); }
+			inline std::shared_ptr<Asset3D> getAsset3D() { return m_context.getAsset3D(); }
 
  			/** If this method returns true, the loader stops parsing immediately. If severity is nor CRITICAL
 			and this method returns false, the loader continues loading.*/

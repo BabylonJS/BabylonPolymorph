@@ -25,10 +25,18 @@ using namespace Babylon::Transcoder;
 using namespace Babylon::Framework;
 
 
-Asset3DColladaFWWriter:: Asset3DColladaFWWriter(IResourceServer* resourceServer, ICancellationTokenPtr cancellationToken) : 
+Asset3DWriterContext::Asset3DWriterContext(IResourceServer* resourceServer, ICancellationTokenPtr cancellationToken) :
 	m_asset3D(std::make_shared<Asset3D>()), 
 	m_cancellationToken(cancellationToken), 
 	m_resourceServer(resourceServer)
+{
+}
+
+Asset3DWriterContext::~Asset3DWriterContext() {
+}
+
+Asset3DColladaFWWriter::Asset3DColladaFWWriter(IResourceServer* resourceServer, ICancellationTokenPtr cancellationToken) :
+	m_context(resourceServer, cancellationToken)
 {
 }
 
@@ -97,10 +105,10 @@ bool Asset3DColladaFWWriter::writeGeometry(const COLLADAFW::Geometry* geometry) 
 
 	switch (geometry->getType()) {
 		case COLLADAFW::Geometry::GEO_TYPE_MESH: {
-			DAEMeshConverter c(m_resourceServer, m_cancellationToken);
+			DAEMeshConverter c( &m_context);
 			std::shared_ptr<Mesh> m = c.GetNode((COLLADAFW::Mesh*)geometry);
 			if (m) {
-
+				m_context.getGeometryLibrary()[geometry->getName()] = m;
 			}
 			break;
 		}

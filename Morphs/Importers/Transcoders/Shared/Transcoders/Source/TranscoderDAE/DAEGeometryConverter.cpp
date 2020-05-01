@@ -13,14 +13,28 @@ std::shared_ptr<Mesh> DAEMeshConverter::Convert(const COLLADAFW::Mesh* colladaMe
 	
 	std::shared_ptr<Mesh> mesh = nullptr;
 
-	const COLLADAFW::MeshVertexData& positions = colladaMesh->getPositions();
-	const COLLADAFW::FloatArray * positionValues = positions.getFloatValues();
-	const float* xyz = positionValues->getData();
-
 	const COLLADAFW::MeshPrimitiveArray& meshPrimitives = colladaMesh->getMeshPrimitives();
 	size_t meshPrimitivesCount = meshPrimitives.getCount();
 	if (meshPrimitivesCount > 0) {
-		
+
+		mesh = std::make_shared<Mesh>();
+		mesh->SetName(colladaMesh->getName());
+
+		/**
+		 * sources are shared by several primitives, then we do not copy the whole array
+		 * we rebind the indices and we use APPEND methods instead of setting the whole array once
+		 */
+		const COLLADAFW::MeshVertexData& positions = colladaMesh->getPositions();
+		const COLLADAFW::FloatArray* positionValues = positions.getFloatValues();
+		const float* xyz = positionValues->getData();
+
+		const int positionIndicesCount = positionValues->getCount() / 3; /// stride is ALWAYS 3 for position
+		int indicesBindingCount = positionIndicesCount;
+		unsigned int* indicesBinding = (unsigned int*)malloc(indicesBindingCount * sizeof(unsigned int)) ;
+		if (!indicesBinding) {
+			throw std::bad_alloc();
+		}
+
 		for (size_t i = 0; i < meshPrimitivesCount; i++) {
 			COLLADAFW::MeshPrimitive* colladaPrimitive = meshPrimitives[i];
 			
@@ -29,7 +43,7 @@ std::shared_ptr<Mesh> DAEMeshConverter::Convert(const COLLADAFW::Mesh* colladaMe
 			std::shared_ptr<MaterialDescriptor> material = nullptr;
 
 			/// time to build the geometry 
-			std::shared_ptr<Geometry> geometry = std::make_shared<Geometry>(material);
+			std::shared_ptr<Geometry> geometry = material ? std::make_shared<Geometry>(material): std::make_shared<Geometry>();
 
 			/// default topology is triangle
 			GeometryTopology topo = GeometryTopology::kTriangles;
@@ -71,34 +85,32 @@ std::shared_ptr<Mesh> DAEMeshConverter::Convert(const COLLADAFW::Mesh* colladaMe
 
 			geometry->SetTopology(topo);
 
-			/** 
-			 * populate positions
-			 * position are shared by several primitives, then we do not copy the whole array 
-			 * we reassign the indices and we use APPEND methods instead  
-			 */
-			COLLADAFW::UIntValuesArray & indices = colladaPrimitive->getPositionIndices();
-			size_t indicesCount = indices.getCount();
-			/// mappedVertices is used to reassign new indexes
-			size_t toAlloc = (positionValues->getCount() / 3) * sizeof(unsigned int);
-			unsigned int* mappedIndices = (unsigned int*)malloc(toAlloc);
-			/// mark the indices as unused if 0xFFFFFFFF 
-			memset(mappedIndices, 0xFF, toAlloc);
+			/// position indices is the face indexing 
+			COLLADAFW::UIntValuesArray & primitiveIndices = colladaPrimitive->getPositionIndices();
+			size_t primitiveIndicesCount = primitiveIndices.getCount();
 
-			for (int i = 0; i < indicesCount; i++) {
-				unsigned int j = indices[i];
-				if (mappedIndices[j] == 0xFFFFFFFF) {
+			/// mark the indices as unused if 0xFFFFFFFF 
+			memset(indicesBinding, 0xFF, positionIndicesCount * sizeof(unsigned int));
+
+			Babylon::Utils::Math::Vector3 v3_cache0(0, 0, 0);
+			int k = 0;
+			for (int i = 0; i < primitiveIndicesCount; i++) {
+				unsigned int j = primitiveIndices[i];
+				if (indicesBinding[j] == 0xFFFFFFFF) {
 					const float* xPtr = xyz + j * 3;
-					Babylon::Utils::Math::Vector3 tmp(xPtr);
-					geometry->AddPosition(tmp);
-					mappedIndices[j] = i;
+					v3_cache0.x = *(xPtr);
+					v3_cache0.y = *(xPtr + 1);
+					v3_cache0.z = *(xPtr + 2);
+					geometry->AddPosition(v3_cache0);
+					indicesBinding[j] = k++;
 				}
-				geometry->AddIndex(mappedIndices[j]);
+				geometry->AddIndex(indicesBinding[j]);
 			}
 
-			/// prepare indices
+			// add extra indices if we need to triangulate
 			if (shouldTriangulate) {
-				/// verify for each faces that we have triangle
 				size_t faceCount = colladaPrimitive->getFaceCount();
+				int i = 0;
 				for (int f = 0; f < faceCount; f++) {
 					size_t verticeCount = colladaPrimitive->getGroupedVerticesVertexCount(f);
 					if (verticeCount > 3) {
@@ -111,22 +123,100 @@ std::shared_ptr<Mesh> DAEMeshConverter::Convert(const COLLADAFW::Mesh* colladaMe
 
 			/// populate Normals
 			if (colladaPrimitive->hasNormalIndices()) {
+
+				/// mesh related
+				const COLLADAFW::MeshVertexData& data = colladaMesh->getNormals();
+				const COLLADAFW::FloatArray* values = data.getFloatValues();
+				const float * valuePtr = values->getData();
+				
+				/// primitive
+				COLLADAFW::UIntValuesArray& indices = colladaPrimitive->getNormalIndices();
+				size_t count = indices.getCount();
+
+				/// check if indicesBinding if enought large 
+				if (count > indicesBindingCount) {
+					void* tmp = realloc(indicesBinding, count * sizeof(unsigned int));
+					if (!tmp) {
+						free(indicesBinding);
+						throw std::bad_alloc();
+					} 
+					indicesBinding = (unsigned int*)tmp;
+					indicesBindingCount = count;
+				}
+				/// mark the indices as unused if 0xFFFFFFFF 
+				memset(indicesBinding, 0xFF, count * sizeof(unsigned int));
+
+				k = 0;
+				for (int i = 0; i < count; i++) {
+					unsigned int j = indices[i];
+					if (indicesBinding[j] == 0xFFFFFFFF) {
+						const float* xPtr = valuePtr + j * 3;
+						v3_cache0.x = *(xPtr);
+						v3_cache0.y = *(xPtr + 1);
+						v3_cache0.z = *(xPtr + 2);
+						geometry->AddNormal(v3_cache0);
+						indicesBinding[j] = k++;
+					}
+				}
 			}
 
 			/// populate Tangents
 			if (colladaPrimitive->hasTangentIndices()) {
+				/// mesh related 
+				const COLLADAFW::MeshVertexData& data = colladaMesh->getTangents();
+				const COLLADAFW::FloatArray* values = data.getFloatValues();
+				const float* valuePtr = values->getData();
+
+				/// primitive
+				COLLADAFW::UIntValuesArray& indices = colladaPrimitive->getTangentIndices();
+				size_t count = indices.getCount();
+
+				/// check if indicesBinding if enought large 
+				if (count > indicesBindingCount) {
+					void* tmp = realloc(indicesBinding, count * sizeof(unsigned int));
+					if (!tmp) {
+						free(indicesBinding);
+						throw std::bad_alloc();
+					}
+					indicesBinding = (unsigned int*)tmp;
+					indicesBindingCount = count;
+				}
+				/// mark the indices as unused if 0xFFFFFFFF 
+				memset(indicesBinding, 0xFF, count * sizeof(unsigned int));
+
+				/// Note : Collada is providing a 3 dimensional tangent
+				Babylon::Utils::Math::Vector4 v4_cache0(0, 0, 0, 1);
+				k = 0;
+				for (int i = 0; i < count; i++) {
+					unsigned int j = indices[i];
+					if (indicesBinding[j] == 0xFFFFFFFF) {
+						const float* xPtr = valuePtr + j * 3;
+						v4_cache0.x = *(xPtr);
+						v4_cache0.y = *(xPtr + 1);
+						v4_cache0.z = *(xPtr + 2);
+						geometry->AddTangent(v4_cache0);
+						indicesBinding[j] = k++;
+					}
+				}
 			}
 
 			/// populate Colors
 			if (colladaPrimitive->hasColorIndices()) {
+				/// mesh related 
+				const COLLADAFW::MeshVertexData& data = colladaMesh->getColors();
+				const COLLADAFW::FloatArray* values = data.getFloatValues();
+				const float* valuePtr = values->getData();
+				/// primitive
+				COLLADAFW::IndexListArray& indexList = colladaPrimitive->getColorIndicesArray();
 			}
 
 			/// populate UVs
 			if (colladaPrimitive->hasUVCoordIndices()) {
 			}
 
-			free(mappedIndices);
+			mesh->AddGeometry(std::move(*geometry));
 		}
+		free(indicesBinding);
 	}
 	return mesh;
 }

@@ -16,11 +16,10 @@ namespace Babylon
 {
 	namespace Transcoder
 	{
-
 		class DAEMeshConverter : public AbstractDAEConverter<COLLADAFW::Mesh, Mesh> {
 		public:
-			DAEMeshConverter(IResourceServer* resourceServer, Framework::ICancellationTokenPtr cancellationToken) :
-				AbstractDAEConverter(resourceServer, cancellationToken) {
+			DAEMeshConverter(Asset3DWriterContext* context) :
+				AbstractDAEConverter(context) {
 			}
 			std::shared_ptr<Mesh> Convert(const COLLADAFW::Mesh* from);
 		};
