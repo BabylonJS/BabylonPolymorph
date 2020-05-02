@@ -4,10 +4,40 @@
 *                                                       *
 ********************************************************/
 #include "TranscodersPch.h"
+
+#define __USE_NORMALIZE
+
 #include <TranscoderDAE\DAEGeometryConverter.h>
 #include <earcut.hpp>
 
+#include <iostream>
+
 using namespace Babylon::Transcoder;
+
+#define __START_REINDEXING(t) const COLLADAFW::MeshVertexData& data = colladaMesh->get##t##s();\
+const COLLADAFW::FloatArray* values = data.getFloatValues();\
+const float* valuePtr = values->getData();\
+const int dataIndicesCount = values->getCount() / 3;
+
+#define __CHECK_INDEX_SIZE  if (dataIndicesCount > indicesBindingCount) { \
+	void* tmp = realloc(indicesBinding, dataIndicesCount * sizeof(unsigned int)); \
+	if (!tmp) { free(indicesBinding); throw std::bad_alloc(); } \
+	indicesBinding = (unsigned int*)tmp;\
+	indicesBindingCount = dataIndicesCount;} \
+    memset(indicesBinding, 0xFF, indicesBindingCount * sizeof(unsigned int));
+
+#define __REINDEXING(t,v) COLLADAFW::UIntValuesArray& indices = colladaPrimitive->get##t##Indices();\
+size_t count = indices.getCount(); k = 0;\
+for (int i = 0; i < count; i++) {\
+	unsigned int j = indices[i];\
+	if (indicesBinding[j] == 0xFFFFFFFF) {\
+		const float* xPtr = valuePtr + j * 3;\
+		v.x = *(xPtr);\
+		v.y = *(xPtr + 1);\
+		v.z = *(xPtr + 2);\
+		geometry->Add##t(v);\
+		indicesBinding[j] = k++;}}
+
 
 std::shared_ptr<Mesh> DAEMeshConverter::Convert(const COLLADAFW::Mesh* colladaMesh) {
 	
@@ -92,26 +122,83 @@ std::shared_ptr<Mesh> DAEMeshConverter::Convert(const COLLADAFW::Mesh* colladaMe
 			/// mark the indices as unused if 0xFFFFFFFF 
 			memset(indicesBinding, 0xFF, positionIndicesCount * sizeof(unsigned int));
 
+			/// do we need to compute normals ?
+			bool hasNormals = colladaPrimitive->hasNormalIndices();
+			const float* nxyz= hasNormals? colladaMesh->getNormals().getFloatValues()->getData() : nullptr ;
+			COLLADAFW::UIntValuesArray& colladaNormalsIndices = colladaPrimitive->getNormalIndices();
+			std::vector<Babylon::Utils::Math::Vector3> normals;
+			std::vector<int> normalPerVertices;
+
 			Babylon::Utils::Math::Vector3 v3_cache0(0, 0, 0);
 			int k = 0;
-			for (int i = 0; i < primitiveIndicesCount; i++) {
-				unsigned int j = primitiveIndices[i];
+			const float* xPtr = nullptr;
+			for (size_t i0 = 0; i0 < primitiveIndicesCount; i0++) {
+				unsigned int j = primitiveIndices[i0];
+				
 				if (indicesBinding[j] == 0xFFFFFFFF) {
-					const float* xPtr = xyz + j * 3;
-					v3_cache0.x = *(xPtr);
-					v3_cache0.y = *(xPtr + 1);
-					v3_cache0.z = *(xPtr + 2);
+					xPtr = xyz + j * 3;
+					v3_cache0.x = *(xPtr++);
+					v3_cache0.y = *(xPtr++);
+					v3_cache0.z = *(xPtr  );
 					geometry->AddPosition(v3_cache0);
+					
+					if (hasNormals) {
+						/// let use the normals at the same index
+						xPtr = nxyz + colladaNormalsIndices[i0] * 3; /// stride ils always xyz 
+						v3_cache0.x = *(xPtr++);
+						v3_cache0.y = *(xPtr++);
+						v3_cache0.z = *(xPtr  );
+						normals.push_back(v3_cache0);
+						normalPerVertices.push_back(1);
+					}
 					indicesBinding[j] = k++;
+				}
+				else {
+					
+					if (hasNormals) {
+						/// we incrementaly average the normals
+						xPtr = nxyz + colladaNormalsIndices[i0] * 3; /// stride ils always xyz
+						int o = indicesBinding[j];
+						Babylon::Utils::Math::Vector3& n = normals[o];
+						int N = normalPerVertices[o] + 1;
+						n.x = n.x + (*(xPtr++)-n.x) / N;
+						n.y = n.y + (*(xPtr++)-n.y) / N;
+						n.z = n.z + (*(xPtr  )-n.z) / N;
+						normalPerVertices[o] = N;
+					}
 				}
 				geometry->AddIndex(indicesBinding[j]);
 			}
 
+			if (hasNormals) {
+
+				/// we Normalize and push normals to geometry
+				std::vector<Babylon::Utils::Math::Vector3>::iterator it = normals.begin();
+				while (it != normals.end())
+				{
+#ifdef __USE_NORMALIZE
+					(*it).Normalize();
+#else
+					/// USE custom function instead of Normalize() to keep control on warning.
+					float l = sqrt(((*it).x * (*it).x) + ((*it).y * (*it).y) + ((*it).z * (*it).z));
+					if (l == 0 || isinf(l)) {
+						std::cout << "wrong normals value.." << "\r\n";
+					} else {
+						(*it).x = (*it).x / l;
+						(*it).y = (*it).y / l;
+						(*it).z = (*it).z / l;
+					}
+#endif
+					geometry->AddNormal(*it);
+					it++;
+				}
+			}
+
+
 			// add extra indices if we need to triangulate
 			if (shouldTriangulate) {
 				size_t faceCount = colladaPrimitive->getFaceCount();
-				int i = 0;
-				for (int f = 0; f < faceCount; f++) {
+				for (size_t f = 0; f < faceCount; f++) {
 					size_t verticeCount = colladaPrimitive->getGroupedVerticesVertexCount(f);
 					if (verticeCount > 3) {
 						/// this is the place to use earcut
@@ -121,93 +208,12 @@ std::shared_ptr<Mesh> DAEMeshConverter::Convert(const COLLADAFW::Mesh* colladaMe
 				}
 			}
 
-			/// populate Normals
-			if (colladaPrimitive->hasNormalIndices()) {
-
-				/// mesh related
-				const COLLADAFW::MeshVertexData& data = colladaMesh->getNormals();
-				const COLLADAFW::FloatArray* values = data.getFloatValues();
-				const float * valuePtr = values->getData();
-				
-				/// primitive
-				COLLADAFW::UIntValuesArray& indices = colladaPrimitive->getNormalIndices();
-				size_t count = indices.getCount();
-
-				/// check if indicesBinding if enought large 
-				if (count > indicesBindingCount) {
-					void* tmp = realloc(indicesBinding, count * sizeof(unsigned int));
-					if (!tmp) {
-						free(indicesBinding);
-						throw std::bad_alloc();
-					} 
-					indicesBinding = (unsigned int*)tmp;
-					indicesBindingCount = count;
-				}
-				/// mark the indices as unused if 0xFFFFFFFF 
-				memset(indicesBinding, 0xFF, count * sizeof(unsigned int));
-
-				k = 0;
-				for (int i = 0; i < count; i++) {
-					unsigned int j = indices[i];
-					if (indicesBinding[j] == 0xFFFFFFFF) {
-						const float* xPtr = valuePtr + j * 3;
-						v3_cache0.x = *(xPtr);
-						v3_cache0.y = *(xPtr + 1);
-						v3_cache0.z = *(xPtr + 2);
-						geometry->AddNormal(v3_cache0);
-						indicesBinding[j] = k++;
-					}
-				}
-			}
-
 			/// populate Tangents
 			if (colladaPrimitive->hasTangentIndices()) {
-				/// mesh related 
-				const COLLADAFW::MeshVertexData& data = colladaMesh->getTangents();
-				const COLLADAFW::FloatArray* values = data.getFloatValues();
-				const float* valuePtr = values->getData();
-
-				/// primitive
-				COLLADAFW::UIntValuesArray& indices = colladaPrimitive->getTangentIndices();
-				size_t count = indices.getCount();
-
-				/// check if indicesBinding if enought large 
-				if (count > indicesBindingCount) {
-					void* tmp = realloc(indicesBinding, count * sizeof(unsigned int));
-					if (!tmp) {
-						free(indicesBinding);
-						throw std::bad_alloc();
-					}
-					indicesBinding = (unsigned int*)tmp;
-					indicesBindingCount = count;
-				}
-				/// mark the indices as unused if 0xFFFFFFFF 
-				memset(indicesBinding, 0xFF, count * sizeof(unsigned int));
-
-				/// Note : Collada is providing a 3 dimensional tangent
-				Babylon::Utils::Math::Vector4 v4_cache0(0, 0, 0, 1);
-				k = 0;
-				for (int i = 0; i < count; i++) {
-					unsigned int j = indices[i];
-					if (indicesBinding[j] == 0xFFFFFFFF) {
-						const float* xPtr = valuePtr + j * 3;
-						v4_cache0.x = *(xPtr);
-						v4_cache0.y = *(xPtr + 1);
-						v4_cache0.z = *(xPtr + 2);
-						geometry->AddTangent(v4_cache0);
-						indicesBinding[j] = k++;
-					}
-				}
 			}
 
 			/// populate Colors
 			if (colladaPrimitive->hasColorIndices()) {
-				/// mesh related 
-				const COLLADAFW::MeshVertexData& data = colladaMesh->getColors();
-				const COLLADAFW::FloatArray* values = data.getFloatValues();
-				const float* valuePtr = values->getData();
-				/// primitive
-				COLLADAFW::IndexListArray& indexList = colladaPrimitive->getColorIndicesArray();
 			}
 
 			/// populate UVs

@@ -30,7 +30,7 @@ R"(Usage: [FILE]... [OPTION]...
   --help=[FORMATIN:FORMATOUT]     Prints options for transcoding from FORMATIN to FORMATOUT
   --version                       Prints the version of this tool
 
-  --format=[FORMAT]               The export file format (default: glb) - [glb, gltf, ply, stl, dae]
+  --format=[FORMAT]               The export file format (default: glb) - [glb, gltf, ply, stl]
 
   --verbosity=[LEVEL]             The level of console output (default: default)
       silent                            No console output
