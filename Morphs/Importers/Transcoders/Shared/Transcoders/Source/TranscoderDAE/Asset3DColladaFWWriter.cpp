@@ -9,16 +9,13 @@
 #include <iostream>
 #include <TranscoderDAE/Asset3DColladaFWWriter.h>
 #include <TranscoderDAE/DAEGeometryConverter.h>
+#include <TranscoderDAE/DAESceneConverter.h>
 
 #include <Asset3D\Asset3D.h>
 
 #include <COLLADAFWGeometry.h>
-#include <COLLADAFWTransformation.h>
-#include <COLLADAFWMatrix.h>
-#include <COLLADAFWRotate.h>
-#include <COLLADAFWTranslate.h>
-#include <COLLADAFWScale.h>
-#include <COLLADAFWLookat.h>
+#include <COLLADAFWVisualScene.h>
+
 #include <COLLADASaxFWLIError.h>
 
 using namespace Babylon::Transcoder; 
@@ -65,8 +62,42 @@ void Asset3DColladaFWWriter::start() {
 }
 
 /** This method is called after the last write* method. No other methods will be called after this.*/
-void Asset3DColladaFWWriter::finish(){
-	std::cout << "FINISH\r\n";
+void Asset3DColladaFWWriter::finish() {
+
+	Asset3DWriterContextPtr ctx = getContext();
+	std::shared_ptr<Asset3D> asset = getAsset3D();
+
+	/**
+	 * some Collada file does NOT define visual scenes, then do NOT instantiate models.
+	 * this appear to be a default behaviors of some transcoder. In this case, only save the model as
+	 * direct child node of the Asset3D, without any transformation.
+	 */
+	if (!ctx->hasVisualScenes()) {
+		/// bind geometries to the asset.
+		if (ctx->hasGeometries()) {
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<Mesh>>& lib = ctx->getGeometryLibrary();
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<Mesh>>::iterator it = lib.begin();
+			while (it != lib.end())
+			{
+				std::shared_ptr<Mesh> m = it->second;
+				std::shared_ptr<SceneNode> n = asset->CreateChildNode();
+				if (n) {
+					n->SetMesh(m);
+				}
+				it++;
+			}
+		}
+		return;
+	}
+
+	/// simply push all the nodes...
+	std::map<COLLADAFW::UniqueId, std::shared_ptr<SceneNode>>& lib = ctx->getVisualSceneLibrary();
+	std::map<COLLADAFW::UniqueId, std::shared_ptr<SceneNode>>::iterator it = lib.begin();
+	while (it != lib.end()) {
+		std::shared_ptr<SceneNode> childNode = (*it).second;
+		asset->AddChildNode(childNode);
+		it++;
+	}
 }
 
 /** When this method is called, the writer must write the global document asset.
@@ -87,6 +118,11 @@ bool Asset3DColladaFWWriter::writeScene(const COLLADAFW::Scene* scene) {
 @return The writer should return true, if writing succeeded, false otherwise.*/
 bool Asset3DColladaFWWriter::writeVisualScene(const COLLADAFW::VisualScene* visualScene) {
 	std::cout << "writeVisualScene\r\n";
+	DAEVirtualSceneConverter c(&m_context);
+	std::shared_ptr<SceneNode> s = c.GetNode(visualScene);
+	if (s) {
+		//m_context.getVisualSceneLibrary()[visualScene->getUniqueId()] = s;
+	}
 	return true;
 }
 
@@ -108,7 +144,7 @@ bool Asset3DColladaFWWriter::writeGeometry(const COLLADAFW::Geometry* geometry) 
 			DAEMeshConverter c( &m_context);
 			std::shared_ptr<Mesh> m = c.GetNode((COLLADAFW::Mesh*)geometry);
 			if (m) {
-				m_context.getGeometryLibrary()[geometry->getName()] = m;
+				m_context.getGeometryLibrary()[geometry->getUniqueId()] = m;
 			}
 			break;
 		}
@@ -185,6 +221,10 @@ bool Asset3DColladaFWWriter::writeSkinControllerData(const COLLADAFW::SkinContro
 @return The writer should return true, if writing succeeded, false otherwise.*/
 bool Asset3DColladaFWWriter::writeController(const COLLADAFW::Controller* controller) {
 	std::cout << "writeController\r\n";
+
+	const COLLADAFW::UniqueId& src = controller->getSource();
+	m_context.getSkinLibrary()[controller->getUniqueId()] = src;
+
 	return true;
 }
 
@@ -201,65 +241,4 @@ bool Asset3DColladaFWWriter::writeFormulas(const COLLADAFW::Formulas* formulas) 
 bool Asset3DColladaFWWriter::writeKinematicsScene(const COLLADAFW::KinematicsScene* kinematicsScene) {
 	std::cout << "writeKinematicsScene\r\n";
 	return true;
-}
-
-COLLADABU::Math::Matrix4 getMatrixFromTransform(const COLLADAFW::Transformation* transform, float assetScale) {
-	switch (transform->getTransformationType()) {
-	case COLLADAFW::Transformation::ROTATE: {
-		COLLADAFW::Rotate* rotate = (COLLADAFW::Rotate*)transform;
-		COLLADABU::Math::Vector3 axis = rotate->getRotationAxis();
-		axis.normalise();
-		double angle = rotate->getRotationAngle();
-		return COLLADABU::Math::Matrix4(COLLADABU::Math::Quaternion(COLLADABU::Math::Utils::degToRad(angle), axis));
-	}
-	case COLLADAFW::Transformation::TRANSLATE: {
-		COLLADAFW::Translate* translate = (COLLADAFW::Translate*)transform;
-		const COLLADABU::Math::Vector3& translation = translate->getTranslation();
-		COLLADABU::Math::Matrix4 translationMatrix;
-		translationMatrix.makeTrans(translation);
-		translationMatrix.scaleTrans(assetScale);
-		return translationMatrix;
-	}
-	case COLLADAFW::Transformation::SCALE: {
-		COLLADAFW::Scale* scale = (COLLADAFW::Scale*)transform;
-		const COLLADABU::Math::Vector3& scaleVector = scale->getScale();
-		COLLADABU::Math::Matrix4 scaleMatrix;
-		scaleMatrix.makeScale(scaleVector);
-		return scaleMatrix;
-	}
-	case COLLADAFW::Transformation::MATRIX: {
-		COLLADAFW::Matrix* transformMatrix = (COLLADAFW::Matrix*)transform;
-		COLLADABU::Math::Matrix4 matrix = transformMatrix->getMatrix();
-		matrix.scaleTrans(assetScale);
-		return matrix;
-	}
-	case COLLADAFW::Transformation::LOOKAT: {
-		COLLADAFW::Lookat* lookAt = (COLLADAFW::Lookat*)transform;
-		const COLLADABU::Math::Vector3& eye = lookAt->getEyePosition();
-		const COLLADABU::Math::Vector3& center = lookAt->getInterestPointPosition();
-		const COLLADABU::Math::Vector3& up = lookAt->getUpAxisDirection();
-		COLLADABU::Math::Matrix4 lookAtMatrix = COLLADABU::Math::Matrix4::IDENTITY;
-		if ((eye.x != center.x) || (eye.y != center.y) || (eye.z != center.z)) {
-			COLLADABU::Math::Vector3 z = (eye - center);
-			z.normalise();
-			COLLADABU::Math::Vector3 x = up.crossProduct(z);
-			x.normalise();
-			COLLADABU::Math::Vector3 y = z.crossProduct(x);
-			y.normalise();
-			lookAtMatrix.setAllElements(
-				x.x, y.x, z.x, 0,
-				x.y, y.y, z.y, 0,
-				x.z, y.z, z.z, 0,
-				-(x.x * eye.x + x.y * eye.y + x.z * eye.z),
-				-(y.x * eye.x + y.y * eye.y + y.z * eye.z),
-				-(z.x * eye.x + z.y * eye.y + z.z * eye.z),
-				1);
-			lookAtMatrix = lookAtMatrix.inverse();
-			lookAtMatrix = lookAtMatrix.transpose();
-		}
-		lookAtMatrix.scaleTrans(assetScale);
-		return lookAtMatrix;
-	}
-	}
-	return COLLADABU::Math::Matrix4::IDENTITY;
 }

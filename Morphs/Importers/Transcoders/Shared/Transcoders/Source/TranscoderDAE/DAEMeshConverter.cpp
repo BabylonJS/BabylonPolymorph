@@ -5,7 +5,7 @@
 ********************************************************/
 #include "TranscodersPch.h"
 
-#define __USE_NORMALIZE
+#include <TranscoderDAE/TranscoderDAEConfig.h>
 
 #include <TranscoderDAE\DAEGeometryConverter.h>
 #include <earcut.hpp>
@@ -14,29 +14,9 @@
 
 using namespace Babylon::Transcoder;
 
-#define __START_REINDEXING(t) const COLLADAFW::MeshVertexData& data = colladaMesh->get##t##s();\
-const COLLADAFW::FloatArray* values = data.getFloatValues();\
-const float* valuePtr = values->getData();\
-const int dataIndicesCount = values->getCount() / 3;
-
-#define __CHECK_INDEX_SIZE  if (dataIndicesCount > indicesBindingCount) { \
-	void* tmp = realloc(indicesBinding, dataIndicesCount * sizeof(unsigned int)); \
-	if (!tmp) { free(indicesBinding); throw std::bad_alloc(); } \
-	indicesBinding = (unsigned int*)tmp;\
-	indicesBindingCount = dataIndicesCount;} \
-    memset(indicesBinding, 0xFF, indicesBindingCount * sizeof(unsigned int));
-
-#define __REINDEXING(t,v) COLLADAFW::UIntValuesArray& indices = colladaPrimitive->get##t##Indices();\
-size_t count = indices.getCount(); k = 0;\
-for (int i = 0; i < count; i++) {\
-	unsigned int j = indices[i];\
-	if (indicesBinding[j] == 0xFFFFFFFF) {\
-		const float* xPtr = valuePtr + j * 3;\
-		v.x = *(xPtr);\
-		v.y = *(xPtr + 1);\
-		v.z = *(xPtr + 2);\
-		geometry->Add##t(v);\
-		indicesBinding[j] = k++;}}
+#define __VEC3_TRANSFER(ptr,v) v.x = *(ptr++); v.y = *(ptr++); v.z = *(ptr);
+#define __AVERAGE_INC(v,b,n) b + (v - b) / n
+#define __VEC3_AVERAGE_INC(ptr, v,n) v.x = __AVERAGE_INC(*(ptr++),v.x,n); v.y = __AVERAGE_INC(*(ptr++),v.y,n); v.z = __AVERAGE_INC(*(ptr),v.z,n);
 
 
 std::shared_ptr<Mesh> DAEMeshConverter::Convert(const COLLADAFW::Mesh* colladaMesh) {
@@ -54,12 +34,12 @@ std::shared_ptr<Mesh> DAEMeshConverter::Convert(const COLLADAFW::Mesh* colladaMe
 		 * sources are shared by several primitives, then we do not copy the whole array
 		 * we rebind the indices and we use APPEND methods instead of setting the whole array once
 		 */
-		const COLLADAFW::MeshVertexData& positions = colladaMesh->getPositions();
-		const COLLADAFW::FloatArray* positionValues = positions.getFloatValues();
-		const float* xyz = positionValues->getData();
+		const COLLADAFW::MeshVertexData& colladaPositions = colladaMesh->getPositions();
+		const COLLADAFW::FloatArray* positionValues = colladaPositions.getFloatValues();
+		const float* colladaXyz = positionValues->getData();
 
-		const int positionIndicesCount = positionValues->getCount() / 3; /// stride is ALWAYS 3 for position
-		int indicesBindingCount = positionIndicesCount;
+		const int colladaPositionIndicesCount = positionValues->getCount() / 3; /// stride is ALWAYS 3 for position
+		int indicesBindingCount = colladaPositionIndicesCount;
 		unsigned int* indicesBinding = (unsigned int*)malloc(indicesBindingCount * sizeof(unsigned int)) ;
 		if (!indicesBinding) {
 			throw std::bad_alloc();
@@ -116,15 +96,15 @@ std::shared_ptr<Mesh> DAEMeshConverter::Convert(const COLLADAFW::Mesh* colladaMe
 			geometry->SetTopology(topo);
 
 			/// position indices is the face indexing 
-			COLLADAFW::UIntValuesArray & primitiveIndices = colladaPrimitive->getPositionIndices();
-			size_t primitiveIndicesCount = primitiveIndices.getCount();
+			COLLADAFW::UIntValuesArray & colladaPrimitiveIndices = colladaPrimitive->getPositionIndices();
+			size_t colladaPrimitiveIndicesCount = colladaPrimitiveIndices.getCount();
 
 			/// mark the indices as unused if 0xFFFFFFFF 
-			memset(indicesBinding, 0xFF, positionIndicesCount * sizeof(unsigned int));
+			memset(indicesBinding, 0xFF, indicesBindingCount * sizeof(unsigned int));
 
 			/// do we need to compute normals ?
-			bool hasNormals = colladaPrimitive->hasNormalIndices();
-			const float* nxyz= hasNormals? colladaMesh->getNormals().getFloatValues()->getData() : nullptr ;
+			bool colladaHasNormals = colladaPrimitive->hasNormalIndices();
+			const float * colladaNXyz= colladaHasNormals ? colladaMesh->getNormals().getFloatValues()->getData() : nullptr ;
 			COLLADAFW::UIntValuesArray& colladaNormalsIndices = colladaPrimitive->getNormalIndices();
 			std::vector<Babylon::Utils::Math::Vector3> normals;
 			std::vector<int> normalPerVertices;
@@ -132,22 +112,18 @@ std::shared_ptr<Mesh> DAEMeshConverter::Convert(const COLLADAFW::Mesh* colladaMe
 			Babylon::Utils::Math::Vector3 v3_cache0(0, 0, 0);
 			int k = 0;
 			const float* xPtr = nullptr;
-			for (size_t i0 = 0; i0 < primitiveIndicesCount; i0++) {
-				unsigned int j = primitiveIndices[i0];
+			for (size_t i0 = 0; i0 < colladaPrimitiveIndicesCount; i0++) {
+				unsigned int j = colladaPrimitiveIndices[i0];
 				
 				if (indicesBinding[j] == 0xFFFFFFFF) {
-					xPtr = xyz + j * 3;
-					v3_cache0.x = *(xPtr++);
-					v3_cache0.y = *(xPtr++);
-					v3_cache0.z = *(xPtr  );
+					xPtr = colladaXyz + j * 3; /// stride ils always xyz
+					__VEC3_TRANSFER(xPtr,v3_cache0)
 					geometry->AddPosition(v3_cache0);
 					
-					if (hasNormals) {
+					if (colladaHasNormals) {
 						/// let use the normals at the same index
-						xPtr = nxyz + colladaNormalsIndices[i0] * 3; /// stride ils always xyz 
-						v3_cache0.x = *(xPtr++);
-						v3_cache0.y = *(xPtr++);
-						v3_cache0.z = *(xPtr  );
+						xPtr = colladaNXyz + colladaNormalsIndices[i0] * 3; /// stride ils always xyz
+						__VEC3_TRANSFER(xPtr, v3_cache0)
 						normals.push_back(v3_cache0);
 						normalPerVertices.push_back(1);
 					}
@@ -155,28 +131,26 @@ std::shared_ptr<Mesh> DAEMeshConverter::Convert(const COLLADAFW::Mesh* colladaMe
 				}
 				else {
 					
-					if (hasNormals) {
+					if (colladaHasNormals) {
 						/// we incrementaly average the normals
-						xPtr = nxyz + colladaNormalsIndices[i0] * 3; /// stride ils always xyz
+						xPtr = colladaNXyz + colladaNormalsIndices[i0] * 3; /// stride ils always xyz
 						int o = indicesBinding[j];
 						Babylon::Utils::Math::Vector3& n = normals[o];
 						int N = normalPerVertices[o] + 1;
-						n.x = n.x + (*(xPtr++)-n.x) / N;
-						n.y = n.y + (*(xPtr++)-n.y) / N;
-						n.z = n.z + (*(xPtr  )-n.z) / N;
+						__VEC3_AVERAGE_INC(xPtr,n, N) 
 						normalPerVertices[o] = N;
 					}
 				}
 				geometry->AddIndex(indicesBinding[j]);
 			}
 
-			if (hasNormals) {
+			if (colladaHasNormals) {
 
 				/// we Normalize and push normals to geometry
 				std::vector<Babylon::Utils::Math::Vector3>::iterator it = normals.begin();
 				while (it != normals.end())
 				{
-#ifdef __USE_NORMALIZE
+#ifdef __USE_V3_NORMALIZE
 					(*it).Normalize();
 #else
 					/// USE custom function instead of Normalize() to keep control on warning.

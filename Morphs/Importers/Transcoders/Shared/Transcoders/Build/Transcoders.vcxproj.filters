@@ -162,7 +162,13 @@
     <ClCompile Include="..\Source\TranscoderDAE\Asset3DColladaFWWriter.cpp">
       <Filter>Source\Importers\ImporterDAE</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\TranscoderDAE\DAEGeometryConverter.cpp">
+    <ClCompile Include="..\Source\TranscoderDAE\TranscoderDAEUtils.cpp">
+      <Filter>Source\Importers\ImporterDAE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\TranscoderDAE\DAEVirtualSceneConverter.cpp">
+      <Filter>Source\Importers\ImporterDAE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\TranscoderDAE\DAEMeshConverter.cpp">
       <Filter>Source\Importers\ImporterDAE</Filter>
     </ClCompile>
   </ItemGroup>
@@ -280,6 +286,15 @@
       <Filter>Public Headers\Importers\ImporterDAE</Filter>
     </ClInclude>
     <ClInclude Include="..\Inc\TranscoderDAE\AbstractDAEConverter.h">
+      <Filter>Public Headers\Importers\ImporterDAE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\TranscoderDAE\TranscoderDAEConfig.h">
+      <Filter>Public Headers\Importers\ImporterDAE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\TranscoderDAE\TranscoderDAEUtils.h">
+      <Filter>Public Headers\Importers\ImporterDAE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\TranscoderDAE\DAESceneConverter.h">
       <Filter>Public Headers\Importers\ImporterDAE</Filter>
     </ClInclude>
   </ItemGroup>

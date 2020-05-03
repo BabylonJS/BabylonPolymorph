@@ -23,7 +23,7 @@ namespace Babylon
 		template<typename F = COLLADAFW::Object, typename T = SceneNode>
 		class AbstractDAEConverter {
 
-		private:
+		protected:
 			Asset3DWriterContext* m_context;
 
 		public:
@@ -41,6 +41,8 @@ namespace Babylon
 				}
 				return  this->Convert(from);
 			}
+
+			inline Asset3DWriterContext* getContext() { return m_context; }
 
 			virtual std::shared_ptr<T> Convert(const F* from) = 0;
 		};

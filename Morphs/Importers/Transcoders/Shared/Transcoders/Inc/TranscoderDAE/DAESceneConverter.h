@@ -6,20 +6,19 @@
 #pragma once
 
 #include <TranscoderDAE/AbstractDAEConverter.h>
-#include <Asset3D/Mesh.h>
-#include <COLLADAFWGeometry.h>
-#include <COLLADAFWMesh.h>
+#include <Asset3D/SceneNode.h>
+#include <COLLADAFWScene.h>
 
 namespace Babylon
 {
 	namespace Transcoder
 	{
-		class DAEMeshConverter : public AbstractDAEConverter<COLLADAFW::Mesh, Mesh> {
+		class DAEVirtualSceneConverter : public AbstractDAEConverter<COLLADAFW::VisualScene, SceneNode> {
 		public:
-			DAEMeshConverter(Asset3DWriterContext* context) :
+			DAEVirtualSceneConverter(Asset3DWriterContext* context) :
 				AbstractDAEConverter(context) {
 			}
-			std::shared_ptr<Mesh> Convert(const COLLADAFW::Mesh* from);
+			std::shared_ptr<SceneNode> Convert(const COLLADAFW::VisualScene* from);
 		};
 
 	}

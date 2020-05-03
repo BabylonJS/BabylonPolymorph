@@ -8,6 +8,7 @@
 #include <map>
 
 #include <COLLADAFWIWriter.h>
+#include <COLLADAFWUniqueId.h>
 #include <COLLADASaxFWLLoader.h>
 #include <COLLADASaxFWLIErrorHandler.h>
 
@@ -17,6 +18,7 @@ namespace Babylon
     {
 		class Asset3D;
 		class Mesh;
+		class SceneNode;
 		class IResourceServer;
 
 		class Asset3DWriterContext {
@@ -25,8 +27,11 @@ namespace Babylon
 			Framework::ICancellationTokenPtr m_cancellationToken;
 			IResourceServer* m_resourceServer = nullptr;
 
-			std::map<std::string, std::shared_ptr<Mesh>> m_geometryLibrary;
-			std::map<std::string, std::shared_ptr<Asset3D>> m_visualSceneLibrary;
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<Mesh>> m_geometryLibrary;
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<SceneNode>> m_visualSceneLibrary;
+
+			// THIS IS TEMPORARY BINDING TO ALLOW SCENE MOUNT GEOMETRY WITH CONTROLLER WITHOUT THE CONTROLLER LIBRARY SUPPORT - Version 0.1.
+			std::map<COLLADAFW::UniqueId, COLLADAFW::UniqueId> m_skinLibrary;
 
 		public:
 			Asset3DWriterContext(IResourceServer* resourceServer, Framework::ICancellationTokenPtr cancellationToken);
@@ -40,12 +45,16 @@ namespace Babylon
 				}
 			}
 
-			std::map<std::string, std::shared_ptr<Mesh>>& getGeometryLibrary() {
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<Mesh>>& getGeometryLibrary() {
 				return m_geometryLibrary;
 			}			
 			
-			std::map<std::string, std::shared_ptr<Asset3D>>& getVisualSceneLibrary() {
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<SceneNode>>& getVisualSceneLibrary() {
 				return m_visualSceneLibrary;
+			}
+
+			std::map<COLLADAFW::UniqueId, COLLADAFW::UniqueId>& getSkinLibrary() {
+				return m_skinLibrary;
 			}
 
 			bool hasGeometries() {
