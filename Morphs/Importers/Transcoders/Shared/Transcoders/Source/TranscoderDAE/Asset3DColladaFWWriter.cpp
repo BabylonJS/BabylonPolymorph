@@ -103,7 +103,10 @@ void Asset3DColladaFWWriter::finish() {
 /** When this method is called, the writer must write the global document asset.
 @return The writer should return true, if writing succeeded, false otherwise.*/
 bool Asset3DColladaFWWriter::writeGlobalAsset(const COLLADAFW::FileInfo* asset) {
-	std::cout << "writeGlobalAsset\r\n";
+
+	Asset3DWriterContextPtr ctx = getContext();
+	ctx->setUpAxisType(asset->getUpAxisType());
+
 	return true;
 }
 
@@ -121,7 +124,7 @@ bool Asset3DColladaFWWriter::writeVisualScene(const COLLADAFW::VisualScene* visu
 	DAEVirtualSceneConverter c(&m_context);
 	std::shared_ptr<SceneNode> s = c.GetNode(visualScene);
 	if (s) {
-		//m_context.getVisualSceneLibrary()[visualScene->getUniqueId()] = s;
+		m_context.getVisualSceneLibrary()[visualScene->getUniqueId()] = s;
 	}
 	return true;
 }

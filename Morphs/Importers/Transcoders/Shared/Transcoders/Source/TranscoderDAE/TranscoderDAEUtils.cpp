@@ -12,8 +12,27 @@
 #include <COLLADAFWScale.h>
 #include <COLLADAFWLookat.h>
 
+Babylon::Utils::Math::Matrix  Babylon::Transcoder::toBabylonMatrix(COLLADABU::Math::Matrix4 colladaMatrix) {
 
-COLLADABU::Math::Matrix4 getMatrixFromTransform(const COLLADAFW::Transformation* transform, float assetScale) {
+	const COLLADABU::Math::Real* m[4];
+	m[0] = colladaMatrix[0];
+	m[1] = colladaMatrix[1];
+	m[2] = colladaMatrix[2];
+	m[3] = colladaMatrix[3];
+
+	/**
+	 * The Babylon math library packs matrices in a row major order.
+	 * According to specification "Matrices in COLLADA are column matrices in the mathematical sense".
+	 * we then need to transpose.
+	 */
+
+	return Babylon::Utils::Math::Matrix(m[0][0], m[1][0], m[2][0], m[3][0],
+		m[0][1], m[1][1], m[2][1], m[3][1],
+		m[0][2], m[1][2], m[2][2], m[3][2],
+		m[0][3], m[1][3], m[2][3], m[3][3]);	
+}
+
+COLLADABU::Math::Matrix4  Babylon::Transcoder::getMatrixFromTransform(const COLLADAFW::Transformation* transform, float assetScale) {
 	switch (transform->getTransformationType()) {
 	case COLLADAFW::Transformation::ROTATE: {
 		COLLADAFW::Rotate* rotate = (COLLADAFW::Rotate*)transform;

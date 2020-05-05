@@ -8,6 +8,7 @@
 #include <map>
 
 #include <COLLADAFWIWriter.h>
+#include <COLLADAFWFileInfo.h>
 #include <COLLADAFWUniqueId.h>
 #include <COLLADASaxFWLLoader.h>
 #include <COLLADASaxFWLIErrorHandler.h>
@@ -21,11 +22,19 @@ namespace Babylon
 		class SceneNode;
 		class IResourceServer;
 
+
 		class Asset3DWriterContext {
+		public:
+			static const COLLADAFW::FileInfo::UpAxisType defaultUpAxis = COLLADAFW::FileInfo::UpAxisType::Y_UP;
+
 		private:
+
+
 			std::shared_ptr<Asset3D> m_asset3D;
 			Framework::ICancellationTokenPtr m_cancellationToken;
 			IResourceServer* m_resourceServer = nullptr;
+
+			COLLADAFW::FileInfo::UpAxisType upAxis = defaultUpAxis;
 
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<Mesh>> m_geometryLibrary;
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<SceneNode>> m_visualSceneLibrary;
@@ -64,6 +73,15 @@ namespace Babylon
 			bool hasVisualScenes() {
 				return m_visualSceneLibrary.size() != 0;
 			}
+
+			void setUpAxisType(COLLADAFW::FileInfo::UpAxisType t) {
+				upAxis = t;
+			}
+
+			COLLADAFW::FileInfo::UpAxisType getUpAxisType() {
+				return upAxis;
+			}
+
 		};
 
 		typedef Asset3DWriterContext* Asset3DWriterContextPtr;

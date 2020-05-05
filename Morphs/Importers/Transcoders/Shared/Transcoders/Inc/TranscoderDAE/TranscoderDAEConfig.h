@@ -9,8 +9,13 @@ namespace Babylon
 {
     namespace Transcoder
     {
+        enum CoordinateType {
+            RIGHT,
+            LEFT
+        };
     }
 }
 
-/// define if we use Vector3 normalize or custom function
-#define __USE_V3_NORMALIZE
+/// define the coordinate type of work
+#define _COLLADA_COORDINATE_TYPE Babylon::Transcoder::CoordinateType::RIGHT
+#define _ASSET3D_COORDINATE_TYPE Babylon::Transcoder::CoordinateType::RIGHT
