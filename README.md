@@ -16,3 +16,27 @@ receive a response within 24 hours. If for some reason you do not, please follow
 email to ensure we received your original message. Further information, including the
 [MSRC PGP](https://technet.microsoft.com/en-us/security/dn606155) key, can be found in
 the [Security TechCenter](https://technet.microsoft.com/en-us/security/default).
+
+## Getting Started
+
+This section will outline the simple steps needed to get started with the Babylon Polymorph repo.  To begin development, you will need [Visual Studio 2019](https://visualstudio.microsoft.com/vs/) and [git](https://git-scm.com/).
+
+### Step 1
+
+Using git, navigate to the folder that will hold your repo and clone the repo:
+```
+git clone https://github.com/BabylonJS/BabylonPolymorph.git
+```
+
+### Step 2
+
+Once your repo is cloned, in git, use the following commands to go into the repo folder and download all required submodules:
+```
+cd BabylonPolymorph
+
+git submodule update --init --recursive
+```
+
+### Step 3
+
+Open *BabylonPolymorph\Morphs\Importers\Build\babylon.native.transcoders.sln* in Visual Studio 2019.
