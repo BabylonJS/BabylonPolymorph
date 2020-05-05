@@ -21,8 +21,6 @@ static bool ShouldBeLoaded(const COLLADABU::URI&, COLLADAFW::FileId) {
 	return false;
 }
 
-
-
 std::shared_ptr<Asset3D> Babylon::Transcoder::ImportDAE(
 	const std::string& filename, 
 	IResourceServer* resourceServer, 
@@ -33,7 +31,6 @@ std::shared_ptr<Asset3D> Babylon::Transcoder::ImportDAE(
 {
 	/// avoid unused param warning.
 	UNUSED(progress);
-	UNUSED(options);
 
 	auto istream = resourceServer->RequestTextFileResource(filename);
 	if (istream == nullptr)
@@ -58,7 +55,7 @@ std::shared_ptr<Asset3D> Babylon::Transcoder::ImportDAE(
 			throw TranscoderResourceFailedException("unable to read. " + filename);
 		}
 
-		Asset3DColladaFWWriter writer(resourceServer,cancellationToken) ;
+		Asset3DColladaFWWriter writer(resourceServer,options,cancellationToken) ;
 		COLLADASaxFWL::IErrorHandler* errorHandler = (COLLADASaxFWL::IErrorHandler*) &writer;
 		COLLADASaxFWL::Loader* loader = new COLLADASaxFWL::Loader(errorHandler);
 		loader->registerExternalReferenceDeciderCallbackFunction(ShouldBeLoaded);

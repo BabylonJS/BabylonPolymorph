@@ -7,11 +7,14 @@
 
 #include <map>
 
+#include <TranscoderDAE/TranscoderDAEConfig.h>
+
 #include <COLLADAFWIWriter.h>
 #include <COLLADAFWFileInfo.h>
 #include <COLLADAFWUniqueId.h>
 #include <COLLADASaxFWLLoader.h>
 #include <COLLADASaxFWLIErrorHandler.h>
+
 
 namespace Babylon
 {
@@ -21,7 +24,7 @@ namespace Babylon
 		class Mesh;
 		class SceneNode;
 		class IResourceServer;
-
+		class TextureDescriptor;
 
 		class Asset3DWriterContext {
 		public:
@@ -29,41 +32,48 @@ namespace Babylon
 
 		private:
 
-
-			std::shared_ptr<Asset3D> m_asset3D;
+			std::unordered_map<std::string, std::string> m_options;
 			Framework::ICancellationTokenPtr m_cancellationToken;
 			IResourceServer* m_resourceServer = nullptr;
 
 			COLLADAFW::FileInfo::UpAxisType upAxis = defaultUpAxis;
 
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<Mesh>> m_geometryLibrary;
-			std::map<COLLADAFW::UniqueId, std::shared_ptr<SceneNode>> m_visualSceneLibrary;
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<Asset3D>> m_visualSceneLibrary;
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<TextureDescriptor>> m_imageLibrary;
+			COLLADAFW::UniqueId m_primarySceneId;
 
 			// THIS IS TEMPORARY BINDING TO ALLOW SCENE MOUNT GEOMETRY WITH CONTROLLER WITHOUT THE CONTROLLER LIBRARY SUPPORT - Version 0.1.
 			std::map<COLLADAFW::UniqueId, COLLADAFW::UniqueId> m_skinLibrary;
 
 		public:
-			Asset3DWriterContext(IResourceServer* resourceServer, Framework::ICancellationTokenPtr cancellationToken);
+			Asset3DWriterContext(IResourceServer* resourceServer, const std::unordered_map<std::string, std::string>& options, Framework::ICancellationTokenPtr cancellationToken);
 			~Asset3DWriterContext();
 
-			inline std::shared_ptr<Asset3D> getAsset3D() const { return m_asset3D; }
-			
 			void CheckCancelledAndThrow() {
 				if (m_cancellationToken) {
 					m_cancellationToken->CheckCancelledAndThrow();
 				}
 			}
 
+			IResourceServer* getRessourceServer() {
+				return m_resourceServer;
+			}
+
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<Mesh>>& getGeometryLibrary() {
 				return m_geometryLibrary;
 			}			
 			
-			std::map<COLLADAFW::UniqueId, std::shared_ptr<SceneNode>>& getVisualSceneLibrary() {
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<Asset3D>>& getVisualSceneLibrary() {
 				return m_visualSceneLibrary;
 			}
 
 			std::map<COLLADAFW::UniqueId, COLLADAFW::UniqueId>& getSkinLibrary() {
 				return m_skinLibrary;
+			}
+
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<TextureDescriptor>>& getImageLibrary() {
+				return m_imageLibrary;
 			}
 
 			bool hasGeometries() {
@@ -82,6 +92,18 @@ namespace Babylon
 				return upAxis;
 			}
 
+			const std::string  getBasePath() {
+				return m_options[_BASEPATH_OPTION_KEY];
+			}
+
+
+			const COLLADAFW::UniqueId getPrimarySceneId() {
+				return m_primarySceneId;
+			}
+
+			const void setPrimarySceneId(COLLADAFW::UniqueId uid) {
+				m_primarySceneId = uid;
+			}
 		};
 
 		typedef Asset3DWriterContext* Asset3DWriterContextPtr;
@@ -95,11 +117,13 @@ namespace Babylon
 			Asset3DWriterContext m_context;
 
 		public :
-			Asset3DColladaFWWriter(IResourceServer* resourceServer, Framework::ICancellationTokenPtr cancellationToken);
+			Asset3DColladaFWWriter(IResourceServer* resourceServer, const std::unordered_map<std::string, std::string>& options, Framework::ICancellationTokenPtr cancellationToken);
 			~Asset3DColladaFWWriter();
 
 			inline const Asset3DWriterContextPtr getContext() { return &(this->m_context); }
-			inline std::shared_ptr<Asset3D> getAsset3D() { return m_context.getAsset3D(); }
+			inline std::shared_ptr<Asset3D> getAsset3D() { 
+				return m_context.getVisualSceneLibrary()[m_context.getPrimarySceneId()];
+			}
 
  			/** If this method returns true, the loader stops parsing immediately. If severity is nor CRITICAL
 			and this method returns false, the loader continues loading.*/

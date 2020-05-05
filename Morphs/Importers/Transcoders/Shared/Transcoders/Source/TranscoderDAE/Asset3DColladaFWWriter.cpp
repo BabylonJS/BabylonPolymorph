@@ -10,11 +10,13 @@
 #include <TranscoderDAE/Asset3DColladaFWWriter.h>
 #include <TranscoderDAE/DAEGeometryConverter.h>
 #include <TranscoderDAE/DAESceneConverter.h>
+#include <TranscoderDAE/DAEFXConverter.h>
 
 #include <Asset3D\Asset3D.h>
 
 #include <COLLADAFWGeometry.h>
 #include <COLLADAFWVisualScene.h>
+#include <COLLADAFWImage.h>
 
 #include <COLLADASaxFWLIError.h>
 
@@ -22,18 +24,19 @@ using namespace Babylon::Transcoder;
 using namespace Babylon::Framework;
 
 
-Asset3DWriterContext::Asset3DWriterContext(IResourceServer* resourceServer, ICancellationTokenPtr cancellationToken) :
-	m_asset3D(std::make_shared<Asset3D>()), 
+Asset3DWriterContext::Asset3DWriterContext(IResourceServer* resourceServer, const std::unordered_map<std::string, std::string>& options, ICancellationTokenPtr cancellationToken) :
+	m_options(options),
 	m_cancellationToken(cancellationToken), 
-	m_resourceServer(resourceServer)
+	m_resourceServer(resourceServer),
+	upAxis(defaultUpAxis)
 {
 }
 
 Asset3DWriterContext::~Asset3DWriterContext() {
 }
 
-Asset3DColladaFWWriter::Asset3DColladaFWWriter(IResourceServer* resourceServer, ICancellationTokenPtr cancellationToken) :
-	m_context(resourceServer, cancellationToken)
+Asset3DColladaFWWriter::Asset3DColladaFWWriter(IResourceServer* resourceServer, const std::unordered_map<std::string, std::string>& options, ICancellationTokenPtr cancellationToken) :
+	m_context(resourceServer, options, cancellationToken)
 {
 }
 
@@ -63,41 +66,7 @@ void Asset3DColladaFWWriter::start() {
 
 /** This method is called after the last write* method. No other methods will be called after this.*/
 void Asset3DColladaFWWriter::finish() {
-
-	Asset3DWriterContextPtr ctx = getContext();
-	std::shared_ptr<Asset3D> asset = getAsset3D();
-
-	/**
-	 * some Collada file does NOT define visual scenes, then do NOT instantiate models.
-	 * this appear to be a default behaviors of some transcoder. In this case, only save the model as
-	 * direct child node of the Asset3D, without any transformation.
-	 */
-	if (!ctx->hasVisualScenes()) {
-		/// bind geometries to the asset.
-		if (ctx->hasGeometries()) {
-			std::map<COLLADAFW::UniqueId, std::shared_ptr<Mesh>>& lib = ctx->getGeometryLibrary();
-			std::map<COLLADAFW::UniqueId, std::shared_ptr<Mesh>>::iterator it = lib.begin();
-			while (it != lib.end())
-			{
-				std::shared_ptr<Mesh> m = it->second;
-				std::shared_ptr<SceneNode> n = asset->CreateChildNode();
-				if (n) {
-					n->SetMesh(m);
-				}
-				it++;
-			}
-		}
-		return;
-	}
-
-	/// simply push all the nodes...
-	std::map<COLLADAFW::UniqueId, std::shared_ptr<SceneNode>>& lib = ctx->getVisualSceneLibrary();
-	std::map<COLLADAFW::UniqueId, std::shared_ptr<SceneNode>>::iterator it = lib.begin();
-	while (it != lib.end()) {
-		std::shared_ptr<SceneNode> childNode = (*it).second;
-		asset->AddChildNode(childNode);
-		it++;
-	}
+	// nothing to do so far
 }
 
 /** When this method is called, the writer must write the global document asset.
@@ -113,7 +82,7 @@ bool Asset3DColladaFWWriter::writeGlobalAsset(const COLLADAFW::FileInfo* asset) 
 /** When this method is called, the writer must write the scene.
 @return The writer should return true, if writing succeeded, false otherwise.*/
 bool Asset3DColladaFWWriter::writeScene(const COLLADAFW::Scene* scene) {
-	std::cout << "writeScene\r\n";
+	m_context.setPrimarySceneId(scene->getInstanceVisualScene()->getInstanciatedObjectId());
 	return true;
 }
 
@@ -122,7 +91,7 @@ bool Asset3DColladaFWWriter::writeScene(const COLLADAFW::Scene* scene) {
 bool Asset3DColladaFWWriter::writeVisualScene(const COLLADAFW::VisualScene* visualScene) {
 	std::cout << "writeVisualScene\r\n";
 	DAEVirtualSceneConverter c(&m_context);
-	std::shared_ptr<SceneNode> s = c.GetNode(visualScene);
+	std::shared_ptr<Asset3D> s = c.GetNode(visualScene);
 	if (s) {
 		m_context.getVisualSceneLibrary()[visualScene->getUniqueId()] = s;
 	}
@@ -180,8 +149,13 @@ bool Asset3DColladaFWWriter::writeCamera(const COLLADAFW::Camera* camera) {
 
 /** When this method is called, the writer must write the image.
 @return The writer should return true, if writing succeeded, false otherwise.*/
-bool Asset3DColladaFWWriter::writeImage(const COLLADAFW::Image* image) {
-	std::cout << "writeImage\r\n";
+bool Asset3DColladaFWWriter::writeImage(const COLLADAFW::Image* colladaImage) {
+
+	DAEImageConverter c(&m_context);
+	std::shared_ptr<TextureDescriptor> texture = c.GetNode(colladaImage);
+	if (texture) {
+		m_context.getImageLibrary()[colladaImage->getUniqueId()] = texture;
+	}
 	return true;
 }
 

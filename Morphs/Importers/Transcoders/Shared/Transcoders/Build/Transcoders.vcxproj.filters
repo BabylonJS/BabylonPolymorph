@@ -171,6 +171,12 @@
     <ClCompile Include="..\Source\TranscoderDAE\DAEMeshConverter.cpp">
       <Filter>Source\Importers\ImporterDAE</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\TranscoderDAE\DAEMaterialConverter.cpp">
+      <Filter>Source\Importers\ImporterDAE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\TranscoderDAE\DAEImageConverter.cpp">
+      <Filter>Source\Importers\ImporterDAE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\TranscodersPch.h">
@@ -295,6 +301,9 @@
       <Filter>Public Headers\Importers\ImporterDAE</Filter>
     </ClInclude>
     <ClInclude Include="..\Inc\TranscoderDAE\DAESceneConverter.h">
+      <Filter>Public Headers\Importers\ImporterDAE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\TranscoderDAE\DAEFXConverter.h">
       <Filter>Public Headers\Importers\ImporterDAE</Filter>
     </ClInclude>
   </ItemGroup>

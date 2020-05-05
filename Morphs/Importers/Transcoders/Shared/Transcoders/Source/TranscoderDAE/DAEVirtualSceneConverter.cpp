@@ -9,6 +9,8 @@
 #include <TranscoderDAE/TranscoderDAEUtils.h>
 #include <TranscoderDAE/DAESceneConverter.h>
 
+#include <Asset3D/Asset3D.h>
+
 #include "COLLADAFWVisualScene.h"
 
 
@@ -100,9 +102,9 @@ std::shared_ptr<SceneNode> DAEVirtualSceneConverter ::Convert(const COLLADAFW::N
 }
 
 
-std::shared_ptr<SceneNode> DAEVirtualSceneConverter::Convert(const COLLADAFW::VisualScene* colladaScene) {
+std::shared_ptr<Asset3D> DAEVirtualSceneConverter::Convert(const COLLADAFW::VisualScene* colladaScene) {
 	
-	std::shared_ptr<SceneNode> scene = std::make_shared<SceneNode>();
+	std::shared_ptr<Asset3D> scene = std::make_shared<Asset3D>();
 	scene->SetName(colladaScene->getName());
 
 	/// loop over root nodes
