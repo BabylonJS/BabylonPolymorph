@@ -5,9 +5,8 @@
 ********************************************************/
 #include "TranscodersPch.h"
 
-
 #include <iostream>
-#include <TranscoderDAE/Asset3DColladaFWWriter.h>
+#include <TranscoderDAE/DAEToAsset3DWriter.h>
 #include <TranscoderDAE/DAEGeometryConverter.h>
 #include <TranscoderDAE/DAESceneConverter.h>
 #include <TranscoderDAE/DAEFXConverter.h>
@@ -17,14 +16,17 @@
 #include <COLLADAFWGeometry.h>
 #include <COLLADAFWVisualScene.h>
 #include <COLLADAFWImage.h>
+#include <COLLADAFWEffect.h>
+#include <COLLADAFWLibraryNodes.h>
+
+
 
 #include <COLLADASaxFWLIError.h>
 
 using namespace Babylon::Transcoder; 
 using namespace Babylon::Framework;
 
-
-Asset3DWriterContext::Asset3DWriterContext(IResourceServer* resourceServer, const std::unordered_map<std::string, std::string>& options, ICancellationTokenPtr cancellationToken) :
+DAEToAsset3DWriterContext::DAEToAsset3DWriterContext(IResourceServer* resourceServer, const std::unordered_map<std::string, std::string>& options, ICancellationTokenPtr cancellationToken) :
 	m_options(options),
 	m_cancellationToken(cancellationToken), 
 	m_resourceServer(resourceServer),
@@ -32,46 +34,43 @@ Asset3DWriterContext::Asset3DWriterContext(IResourceServer* resourceServer, cons
 {
 }
 
-Asset3DWriterContext::~Asset3DWriterContext() {
+DAEToAsset3DWriterContext::~DAEToAsset3DWriterContext() {
 }
 
-Asset3DColladaFWWriter::Asset3DColladaFWWriter(IResourceServer* resourceServer, const std::unordered_map<std::string, std::string>& options, ICancellationTokenPtr cancellationToken) :
+DAEToAsset3DWriter::DAEToAsset3DWriter(IResourceServer* resourceServer, const std::unordered_map<std::string, std::string>& options, ICancellationTokenPtr cancellationToken) :
 	m_context(resourceServer, options, cancellationToken)
 {
 }
 
-Asset3DColladaFWWriter::~Asset3DColladaFWWriter() {
+DAEToAsset3DWriter::~DAEToAsset3DWriter() {
 }
 
 /** If this method returns true, the loader stops parsing immediately. If severity is nor CRITICAL
 and this method returns false, the loader continues loading.*/
-bool Asset3DColladaFWWriter::handleError(const COLLADASaxFWL::IError* error) {
-	std::cout << "Error :" << (error ? error->getFullErrorMessage(): "") << "\r\n";
+bool DAEToAsset3DWriter::handleError(const COLLADASaxFWL::IError* error) {
 	return false;
 }
-
 
 /** This method will be called if an error in the loading process occurred and the loader cannot
 continue to to load. The writer should undo all operations that have been performed.
 @param errorMessage A message containing informations about the error that occurred.
 */
-void Asset3DColladaFWWriter::cancel(const COLLADAFW::String& errorMessage) {
-	std::cout << "CANCEL cause of " << errorMessage << "\r\n";
+void DAEToAsset3DWriter::cancel(const COLLADAFW::String& errorMessage) {
 }
 
 /** This is the method called. The writer hast to prepare to receive data.*/
-void Asset3DColladaFWWriter::start() {
-	std::cout << "START\r\n";
+void DAEToAsset3DWriter::start() {
+	/// nothing to do so far
 }
 
 /** This method is called after the last write* method. No other methods will be called after this.*/
-void Asset3DColladaFWWriter::finish() {
-	// nothing to do so far
+void DAEToAsset3DWriter::finish() {
+	/// nothing to do so far
 }
 
 /** When this method is called, the writer must write the global document asset.
 @return The writer should return true, if writing succeeded, false otherwise.*/
-bool Asset3DColladaFWWriter::writeGlobalAsset(const COLLADAFW::FileInfo* asset) {
+bool DAEToAsset3DWriter::writeGlobalAsset(const COLLADAFW::FileInfo* asset) {
 
 	Asset3DWriterContextPtr ctx = getContext();
 	ctx->setUpAxisType(asset->getUpAxisType());
@@ -81,15 +80,14 @@ bool Asset3DColladaFWWriter::writeGlobalAsset(const COLLADAFW::FileInfo* asset) 
 
 /** When this method is called, the writer must write the scene.
 @return The writer should return true, if writing succeeded, false otherwise.*/
-bool Asset3DColladaFWWriter::writeScene(const COLLADAFW::Scene* scene) {
+bool DAEToAsset3DWriter::writeScene(const COLLADAFW::Scene* scene) {
 	m_context.setPrimarySceneId(scene->getInstanceVisualScene()->getInstanciatedObjectId());
 	return true;
 }
 
 /** When this method is called, the writer must write the entire visual scene.
 @return The writer should return true, if writing succeeded, false otherwise.*/
-bool Asset3DColladaFWWriter::writeVisualScene(const COLLADAFW::VisualScene* visualScene) {
-	std::cout << "writeVisualScene\r\n";
+bool DAEToAsset3DWriter::writeVisualScene(const COLLADAFW::VisualScene* visualScene) {
 	DAEVirtualSceneConverter c(&m_context);
 	std::shared_ptr<Asset3D> s = c.GetNode(visualScene);
 	if (s) {
@@ -98,18 +96,50 @@ bool Asset3DColladaFWWriter::writeVisualScene(const COLLADAFW::VisualScene* visu
 	return true;
 }
 
-/** When this method is called, the writer must handle all nodes contained in the
-library nodes.
-@return The writer should return true, if writing succeeded, false otherwise.*/
-bool Asset3DColladaFWWriter::writeLibraryNodes(const COLLADAFW::LibraryNodes* libraryNodes) {
-	std::cout << "writeLibraryNodes\r\n";
+/** 
+ * When this method is called, the writer must handle all nodes contained in the library nodes.
+ * Has sub node MAY contain reference to sibling node, we MUST conduct a Breadth-first algorithm
+ * at the top level instead of Deep-first search. Otherwise we gona miss some node_instance.
+ * ex :
+ * <node id="ID4" name="skp56">
+ *    <node id="ID5" name="instance_1">
+ *        <matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+ *        <instance_node url="#ID6" />
+ *    </node>
+ * </node>
+ * <node id="ID6" name="body_1">
+ * ...
+ * </node>
+ *
+ * @return The writer should return true, if writing succeeded, false otherwise.
+ **/
+bool DAEToAsset3DWriter::writeLibraryNodes(const COLLADAFW::LibraryNodes* colladaLibraryNodes) {
+	
+	COLLADAFW::NodePointerArray nodes = colladaLibraryNodes->getNodes();
+	int count = nodes.getCount();
+	if (count) {
+		/// first pass to bind top nodes to library
+		std::vector<std::shared_ptr<SceneNode>> queue;
+		for (int i = 0; i != count; i++) {
+			std::shared_ptr<SceneNode> n = std::make_shared<SceneNode>();
+			// start to register the node, then it will be available down hierarchy
+			m_context.getNodeLibrary()[nodes[i]->getUniqueId()] = n;
+			queue.push_back(n);
+		}
+
+		/// then fill from collada instance
+		DAENodeConverter c(&m_context);
+		for (int i = 0; i != count; i++) {
+			/// bypass GetNode logic. Check for user cancellation will be done down hierachy.
+			c.Convert(nodes[i], queue[i]);
+		}
+	}
 	return true;
 }
 
 /** When this method is called, the writer must write the geometry.
 @return The writer should return true, if writing succeeded, false otherwise.*/
-bool Asset3DColladaFWWriter::writeGeometry(const COLLADAFW::Geometry* geometry) {
-	std::cout << "writeGeometry " << geometry->getName() << "\r\n";
+bool DAEToAsset3DWriter::writeGeometry(const COLLADAFW::Geometry* geometry) {
 
 	switch (geometry->getType()) {
 		case COLLADAFW::Geometry::GEO_TYPE_MESH: {
@@ -129,27 +159,33 @@ bool Asset3DColladaFWWriter::writeGeometry(const COLLADAFW::Geometry* geometry) 
 
 /** When this method is called, the writer must write the material.
 @return The writer should return true, if writing succeeded, false otherwise.*/
-bool Asset3DColladaFWWriter::writeMaterial(const COLLADAFW::Material* material) {
-	std::cout << "writeMaterial\r\n";
+bool DAEToAsset3DWriter::writeMaterial(const COLLADAFW::Material* colladaMaterial) {
+	/// Collada material is "just" a binding to effect
+	m_context.getMaterialToEffectIndex()[colladaMaterial->getUniqueId()] = colladaMaterial->getInstantiatedEffect();
 	return true;
 }
+
 /** When this method is called, the writer must write the effect.
 @return The writer should return true, if writing succeeded, false otherwise.*/
-bool Asset3DColladaFWWriter::writeEffect(const COLLADAFW::Effect* effect) {
-	std::cout << "writeEffect\r\n";
+bool DAEToAsset3DWriter::writeEffect(const COLLADAFW::Effect* colladaEffect) {
+
+	DAEEffectConverter c(&m_context);
+	std::shared_ptr<MaterialDescriptor> material = c.GetNode(colladaEffect);
+	if (material) {
+		m_context.getEffectLibrary()[colladaEffect->getUniqueId()] = material;
+	}
 	return true;
 }
 
 /** When this method is called, the writer must write the camera.
 @return The writer should return true, if writing succeeded, false otherwise.*/
-bool Asset3DColladaFWWriter::writeCamera(const COLLADAFW::Camera* camera) {
-	std::cout << "writeCamera\r\n";
+bool DAEToAsset3DWriter::writeCamera(const COLLADAFW::Camera* camera) {
 	return true;
 }
 
 /** When this method is called, the writer must write the image.
 @return The writer should return true, if writing succeeded, false otherwise.*/
-bool Asset3DColladaFWWriter::writeImage(const COLLADAFW::Image* colladaImage) {
+bool DAEToAsset3DWriter::writeImage(const COLLADAFW::Image* colladaImage) {
 
 	DAEImageConverter c(&m_context);
 	std::shared_ptr<TextureDescriptor> texture = c.GetNode(colladaImage);
@@ -161,46 +197,42 @@ bool Asset3DColladaFWWriter::writeImage(const COLLADAFW::Image* colladaImage) {
 
 /** When this method is called, the writer must write the light.
 @return The writer should return true, if writing succeeded, false otherwise.*/
-bool Asset3DColladaFWWriter::writeLight(const COLLADAFW::Light* light) {
-	std::cout << "writeLight\r\n";
+bool DAEToAsset3DWriter::writeLight(const COLLADAFW::Light* light) {
 	return true;
 }
 
 /** When this method is called, the writer must write the Animation.
 @return The writer should return true, if writing succeeded, false otherwise.*/
-bool Asset3DColladaFWWriter::writeAnimation(const COLLADAFW::Animation* animation) {
-	std::cout << "writeAnimation\r\n";
+bool DAEToAsset3DWriter::writeAnimation(const COLLADAFW::Animation* animation) {
 	return true;
 }
 
 /** When this method is called, the writer must write the AnimationList.
 @return The writer should return true, if writing succeeded, false otherwise.*/
-bool Asset3DColladaFWWriter::writeAnimationList(const COLLADAFW::AnimationList* animationList) {
-	std::cout << "writeAnimationList\r\n";
+bool DAEToAsset3DWriter::writeAnimationList(const COLLADAFW::AnimationList* animationList) {
 	return true;
 }
 
 /** When this method is called, the writer must write the AnimationClip.
 @return The writer should return true, of writing succeeded, false otherwise.*/
-bool Asset3DColladaFWWriter::writeAnimationClip(const COLLADAFW::AnimationClip* animationClip) {
-	std::cout << "writeAnimationClip\r\n";
+bool DAEToAsset3DWriter::writeAnimationClip(const COLLADAFW::AnimationClip* animationClip) {
 	return true;
 }
 
 /** When this method is called, the writer must write the skin controller data.
 @return The writer should return true, if writing succeeded, false otherwise.*/
-bool Asset3DColladaFWWriter::writeSkinControllerData(const COLLADAFW::SkinControllerData* skinControllerData) {
-	std::cout << "writeSkinControllerData\r\n";
+bool DAEToAsset3DWriter::writeSkinControllerData(const COLLADAFW::SkinControllerData* skinControllerData) {
+	/// nothing to do so far
 	return true;
 }
 
 /** When this method is called, the writer must write the controller.
 @return The writer should return true, if writing succeeded, false otherwise.*/
-bool Asset3DColladaFWWriter::writeController(const COLLADAFW::Controller* controller) {
-	std::cout << "writeController\r\n";
+bool DAEToAsset3DWriter::writeController(const COLLADAFW::Controller* controller) {
 
+	/// just index the skin geometry to keep the geometry part of the export even without controller support
 	const COLLADAFW::UniqueId& src = controller->getSource();
-	m_context.getSkinLibrary()[controller->getUniqueId()] = src;
+	m_context.getControllerToSkinIndex()[controller->getUniqueId()] = src;
 
 	return true;
 }
@@ -208,14 +240,14 @@ bool Asset3DColladaFWWriter::writeController(const COLLADAFW::Controller* contro
 /** When this method is called, the writer must write the formulas. All the formulas of the entire
 COLLADA file are contained in @a formulas.
 @return The writer should return true, if writing succeeded, false otherwise.*/
-bool Asset3DColladaFWWriter::writeFormulas(const COLLADAFW::Formulas* formulas) {
-	std::cout << "writeFormulas\r\n";
+bool DAEToAsset3DWriter::writeFormulas(const COLLADAFW::Formulas* formulas) {
+	/// nothing to do so far
 	return true;
 }
 
 /** When this method is called, the writer must write the kinematics scene.
 @return The writer should return true, if writing succeeded, false otherwise.*/
-bool Asset3DColladaFWWriter::writeKinematicsScene(const COLLADAFW::KinematicsScene* kinematicsScene) {
-	std::cout << "writeKinematicsScene\r\n";
+bool DAEToAsset3DWriter::writeKinematicsScene(const COLLADAFW::KinematicsScene* kinematicsScene) {
+	/// nothing to do so far
 	return true;
 }

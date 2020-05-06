@@ -5,7 +5,7 @@
 ********************************************************/
 #pragma once
 
-#include <TranscoderDAE/AbstractDAEConverter.h>
+#include <TranscoderDAE/DAEConverter.h>
 #include <Asset3D/Mesh.h>
 #include <COLLADAFWGeometry.h>
 #include <COLLADAFWMesh.h>
@@ -14,10 +14,10 @@ namespace Babylon
 {
 	namespace Transcoder
 	{
-		class DAEMeshConverter : public AbstractDAEConverter<COLLADAFW::Mesh, Mesh> {
+		class DAEMeshConverter : public DAEAbstractConverter<COLLADAFW::Mesh, Mesh> {
 		public:
-			DAEMeshConverter(Asset3DWriterContext* context) :
-				AbstractDAEConverter(context) {
+			DAEMeshConverter(DAEToAsset3DWriterContext* context) :
+				DAEAbstractConverter(context) {
 			}
 			std::shared_ptr<Mesh> Convert(const COLLADAFW::Mesh* from);
 		};

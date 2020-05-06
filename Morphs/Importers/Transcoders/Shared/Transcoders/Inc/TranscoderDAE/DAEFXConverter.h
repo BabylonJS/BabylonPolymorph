@@ -5,31 +5,39 @@
 ********************************************************/
 #pragma once
 
-#include <TranscoderDAE/AbstractDAEConverter.h>
+#include <TranscoderDAE/DAEConverter.h>
 #include <Asset3D/MaterialDescriptor.h>
 
 #include <COLLADAFWMaterial.h>
+#include <COLLADAFWTexture.h>
+#include <COLLADAFWSampler.h>
+#include <COLLADAFWEffect.h>
+#include <COLLADAFWEffectCommon.h>
 
 namespace Babylon
 {
 	namespace Transcoder
 	{
 		/// IMAGE converter
-		class DAEImageConverter : public AbstractDAEConverter<COLLADAFW::Image, TextureDescriptor> {
+		class DAEImageConverter : public DAEAbstractConverter<COLLADAFW::Image, TextureDescriptor> {
 		public:
-			DAEImageConverter(Asset3DWriterContext* context) :
-				AbstractDAEConverter(context) {
+			DAEImageConverter(DAEToAsset3DWriterContext* context) :
+				DAEAbstractConverter(context) {
 			}
 			std::shared_ptr<TextureDescriptor> Convert(const COLLADAFW::Image* from);
 		};
 
 		/// Material converter
-		class DAEMaterialConverter : public AbstractDAEConverter<COLLADAFW::Material, MaterialDescriptor> {
+		class DAEEffectConverter : public DAEAbstractConverter<COLLADAFW::Effect, MaterialDescriptor> {
 		public:
-			DAEMaterialConverter(Asset3DWriterContext* context) :
-				AbstractDAEConverter(context) {
+			DAEEffectConverter(DAEToAsset3DWriterContext* context) :
+				DAEAbstractConverter(context) {
 			}
-			std::shared_ptr<MaterialDescriptor> Convert(const COLLADAFW::Material* from);
+
+			std::shared_ptr<TextureDescriptor> fromColladaTexture(const COLLADAFW::EffectCommon* effectCommon, COLLADAFW::Texture colladaTexture);
+			std::shared_ptr<TextureDescriptor> fromColladaTexture(const COLLADAFW::EffectCommon* effectCommon, COLLADAFW::SamplerID samplerId);
+
+			std::shared_ptr<MaterialDescriptor> Convert(const COLLADAFW::Effect* from);
 		};
 
 	}

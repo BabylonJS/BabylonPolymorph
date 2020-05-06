@@ -159,9 +159,6 @@
     <ClCompile Include="..\Source\TranscoderDAE\TranscoderDAE.cpp">
       <Filter>Source\Importers\ImporterDAE</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\TranscoderDAE\Asset3DColladaFWWriter.cpp">
-      <Filter>Source\Importers\ImporterDAE</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\TranscoderDAE\TranscoderDAEUtils.cpp">
       <Filter>Source\Importers\ImporterDAE</Filter>
     </ClCompile>
@@ -171,10 +168,16 @@
     <ClCompile Include="..\Source\TranscoderDAE\DAEMeshConverter.cpp">
       <Filter>Source\Importers\ImporterDAE</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\TranscoderDAE\DAEMaterialConverter.cpp">
+    <ClCompile Include="..\Source\TranscoderDAE\DAEImageConverter.cpp">
       <Filter>Source\Importers\ImporterDAE</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\TranscoderDAE\DAEImageConverter.cpp">
+    <ClCompile Include="..\Source\TranscoderDAE\DAEToAsset3DWriter.cpp">
+      <Filter>Source\Importers\ImporterDAE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\TranscoderDAE\DAEEffectConverter.cpp">
+      <Filter>Source\Importers\ImporterDAE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\TranscoderDAE\DAENodeConverter.cpp">
       <Filter>Source\Importers\ImporterDAE</Filter>
     </ClCompile>
   </ItemGroup>
@@ -282,16 +285,10 @@
     <ClInclude Include="..\Inc\ExporterGLTF\ExtensionsMSFT.h">
       <Filter>Public Headers\Exporters\ExporterGLTF</Filter>
     </ClInclude>
-    <ClInclude Include="..\Inc\TranscoderDAE\Asset3DColladaFWWriter.h">
-      <Filter>Public Headers\Importers\ImporterDAE</Filter>
-    </ClInclude>
     <ClInclude Include="..\Inc\TranscoderDAE\TranscoderDAE.h">
       <Filter>Public Headers\Importers\ImporterDAE</Filter>
     </ClInclude>
     <ClInclude Include="..\Inc\TranscoderDAE\DAEGeometryConverter.h">
-      <Filter>Public Headers\Importers\ImporterDAE</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Inc\TranscoderDAE\AbstractDAEConverter.h">
       <Filter>Public Headers\Importers\ImporterDAE</Filter>
     </ClInclude>
     <ClInclude Include="..\Inc\TranscoderDAE\TranscoderDAEConfig.h">
@@ -304,6 +301,12 @@
       <Filter>Public Headers\Importers\ImporterDAE</Filter>
     </ClInclude>
     <ClInclude Include="..\Inc\TranscoderDAE\DAEFXConverter.h">
+      <Filter>Public Headers\Importers\ImporterDAE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\TranscoderDAE\DAEToAsset3DWriter.h">
+      <Filter>Public Headers\Importers\ImporterDAE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\TranscoderDAE\DAEConverter.h">
       <Filter>Public Headers\Importers\ImporterDAE</Filter>
     </ClInclude>
   </ItemGroup>

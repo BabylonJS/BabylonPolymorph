@@ -6,7 +6,7 @@
 #include "TranscodersPch.h"
 
 #include <TranscoderDAE/TranscoderDAE.h>
-#include <TranscoderDAE/Asset3DColladaFWWriter.h>
+#include <TranscoderDAE/DAEToAsset3DWriter.h>
 #include "TranscoderException.h"
 
 
@@ -55,7 +55,7 @@ std::shared_ptr<Asset3D> Babylon::Transcoder::ImportDAE(
 			throw TranscoderResourceFailedException("unable to read. " + filename);
 		}
 
-		Asset3DColladaFWWriter writer(resourceServer,options,cancellationToken) ;
+		DAEToAsset3DWriter writer(resourceServer,options,cancellationToken) ;
 		COLLADASaxFWL::IErrorHandler* errorHandler = (COLLADASaxFWL::IErrorHandler*) &writer;
 		COLLADASaxFWL::Loader* loader = new COLLADASaxFWL::Loader(errorHandler);
 		loader->registerExternalReferenceDeciderCallbackFunction(ShouldBeLoaded);

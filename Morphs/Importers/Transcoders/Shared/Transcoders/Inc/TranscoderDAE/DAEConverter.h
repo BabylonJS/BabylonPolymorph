@@ -14,25 +14,25 @@
 #include <COLLADAFWUniqueId.h>
 #include <COLLADAFWObject.h>
 
-#include <TranscoderDAE/Asset3DColladaFWWriter.h>
+#include <TranscoderDAE/DAEToAsset3DWriter.h>
 
 namespace Babylon
 {
 	namespace Transcoder
 	{
 		template<typename F = COLLADAFW::Object, typename T = SceneNode>
-		class AbstractDAEConverter {
+		class DAEAbstractConverter {
 
 		protected:
-			Asset3DWriterContext* m_context;
+			DAEToAsset3DWriterContext* m_context;
 
 		public:
-			AbstractDAEConverter(Asset3DWriterContext * context) :
+			DAEAbstractConverter(DAEToAsset3DWriterContext * context) :
 				m_context(context)
 			{
 			}
 
-			~AbstractDAEConverter() {
+			~DAEAbstractConverter() {
 			}
 
 			inline std::shared_ptr<T> GetNode(const F* from) {
@@ -42,7 +42,7 @@ namespace Babylon
 				return  this->Convert(from);
 			}
 
-			inline Asset3DWriterContext* getContext() { return m_context; }
+			inline DAEToAsset3DWriterContext* getContext() { return m_context; }
 
 			virtual std::shared_ptr<T> Convert(const F* from) = 0;
 		};
