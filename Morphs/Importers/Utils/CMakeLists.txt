@@ -1,0 +1,5 @@
+add_subdirectory(CoreUtils)
+add_subdirectory(Framework)
+add_subdirectory(CanvasTex)
+add_subdirectory(ImagingComponent)
+add_subdirectory(Asset3D)

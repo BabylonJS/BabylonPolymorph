@@ -1,0 +1,18 @@
+cmake_minimum_required(VERSION 2.8.2)
+
+project(DirectXTex-download NONE)
+
+include(ExternalProject)
+ExternalProject_Add(DirectXTex
+  # Code from https://github.com/Microsoft/DirectXTex.git
+  # Branch "master"
+  # Commit 3950756b534e42de1ada8222398fbc1ac7432fca
+  GIT_REPOSITORY    https://github.com/microsoft/DirectXTex.git
+  GIT_TAG           3950756b534e42de1ada8222398fbc1ac7432fca
+  SOURCE_DIR        "${CMAKE_BINARY_DIR}/DirectXTex-src"
+  BINARY_DIR        "${CMAKE_BINARY_DIR}/DirectXTex-build"
+  CONFIGURE_COMMAND ""
+  BUILD_COMMAND     ""
+  INSTALL_COMMAND   ""
+  TEST_COMMAND      ""
+)
