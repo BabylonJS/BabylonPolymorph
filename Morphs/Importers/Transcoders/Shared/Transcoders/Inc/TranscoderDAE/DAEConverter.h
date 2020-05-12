@@ -15,12 +15,13 @@
 #include <COLLADAFWObject.h>
 
 #include <TranscoderDAE/DAEToAsset3DWriter.h>
+#include <TranscoderDAE/DAEAsset3DBuilder.h>
 
 namespace Babylon
 {
 	namespace Transcoder
 	{
-		template<typename F = COLLADAFW::Object, typename T = SceneNode>
+		template<typename F, typename T>
 		class DAEAbstractConverter {
 
 		protected:

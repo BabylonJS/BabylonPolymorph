@@ -8,129 +8,68 @@
 #include <TranscoderDAE/TranscoderDAEConfig.h>
 #include <TranscoderDAE/TranscoderDAEUtils.h>
 #include <TranscoderDAE/DAEFXConverter.h>
+#include <TranscoderDAE/DAETextureBuilder.h>
+#include <TranscoderDAE/DAEFXBuilder.h>
+
+#include <CoreUtils/Math/SimpleMath.h>
 
 #include <COLLADAFWEffect.h>
 #include <COLLADAFWEffectCommon.h>
 
+
 using namespace Babylon::Transcoder;
 
-namespace {
+#define _ToColor(c)  Babylon::Utils::Math::Color(c.getRed(),c.getGreen(), c.getBlue(),c.getAlpha())
 
-	void packColladaColor(COLLADAFW::Color color, float* packArray) {
-		packArray[0] = (float)color.getRed();
-		packArray[1] = (float)color.getGreen();
-		packArray[2] = (float)color.getBlue();
-		packArray[3] = (float)color.getAlpha();
+
+
+std::shared_ptr<MaterialDescriptor::LayerInfo> DAEEffectConverter::SetLayer(const COLLADAFW::EffectCommon* effectCommon, const COLLADAFW::ColorOrTexture* src, std::shared_ptr<DAEMaterialBuilder> material) {
+
+	std::shared_ptr<MaterialDescriptor::LayerInfo> layer = nullptr;
+
+	if (src->isTexture()) {
+		layer = std::make_shared<LayerInfo>();
+		COLLADAFW::Texture colladaTexture = src->getTexture();
+		const COLLADAFW::SamplerPointerArray& colladaSamplers = effectCommon->getSamplerPointerArray();
+		COLLADAFW::Sampler* colladaSampler = (COLLADAFW::Sampler*)colladaSamplers[colladaTexture.getSamplerId()];
+		std::shared_ptr<DAETextureBuilder> tb = getContext()->getImageLibrary()[colladaSampler->getSourceImage()];
+		if (tb) {
+			layer->Texture = tb->Build();
+			std::shared_ptr<MaterialLayer::TextureSampler> sampler = std::make_shared<MaterialLayer::TextureSampler>();
+			layer->Sampler = *sampler;
+		}
+	} else if (src->isColor()) {
+		layer = std::make_shared<LayerInfo>();
+		const COLLADAFW::Color& color = src->getColor();
+		layer->SetColor(_ToColor(color));
 	}
-
-	void UpdateLayerTextureParams(	const std::shared_ptr<MaterialDescriptor::LayerInfo>& layer, 
-									const std::shared_ptr<TextureDescriptor>& texture, 
-									const std::shared_ptr<MaterialLayer::TextureSampler>& sampler, 
-									const COLLADAFW::Texture & colladaTexture)
-	{
-		layer->Texture = texture;
-		layer->Sampler = *sampler;
-		//layer->UVSetIndex = static_cast<uint32_t>(gltfTextureInfo.texCoord);
-
-		//if (gltfTextureInfo.HasExtension<glTF::KHR::TextureInfos::TextureTransform>())
-		//{
-		//	const auto& gltfTextureTransform = gltfTextureInfo.GetExtension<glTF::KHR::TextureInfos::TextureTransform>();
-
-		//	layer->TextureTransform = Babylon::Utils::glTF::GetTextureTransformMatrix(gltfTextureTransform);
-
-		//	if (gltfTextureTransform.texCoord)
-		//	{
-		//		layer->UVSetIndex = static_cast<uint32_t>(gltfTextureTransform.texCoord.Get());
-		//	}
-		//}
-	}
-}
-
-std::shared_ptr<TextureDescriptor> DAEEffectConverter::fromColladaTexture(const COLLADAFW::EffectCommon* effectCommon, COLLADAFW::SamplerID samplerId) {
-	const COLLADAFW::SamplerPointerArray& samplers = effectCommon->getSamplerPointerArray();
-	COLLADAFW::Sampler* colladaSampler = (COLLADAFW::Sampler*)samplers[samplerId];
-	return getContext()->getImageLibrary()[colladaSampler->getSourceImage()];
-}
-
-std::shared_ptr<TextureDescriptor> DAEEffectConverter::fromColladaTexture(const COLLADAFW::EffectCommon* effectCommon, COLLADAFW::Texture colladaTexture) {
-	return fromColladaTexture(effectCommon, colladaTexture.getSamplerId());
+	return layer;
 }
 
 
-std::shared_ptr<MaterialDescriptor> DAEEffectConverter::Convert(const COLLADAFW::Effect * effect) {
-	std::shared_ptr<MaterialDescriptor> material = nullptr; 
+std::shared_ptr<DAEMaterialBuilder> DAEEffectConverter::Convert(const COLLADAFW::Effect * effect) {
+	
+	std::shared_ptr<DAEMaterialBuilder> materialBuilderPtr = std::make_shared<DAEMaterialBuilder>(getContext());
+	materialBuilderPtr->WithName(effect->getName().empty() ? effect->getOriginalId() : effect->getName());
+
+	/** 
+	 * The <profile_COMMON> elements encapsulate all the values and declarations for a platform-independent 
+	 * fixed-function shader. All platforms are required to support <profile_COMMON>. <profile_COMMON>
+	 * effects are designed to be used as the reliable fallback when no other profile is recognized by the
+	 * current effects runtime. 
+	 * ONE effect makes ONE material, it really isn't possible to process more than one of these
+	 */
 	const COLLADAFW::CommonEffectPointerArray & commonEffects = effect->getCommonEffects();
-
 	if (commonEffects.getCount() > 0) {
 
-		material = std::make_shared<MaterialDescriptor>();
-		COLLADAFW::UniqueId effectId = effect->getUniqueId();
-		std::map<std::string, std::shared_ptr<TextureDescriptor>> textureMapping;
-
-		material->SetName(effect->getName().empty()? effect->getOriginalId() : effect->getName());
-
-		/// One effect makes one template material, it really isn't possible to process more than one of these
+		/// non sens to get more than one common effect
 		const COLLADAFW::EffectCommon* effectCommon = commonEffects[0];
-		
-		//switch (effectCommon->getShaderType()) {
-		//case COLLADAFW::EffectCommon::SHADER_BLINN:
-		//	material->technique = GLTF::MaterialCommon::BLINN;
-		//	break;
-		//case COLLADAFW::EffectCommon::SHADER_CONSTANT:
-		//	material->technique = GLTF::MaterialCommon::CONSTANT;
-		//	break;
-		//case COLLADAFW::EffectCommon::SHADER_PHONG:
-		//	material->technique = GLTF::MaterialCommon::PHONG;
-		//	break;
-		//case COLLADAFW::EffectCommon::SHADER_LAMBERT:
-		//	material->technique = GLTF::MaterialCommon::LAMBERT;
-		//	break;
-		//}
 
-		//bool lockAmbientDiffuse = _extrasHandler->lockAmbientDiffuse.find(effect->getUniqueId()) != _extrasHandler->lockAmbientDiffuse.end();
+		materialBuilderPtr->WithEmissive(SetLayer(effectCommon, &effectCommon->getEmission(), materialBuilderPtr))
+						.WithDiffuse(SetLayer(effectCommon, &effectCommon->getDiffuse(), materialBuilderPtr))
+						.WithSpecular(SetLayer(effectCommon, &effectCommon->getSpecular(), materialBuilderPtr));
 
-		//if (!lockAmbientDiffuse) {
-		//	COLLADAFW::ColorOrTexture ambient = effectCommon->getAmbient();
-		//	if (ambient.isTexture()) {
-		//		material->values->ambientTexture = fromColladaTexture(effectCommon, ambient.getTexture());
-		//		textureMapping[ambient.getTexture().getTexcoord()] = material->values->ambientTexture;
-		//	}
-		//	else if (ambient.isColor()) {
-		//		material->values->ambient = new float[4];
-		//		packColladaColor(ambient.getColor(), material->values->ambient);
-		//	}
-		//}
 
-		//COLLADAFW::ColorOrTexture diffuse = effectCommon->getDiffuse();
-		//if (diffuse.isTexture()) {
-		//	std::shared_ptr<MaterialLayer::TextureSampler> sampler;
-		//	auto layer = material->AddLayer(LayerType::kDiffuse);
-		//	auto texture = fromColladaTexture(effectCommon, diffuse.getTexture());
-		//	textureMapping[diffuse.getTexture().getTexcoord()] = texture;
-
-		//	UpdateLayerTextureParams(layer, texture, sampler, mat.diffuseTexture);
-
-		//	//if (lockAmbientDiffuse) {
-		//	//	material->values->ambientTexture = material->values->diffuseTexture;
-		//	//}
-		//}
-		//else if (diffuse.isColor()) {
-		//	material->values->diffuse = new float[4];
-		//	packColladaColor(diffuse.getColor(), material->values->diffuse);
-		//	if (lockAmbientDiffuse) {
-		//		material->values->ambient = material->values->diffuse;
-		//	}
-		//}
-
-		//COLLADAFW::ColorOrTexture emission = effectCommon->getEmission();
-		//if (emission.isTexture()) {
-		//	material->values->emissionTexture = fromColladaTexture(effectCommon, emission.getTexture());
-		//	textureMapping[emission.getTexture().getTexcoord()] = material->values->emissionTexture;
-		//}
-		//else if (emission.isColor()) {
-		//	material->values->emission = new float[4];
-		//	packColladaColor(emission.getColor(), material->values->emission);
-		//}
 
 		//COLLADAFW::ColorOrTexture specular = effectCommon->getSpecular();
 		//if (specular.isTexture()) {
@@ -218,5 +157,5 @@ std::shared_ptr<MaterialDescriptor> DAEEffectConverter::Convert(const COLLADAFW:
 		//_effectInstances[effectId] = material;
 	}
 
-	return material;
+	return materialBuilderPtr;
 }

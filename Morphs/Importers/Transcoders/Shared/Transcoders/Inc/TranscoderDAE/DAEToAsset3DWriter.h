@@ -15,7 +15,6 @@
 #include <COLLADASaxFWLLoader.h>
 #include <COLLADASaxFWLIErrorHandler.h>
 
-
 namespace Babylon
 {
     namespace Transcoder
@@ -24,8 +23,10 @@ namespace Babylon
 		class Mesh;
 		class SceneNode;
 		class IResourceServer;
-		class TextureDescriptor;
-		class MaterialDescriptor;
+
+		class DAEMeshBuilder;
+		class DAETextureBuilder;
+		class DAEMaterialBuilder;
 
 		class DAEToAsset3DWriterContext {
 		public:
@@ -39,15 +40,16 @@ namespace Babylon
 
 			COLLADAFW::FileInfo::UpAxisType upAxis = defaultUpAxis;
 
-			std::map<COLLADAFW::UniqueId, std::shared_ptr<Mesh>> m_geometryLibrary;
+			/// builders.
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAEMeshBuilder>> m_geometryLibrary;
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAETextureBuilder>> m_imageLibrary;
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAEMaterialBuilder>> m_effectLibrary;
+
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<Asset3D>> m_visualSceneLibrary;
-			std::map<COLLADAFW::UniqueId, std::shared_ptr<TextureDescriptor>> m_imageLibrary;
-			std::map<COLLADAFW::UniqueId, std::shared_ptr<MaterialDescriptor>> m_effectLibrary;
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<SceneNode>> m_nodeLibrary;
 			std::map<COLLADAFW::UniqueId, COLLADAFW::UniqueId> m_materialToEffectIndex;
 			// THIS IS TEMPORARY BINDING TO ALLOW SCENE MOUNT GEOMETRY WITH CONTROLLER WITHOUT THE CONTROLLER LIBRARY SUPPORT - Version 0.1.
 			std::map<COLLADAFW::UniqueId, COLLADAFW::UniqueId> m_controllerToSkinIndex;
-
 			COLLADAFW::UniqueId m_primarySceneId;
 
 		public:
@@ -64,7 +66,7 @@ namespace Babylon
 				return m_resourceServer;
 			}
 
-			std::map<COLLADAFW::UniqueId, std::shared_ptr<Mesh>>& getGeometryLibrary() {
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAEMeshBuilder>>& getGeometryLibrary() {
 				return m_geometryLibrary;
 			}			
 			
@@ -72,11 +74,11 @@ namespace Babylon
 				return m_visualSceneLibrary;
 			}
 
-			std::map<COLLADAFW::UniqueId, std::shared_ptr<TextureDescriptor>>& getImageLibrary() {
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAETextureBuilder>>& getImageLibrary() {
 				return m_imageLibrary;
 			}
 
-			std::map<COLLADAFW::UniqueId, std::shared_ptr<MaterialDescriptor>>& getEffectLibrary() {
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAEMaterialBuilder>>& getEffectLibrary() {
 				return m_effectLibrary;
 			}
 
@@ -124,7 +126,7 @@ namespace Babylon
 
 		};
 
-		typedef DAEToAsset3DWriterContext* Asset3DWriterContextPtr;
+		typedef DAEToAsset3DWriterContext* DAEToAsset3DWriterContextPtr;
 
 		/**
 		 * Use this class to handle parsed collada assets 
@@ -138,7 +140,7 @@ namespace Babylon
 			DAEToAsset3DWriter(IResourceServer* resourceServer, const std::unordered_map<std::string, std::string>& options, Framework::ICancellationTokenPtr cancellationToken);
 			~DAEToAsset3DWriter();
 
-			inline const Asset3DWriterContextPtr getContext() { return &(this->m_context); }
+			inline const DAEToAsset3DWriterContextPtr getContext() { return &(this->m_context); }
 			inline std::shared_ptr<Asset3D> getAsset3D() { 
 				return m_context.getVisualSceneLibrary()[m_context.getPrimarySceneId()];
 			}

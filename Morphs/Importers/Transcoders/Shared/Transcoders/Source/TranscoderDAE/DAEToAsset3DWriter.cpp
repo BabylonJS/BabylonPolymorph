@@ -10,6 +10,8 @@
 #include <TranscoderDAE/DAEGeometryConverter.h>
 #include <TranscoderDAE/DAESceneConverter.h>
 #include <TranscoderDAE/DAEFXConverter.h>
+#include <TranscoderDAE/DAEGeometryBuilder.h>
+#include <TranscoderDAE/DAEFXBuilder.h>
 
 #include <Asset3D\Asset3D.h>
 
@@ -18,7 +20,6 @@
 #include <COLLADAFWImage.h>
 #include <COLLADAFWEffect.h>
 #include <COLLADAFWLibraryNodes.h>
-
 
 
 #include <COLLADASaxFWLIError.h>
@@ -72,7 +73,7 @@ void DAEToAsset3DWriter::finish() {
 @return The writer should return true, if writing succeeded, false otherwise.*/
 bool DAEToAsset3DWriter::writeGlobalAsset(const COLLADAFW::FileInfo* asset) {
 
-	Asset3DWriterContextPtr ctx = getContext();
+	DAEToAsset3DWriterContextPtr ctx = getContext();
 	ctx->setUpAxisType(asset->getUpAxisType());
 
 	return true;
@@ -144,7 +145,7 @@ bool DAEToAsset3DWriter::writeGeometry(const COLLADAFW::Geometry* geometry) {
 	switch (geometry->getType()) {
 		case COLLADAFW::Geometry::GEO_TYPE_MESH: {
 			DAEMeshConverter c( &m_context);
-			std::shared_ptr<Mesh> m = c.GetNode((COLLADAFW::Mesh*)geometry);
+			std::shared_ptr<DAEMeshBuilder> m = c.GetNode((COLLADAFW::Mesh*)geometry);
 			if (m) {
 				m_context.getGeometryLibrary()[geometry->getUniqueId()] = m;
 			}
@@ -170,7 +171,7 @@ bool DAEToAsset3DWriter::writeMaterial(const COLLADAFW::Material* colladaMateria
 bool DAEToAsset3DWriter::writeEffect(const COLLADAFW::Effect* colladaEffect) {
 
 	DAEEffectConverter c(&m_context);
-	std::shared_ptr<MaterialDescriptor> material = c.GetNode(colladaEffect);
+	std::shared_ptr<DAEMaterialBuilder> material = c.GetNode(colladaEffect);
 	if (material) {
 		m_context.getEffectLibrary()[colladaEffect->getUniqueId()] = material;
 	}
@@ -188,7 +189,7 @@ bool DAEToAsset3DWriter::writeCamera(const COLLADAFW::Camera* camera) {
 bool DAEToAsset3DWriter::writeImage(const COLLADAFW::Image* colladaImage) {
 
 	DAEImageConverter c(&m_context);
-	std::shared_ptr<TextureDescriptor> texture = c.GetNode(colladaImage);
+	std::shared_ptr<DAETextureBuilder> texture = c.GetNode(colladaImage);
 	if (texture) {
 		m_context.getImageLibrary()[colladaImage->getUniqueId()] = texture;
 	}

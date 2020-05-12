@@ -76,6 +76,12 @@
     <Filter Include="Source\Importers\ImporterDAE">
       <UniqueIdentifier>{3d05deee-e25a-458e-bc59-d58d369b2d3c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Public Headers\Importers\ImporterDAE\Builders">
+      <UniqueIdentifier>{8cbe7c58-eab4-44ad-97a7-cecd28748edf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public Headers\Importers\ImporterDAE\Converters">
+      <UniqueIdentifier>{75c6bb76-aa6a-4d40-b29b-6e25a7a13a61}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -288,19 +294,10 @@
     <ClInclude Include="..\Inc\TranscoderDAE\TranscoderDAE.h">
       <Filter>Public Headers\Importers\ImporterDAE</Filter>
     </ClInclude>
-    <ClInclude Include="..\Inc\TranscoderDAE\DAEGeometryConverter.h">
-      <Filter>Public Headers\Importers\ImporterDAE</Filter>
-    </ClInclude>
     <ClInclude Include="..\Inc\TranscoderDAE\TranscoderDAEConfig.h">
       <Filter>Public Headers\Importers\ImporterDAE</Filter>
     </ClInclude>
     <ClInclude Include="..\Inc\TranscoderDAE\TranscoderDAEUtils.h">
-      <Filter>Public Headers\Importers\ImporterDAE</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Inc\TranscoderDAE\DAESceneConverter.h">
-      <Filter>Public Headers\Importers\ImporterDAE</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Inc\TranscoderDAE\DAEFXConverter.h">
       <Filter>Public Headers\Importers\ImporterDAE</Filter>
     </ClInclude>
     <ClInclude Include="..\Inc\TranscoderDAE\DAEToAsset3DWriter.h">
@@ -308,6 +305,30 @@
     </ClInclude>
     <ClInclude Include="..\Inc\TranscoderDAE\DAEConverter.h">
       <Filter>Public Headers\Importers\ImporterDAE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\TranscoderDAE\DAEFXConverter.h">
+      <Filter>Public Headers\Importers\ImporterDAE\Converters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\TranscoderDAE\DAESceneConverter.h">
+      <Filter>Public Headers\Importers\ImporterDAE\Converters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\TranscoderDAE\DAEGeometryConverter.h">
+      <Filter>Public Headers\Importers\ImporterDAE\Converters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\TranscoderDAE\DAEAsset3DBuilder.h">
+      <Filter>Public Headers\Importers\ImporterDAE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\TranscoderDAE\DAEGeometryBuilder.h">
+      <Filter>Public Headers\Importers\ImporterDAE\Builders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\TranscoderDAE\DAEMeshBuilder.h">
+      <Filter>Public Headers\Importers\ImporterDAE\Builders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\TranscoderDAE\DAETextureBuilder.h">
+      <Filter>Public Headers\Importers\ImporterDAE\Builders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\TranscoderDAE\DAEFXBuilder.h">
+      <Filter>Public Headers\Importers\ImporterDAE\Builders</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
