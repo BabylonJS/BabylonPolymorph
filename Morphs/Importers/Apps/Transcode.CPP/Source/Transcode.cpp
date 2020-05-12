@@ -12,6 +12,7 @@
 #include <CoreUtils/Trace.h>
 
 #include <Transcoders.h>
+#include <PluginSKP/PluginSKP.h>
 
 DEFINE_TRACE_AREA(Transcode_CPP, 0);
 
@@ -77,12 +78,25 @@ namespace
     private:
         std::string m_baseDirectory;
     };
+	
+	    void CheckAndInitializeImportFormat(const std::string& format)
+    {
+#if CANVAS_CAN_USE_SKP()
+        // Register SKP importer if necessary
+        if (format == "skp" && !Babylon::Transcoder::HasImporter("skp"))
+        {
+            Babylon::Transcoder::RegisterImportFunction("skp", Babylon::Transcoder::ImportSKP);
+        }
+#endif
+    }
 
     std::shared_ptr<Babylon::Transcoder::Asset3D> Import(const std::string& inputFilePath, const std::unordered_map<std::string, std::string>& importOptions)
     {
         auto inputFileExtension = Babylon::Utils::GetPathFileExtensionLower(inputFilePath);
         auto inputFileName      = Babylon::Utils::GetPathFileName(inputFilePath);
         auto inputFileDirectory = Babylon::Utils::GetPathDirectory(inputFilePath);
+
+        CheckAndInitializeImportFormat(inputFileExtension);
 
         auto resourceServer = std::make_shared<ResourceServer>(std::move(inputFileDirectory));
         auto asset3d = Babylon::Transcoder::Import(inputFileExtension, inputFileName, resourceServer.get(), importOptions);
