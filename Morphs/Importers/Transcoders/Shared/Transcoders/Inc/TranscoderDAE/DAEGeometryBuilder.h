@@ -44,7 +44,6 @@ namespace Babylon
 			{
 			}
 
-
 			std::shared_ptr<Geometry> Build() {
 				std::shared_ptr<Geometry> geom = std::make_shared<Geometry>(m_material ? m_material : m_defaultMaterial);
 				if (m_indices.size()) {
