@@ -6,25 +6,31 @@
 #pragma once
 
 #include <TranscoderDAE/DAEAsset3DBuilder.h>
+#include <TranscoderDAE/DAEFXBuilder.h>
 
 namespace Babylon
 {
 	namespace Transcoder
 	{
 #define UV_CHANNEL_NONE -1
+#define UV_CHANNEL_ZERO  0
+#define UV_CHANNEL_ZERO  1
 
 		class DAEGeometryBuilder : public DAEAsset3DBuilder<Geometry> {
 
 		private:
-			GeometryTopology m_topo;
-
-			/// default material 
-			std::shared_ptr<MaterialDescriptor> m_defaultMaterial;
-			std::shared_ptr<MaterialDescriptor> m_material;
-
 			int16_t m_uvChannel0;
 			int16_t m_uvChannel1;
+			std::shared_ptr<DAEMaterialBuilder> m_materialBuilder;
 
+			struct {
+				int16_t m_uvChannel0;
+				int16_t m_uvChannel1;
+				std::shared_ptr<DAEMaterialBuilder> m_materialBuilder;
+			} saved;
+
+			GeometryTopology m_topo;
+			std::string m_materialName;
 			std::vector<uint32_t> m_indices;
 			std::vector<Babylon::Utils::Math::Vector3> m_positions;
 			std::vector<Babylon::Utils::Math::Vector3> m_normals;
@@ -36,16 +42,18 @@ namespace Babylon
 
 		public:
 			DAEGeometryBuilder(DAEToAsset3DWriterContextPtr context) : DAEAsset3DBuilder(context), 
-				m_topo(GeometryTopology::kTriangles),
-				m_defaultMaterial(nullptr),
-				m_material(nullptr),
 				m_uvChannel0(UV_CHANNEL_NONE),
 				m_uvChannel1(UV_CHANNEL_NONE)
 			{
+				m_topo = GeometryTopology::kTriangles;
+				Save();
 			}
 
 			std::shared_ptr<Geometry> Build() {
-				std::shared_ptr<Geometry> geom = std::make_shared<Geometry>(m_material ? m_material : m_defaultMaterial);
+
+				std::shared_ptr<MaterialDescriptor> desc = m_materialBuilder ? m_materialBuilder->Build() : nullptr;
+				std::shared_ptr<Geometry> geom = std::make_shared<Geometry>(desc);
+				geom->SetTopology(m_topo);
 				if (m_indices.size()) {
 					geom->SetIndices(m_indices);
 				}
@@ -79,13 +87,13 @@ namespace Babylon
 				return *this;
 			}
 
-			inline DAEGeometryBuilder& WithDefaultMaterial(std::shared_ptr<MaterialDescriptor> material) {
-				m_defaultMaterial = material;
+			inline DAEGeometryBuilder& WithMaterialName(std::string materialName) {
+				m_materialName = materialName;
 				return *this;
 			}
 
-			inline DAEGeometryBuilder& WithMaterial(std::shared_ptr<MaterialDescriptor> material) {
-				m_material = material;
+			inline DAEGeometryBuilder& WithMaterial(std::shared_ptr<DAEMaterialBuilder> material) {
+				m_materialBuilder = material;
 				return *this;
 			}
 
@@ -136,6 +144,24 @@ namespace Babylon
 			inline DAEGeometryBuilder& WithChannel1(int16_t channel)
 			{
 				m_uvChannel1 = channel;
+				return *this;
+			}
+
+			inline const std::string& GetMaterialName() {
+				return m_materialName;
+			}
+
+			inline DAEGeometryBuilder& Save() {
+				saved.m_materialBuilder = m_materialBuilder;
+				saved.m_uvChannel0 = m_uvChannel0;
+				saved.m_uvChannel1 = m_uvChannel1;
+				return *this;
+			}
+
+			inline DAEGeometryBuilder& Restore() {
+				m_materialBuilder = saved.m_materialBuilder;
+				m_uvChannel0 = saved.m_uvChannel0;
+				m_uvChannel1 = saved.m_uvChannel1;
 				return *this;
 			}
 		};

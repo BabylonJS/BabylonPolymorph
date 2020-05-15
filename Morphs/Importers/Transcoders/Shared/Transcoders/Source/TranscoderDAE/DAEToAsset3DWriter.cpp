@@ -29,14 +29,45 @@ using namespace Babylon::Framework;
 
 DAEToAsset3DWriterContext::DAEToAsset3DWriterContext(IResourceServer* resourceServer, const std::unordered_map<std::string, std::string>& options, ICancellationTokenPtr cancellationToken) :
 	m_options(options),
-	m_cancellationToken(cancellationToken), 
-	m_resourceServer(resourceServer),
-	upAxis(defaultUpAxis)
+	m_cancellationToken(cancellationToken),
+	m_resourceServer(resourceServer)
 {
+	setUpAxisType(defaultUpAxis);
 }
 
 DAEToAsset3DWriterContext::~DAEToAsset3DWriterContext() {
 }
+
+void DAEToAsset3DWriterContext::setUpAxisType(COLLADAFW::FileInfo::UpAxisType t) {
+	m_upAxis = t;
+	switch (t) {
+	case COLLADAFW::FileInfo::UpAxisType::X_UP: {
+		m_upAxisTransform = Babylon::Utils::Math::Matrix(
+			0, 1, 0, 0,
+			-1, 0, 0, 0,
+			0, 0, 1, 0,
+			0, 0, 0, 1
+		);
+		break;
+	}
+	case COLLADAFW::FileInfo::UpAxisType::Z_UP: {
+		m_upAxisTransform = Babylon::Utils::Math::Matrix(
+			1, 0, 0, 0,
+			0, 0, -1, 0,
+			0, 1, 0, 0,
+			0, 0, 0, 1
+		);
+		break;
+	}
+	case COLLADAFW::FileInfo::UpAxisType::Y_UP:
+	default: {
+		m_upAxisTransform = Babylon::Utils::Math::Matrix::Identity;
+		break;
+	}
+	}
+}
+
+
 
 DAEToAsset3DWriter::DAEToAsset3DWriter(IResourceServer* resourceServer, const std::unordered_map<std::string, std::string>& options, ICancellationTokenPtr cancellationToken) :
 	m_context(resourceServer, options, cancellationToken)
@@ -75,7 +106,7 @@ bool DAEToAsset3DWriter::writeGlobalAsset(const COLLADAFW::FileInfo* asset) {
 
 	DAEToAsset3DWriterContextPtr ctx = getContext();
 	ctx->setUpAxisType(asset->getUpAxisType());
-
+	ctx->setScaleMeter((float)asset->getUnit().getLinearUnitMeter());
 	return true;
 }
 
@@ -99,41 +130,15 @@ bool DAEToAsset3DWriter::writeVisualScene(const COLLADAFW::VisualScene* visualSc
 
 /** 
  * When this method is called, the writer must handle all nodes contained in the library nodes.
- * Has sub node MAY contain reference to sibling node, we MUST conduct a Breadth-first algorithm
- * at the top level instead of Deep-first search. Otherwise we gona miss some node_instance.
- * ex :
- * <node id="ID4" name="skp56">
- *    <node id="ID5" name="instance_1">
- *        <matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
- *        <instance_node url="#ID6" />
- *    </node>
- * </node>
- * <node id="ID6" name="body_1">
- * ...
- * </node>
- *
  * @return The writer should return true, if writing succeeded, false otherwise.
  **/
 bool DAEToAsset3DWriter::writeLibraryNodes(const COLLADAFW::LibraryNodes* colladaLibraryNodes) {
 	
-	COLLADAFW::NodePointerArray nodes = colladaLibraryNodes->getNodes();
+	const COLLADAFW::NodePointerArray nodes = colladaLibraryNodes->getNodes();
 	int count = nodes.getCount();
 	if (count) {
-		/// first pass to bind top nodes to library
-		std::vector<std::shared_ptr<SceneNode>> queue;
-		for (int i = 0; i != count; i++) {
-			std::shared_ptr<SceneNode> n = std::make_shared<SceneNode>();
-			// start to register the node, then it will be available down hierarchy
-			m_context.getNodeLibrary()[nodes[i]->getUniqueId()] = n;
-			queue.push_back(n);
-		}
-
-		/// then fill from collada instance
 		DAENodeConverter c(&m_context);
-		for (int i = 0; i != count; i++) {
-			/// bypass GetNode logic. Check for user cancellation will be done down hierachy.
-			c.Convert(nodes[i], queue[i]);
-		}
+		c.ConvertBreadthFirst(&nodes);
 	}
 	return true;
 }
@@ -161,20 +166,24 @@ bool DAEToAsset3DWriter::writeGeometry(const COLLADAFW::Geometry* geometry) {
 /** When this method is called, the writer must write the material.
 @return The writer should return true, if writing succeeded, false otherwise.*/
 bool DAEToAsset3DWriter::writeMaterial(const COLLADAFW::Material* colladaMaterial) {
+#ifdef _IMPORT_MATERIAL
 	/// Collada material is "just" a binding to effect
-	m_context.getMaterialToEffectIndex()[colladaMaterial->getUniqueId()] = colladaMaterial->getInstantiatedEffect();
+	m_context.getMaterialUIdToEffectIndex()[colladaMaterial->getUniqueId()] = colladaMaterial->getInstantiatedEffect();
+	m_context.getMaterialOriginalIdToEffectIndex()[colladaMaterial->getOriginalId()] = colladaMaterial->getInstantiatedEffect();
+#endif
 	return true;
 }
 
 /** When this method is called, the writer must write the effect.
 @return The writer should return true, if writing succeeded, false otherwise.*/
 bool DAEToAsset3DWriter::writeEffect(const COLLADAFW::Effect* colladaEffect) {
-
+#ifdef _IMPORT_MATERIAL
 	DAEEffectConverter c(&m_context);
 	std::shared_ptr<DAEMaterialBuilder> material = c.GetNode(colladaEffect);
 	if (material) {
 		m_context.getEffectLibrary()[colladaEffect->getUniqueId()] = material;
 	}
+#endif
 	return true;
 }
 
@@ -187,12 +196,13 @@ bool DAEToAsset3DWriter::writeCamera(const COLLADAFW::Camera* camera) {
 /** When this method is called, the writer must write the image.
 @return The writer should return true, if writing succeeded, false otherwise.*/
 bool DAEToAsset3DWriter::writeImage(const COLLADAFW::Image* colladaImage) {
-
+#ifdef _IMPORT_MATERIAL
 	DAEImageConverter c(&m_context);
 	std::shared_ptr<DAETextureBuilder> texture = c.GetNode(colladaImage);
 	if (texture) {
 		m_context.getImageLibrary()[colladaImage->getUniqueId()] = texture;
 	}
+#endif
 	return true;
 }
 

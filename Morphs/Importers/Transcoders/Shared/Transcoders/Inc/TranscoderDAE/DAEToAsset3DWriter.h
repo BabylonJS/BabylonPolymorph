@@ -8,6 +8,7 @@
 #include <map>
 
 #include <TranscoderDAE/TranscoderDAEConfig.h>
+#include <TranscoderDAE/TranscoderDAEUtils.h>
 
 #include <COLLADAFWIWriter.h>
 #include <COLLADAFWFileInfo.h>
@@ -33,12 +34,13 @@ namespace Babylon
 			static const COLLADAFW::FileInfo::UpAxisType defaultUpAxis = COLLADAFW::FileInfo::UpAxisType::Y_UP;
 
 		private:
-
 			std::unordered_map<std::string, std::string> m_options;
 			Framework::ICancellationTokenPtr m_cancellationToken;
 			IResourceServer* m_resourceServer = nullptr;
 
-			COLLADAFW::FileInfo::UpAxisType upAxis = defaultUpAxis;
+			COLLADAFW::FileInfo::UpAxisType m_upAxis ;
+			Babylon::Utils::Math::Matrix m_upAxisTransform ;
+			float m_scale_meter;
 
 			/// builders.
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAEMeshBuilder>> m_geometryLibrary;
@@ -47,7 +49,8 @@ namespace Babylon
 
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<Asset3D>> m_visualSceneLibrary;
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<SceneNode>> m_nodeLibrary;
-			std::map<COLLADAFW::UniqueId, COLLADAFW::UniqueId> m_materialToEffectIndex;
+			std::map<COLLADAFW::UniqueId, COLLADAFW::UniqueId> m_materialUIdToEffectIndex;
+			std::map<COLLADAFW::String, COLLADAFW::UniqueId> m_materialOriginalIdToEffectIndex;
 			// THIS IS TEMPORARY BINDING TO ALLOW SCENE MOUNT GEOMETRY WITH CONTROLLER WITHOUT THE CONTROLLER LIBRARY SUPPORT - Version 0.1.
 			std::map<COLLADAFW::UniqueId, COLLADAFW::UniqueId> m_controllerToSkinIndex;
 			COLLADAFW::UniqueId m_primarySceneId;
@@ -56,13 +59,13 @@ namespace Babylon
 			DAEToAsset3DWriterContext(IResourceServer* resourceServer, const std::unordered_map<std::string, std::string>& options, Framework::ICancellationTokenPtr cancellationToken);
 			~DAEToAsset3DWriterContext();
 
-			void CheckCancelledAndThrow() {
+			inline void CheckCancelledAndThrow() {
 				if (m_cancellationToken) {
 					m_cancellationToken->CheckCancelledAndThrow();
 				}
 			}
 
-			IResourceServer* getRessourceServer() {
+			inline const IResourceServer* getRessourceServer() {
 				return m_resourceServer;
 			}
 
@@ -86,8 +89,12 @@ namespace Babylon
 				return m_nodeLibrary;
 			}
 
-			std::map<COLLADAFW::UniqueId, COLLADAFW::UniqueId>& getMaterialToEffectIndex() {
-				return m_materialToEffectIndex;
+			std::map<COLLADAFW::UniqueId, COLLADAFW::UniqueId>& getMaterialUIdToEffectIndex() {
+				return m_materialUIdToEffectIndex;
+			}
+
+			std::map<COLLADAFW::String, COLLADAFW::UniqueId>& getMaterialOriginalIdToEffectIndex() {
+				return m_materialOriginalIdToEffectIndex;
 			}
 
 			std::map<COLLADAFW::UniqueId, COLLADAFW::UniqueId>& getControllerToSkinIndex() {
@@ -95,32 +102,43 @@ namespace Babylon
 			}
 
 
-			bool hasGeometries() {
+			inline bool hasGeometries() {
 				return m_geometryLibrary.size() != 0;
 			}			
 			
-			bool hasVisualScenes() {
+			inline bool hasVisualScenes() {
 				return m_visualSceneLibrary.size() != 0;
 			}
 
-			void setUpAxisType(COLLADAFW::FileInfo::UpAxisType t) {
-				upAxis = t;
+
+			inline const COLLADAFW::FileInfo::UpAxisType getUpAxisType() {
+				return m_upAxis;
 			}
 
-			COLLADAFW::FileInfo::UpAxisType getUpAxisType() {
-				return upAxis;
-			}
-
-			const std::string  getBasePath() {
+			inline const std::string  getBasePath() {
 				return m_options[_BASEPATH_OPTION_KEY];
 			}
 
+			inline const Babylon::Utils::Math::Matrix getUpAxisTransfrom() {
+				return m_upAxisTransform;
+			}
 
-			const COLLADAFW::UniqueId getPrimarySceneId() {
+
+			inline const COLLADAFW::UniqueId getPrimarySceneId() {
 				return m_primarySceneId;
 			}
 
-			const void setPrimarySceneId(COLLADAFW::UniqueId uid) {
+			inline const float getScaleMeter() {
+				return m_scale_meter;
+			}
+
+			inline void setScaleMeter(float scale) {
+				m_scale_meter = scale;
+			}
+
+			void setUpAxisType(COLLADAFW::FileInfo::UpAxisType t);
+
+			inline void setPrimarySceneId(COLLADAFW::UniqueId uid) {
 				m_primarySceneId = uid;
 			}
 
@@ -141,6 +159,7 @@ namespace Babylon
 			~DAEToAsset3DWriter();
 
 			inline const DAEToAsset3DWriterContextPtr getContext() { return &(this->m_context); }
+			
 			inline std::shared_ptr<Asset3D> getAsset3D() { 
 				return m_context.getVisualSceneLibrary()[m_context.getPrimarySceneId()];
 			}

@@ -25,8 +25,8 @@ namespace {
 	template<typename T>
 	struct FeatureAccessor : public IFeatureAccessor {
 
+		std::string semantic;
 		COLLADAFW::UIntValuesArray& indices;
-
 		const float* values;
 		const size_t size;
 		size_t stride;
@@ -37,7 +37,7 @@ namespace {
 		size_t _targetSize;
 		float* _tmp;
 
-		FeatureAccessor(COLLADAFW::UIntValuesArray& i, const float* values, const size_t size, int stride, std::vector<T>& target, bool mayEqualValues = false, float padding = 1) :
+		FeatureAccessor(std::string semantic, COLLADAFW::UIntValuesArray& i, const float* values, const size_t size, int stride, std::vector<T>& target, bool mayEqualValues = false, float padding = 1) :
 			indices(i),
 			values(values),
 			size(size),
@@ -45,7 +45,7 @@ namespace {
 			target(target),
 			mayEqualsValues(mayEqualValues),
 			_itemSize(stride * sizeof(float)),
-			_targetSize(sizeof(T) / sizeof(float)) {
+			_targetSize(sizeof(T)) {
 
 			_tmp = _targetSize > _itemSize ? new float[_targetSize] : nullptr;
 			if (_tmp) {
@@ -60,11 +60,16 @@ namespace {
 		}
 
 		bool equals(const size_t a, const size_t b) const {
-			if (a == b) return true;
+			/// note in the way we use it inside a loop a is ALWAYS greater than b.
 			uint32_t ia = indices[a];
 			uint32_t ib = indices[b];
 			if (ia == ib) return true;
-			return mayEqualsValues ? memcmp(values + ia * stride, values + ib * stride, _itemSize) : false;
+			/**
+			 * here we have different index, wich lead potentially to differents values 
+			 * As we want to duplicate vertices with different features value we may test the value
+			 * to see if different.
+			 */
+			return mayEqualsValues ? memcmp(values + ia * stride, values + ib * stride, _itemSize) == 0 : false;
 		}
 
 		void move(const size_t a) const {
@@ -114,8 +119,9 @@ std::shared_ptr<DAEMeshBuilder> DAEMeshConverter::Convert(const COLLADAFW::Mesh*
 
 		/// create the mesh builder.
 		meshbuilderPtr = std::make_shared<DAEMeshBuilder>(ctx);
-		meshbuilderPtr->WithName(colladaMesh->getName());
 
+		std::string name = colladaMesh->getName();
+		meshbuilderPtr->WithName(name.empty() ? colladaMesh->getOriginalId() : name);
 
 		/// loop over primitives
 		for (size_t i = 0; i < meshPrimitivesCount; i++) {
@@ -123,14 +129,12 @@ std::shared_ptr<DAEMeshBuilder> DAEMeshConverter::Convert(const COLLADAFW::Mesh*
 			COLLADAFW::MeshPrimitive* colladaPrimitive = meshPrimitives[i];
 			
 			/// this is the place to find the corresponding default material for the geometry
-			int materialId = colladaPrimitive->getMaterialId();
-			std::shared_ptr<MaterialDescriptor> defaultMaterialPtr = nullptr;
+			std::string materialName = colladaPrimitive->getMaterial();
+			COLLADAFW::MaterialId materialId = colladaPrimitive->getMaterialId();
 
 			/// time to build the geometry 
 			std::shared_ptr<DAEGeometryBuilder> geometryBuilder = std::make_shared<DAEGeometryBuilder>(ctx);
-			if (defaultMaterialPtr) {
-				geometryBuilder->WithDefaultMaterial(defaultMaterialPtr);
-			}
+			geometryBuilder->WithMaterialName(materialName);
 
 			/// default topology is triangle
 			GeometryTopology topo = GeometryTopology::kTriangles;
@@ -178,67 +182,62 @@ std::shared_ptr<DAEMeshBuilder> DAEMeshConverter::Convert(const COLLADAFW::Mesh*
 			std::vector<Babylon::Utils::Math::Vector3> verticesCache;
 			std::vector<Babylon::Utils::Math::Vector3> normalsCache;
 			std::vector<Babylon::Utils::Math::Vector4> tangentsCache;
-			std::vector<std::vector<Babylon::Utils::Math::Vector3>> colorsCache;
-			std::vector<std::vector<Babylon::Utils::Math::Vector2>> uvsCache;
+			std::vector<std::shared_ptr<std::vector<Babylon::Utils::Math::Vector3>>> colorsCache;
+			std::vector<std::shared_ptr<std::vector<Babylon::Utils::Math::Vector2>>> uvsCache;
 
 			/// features to be parsed
 			std::vector<std::shared_ptr<IFeatureAccessor>> features;
-	
+
 			const COLLADAFW::FloatArray* colladaPositionValues = colladaMesh->getPositions().getFloatValues();
-			auto positionAccess = std::make_shared<FeatureAccessor<Babylon::Utils::Math::Vector3>>( colladaPrimitive->getPositionIndices(), colladaPositionValues->getData(), colladaPositionValues->getCount(), 3, verticesCache);
+			auto positionAccess = std::make_shared<FeatureAccessor<Babylon::Utils::Math::Vector3>>("",colladaPrimitive->getPositionIndices(), colladaPositionValues->getData(), colladaPositionValues->getCount(), 3, verticesCache, _GEOM_TEST_POSITION_VALUE);
 			features.push_back(positionAccess);
 
-			if (colladaPrimitive->hasNormalIndices()) {
-				const COLLADAFW::FloatArray* colladaValues = colladaMesh->getNormals().getFloatValues();
-				auto accessor = std::make_shared<FeatureAccessor<Babylon::Utils::Math::Vector3>>(colladaPrimitive->getNormalIndices(), colladaValues->getData(), colladaValues->getCount(), 3, normalsCache, true);
-				features.push_back(accessor);
+			if (topo != GeometryTopology::kLines && topo != GeometryTopology::kPoints) {
+			
+				if (colladaPrimitive->hasNormalIndices()) {
+					const COLLADAFW::FloatArray* colladaValues = colladaMesh->getNormals().getFloatValues();
+					auto accessor = std::make_shared<FeatureAccessor<Babylon::Utils::Math::Vector3>>("", colladaPrimitive->getNormalIndices(), colladaValues->getData(), colladaValues->getCount(), 3, normalsCache, _GEOM_TEST_NORMAL_VALUE);
+					features.push_back(accessor);
+				}
+
+				if (colladaPrimitive->hasTangentIndices()) {
+					const COLLADAFW::FloatArray* colladaValues = colladaMesh->getTangents().getFloatValues();
+					auto accessor = std::make_shared<FeatureAccessor<Babylon::Utils::Math::Vector4>>("", colladaPrimitive->getTangentIndices(), colladaValues->getData(), colladaValues->getCount(), 3, tangentsCache, _GEOM_TEST_TANGENT_VALUE, 1);
+					features.push_back(accessor);
+				}
+
+#ifdef _IMPORT_MATERIAL
+				if (colladaPrimitive->hasUVCoordIndices()) {
+					COLLADAFW::IndexListArray& indicesArray = colladaPrimitive->getUVCoordIndicesArray();
+					size_t arrayCount = indicesArray.getCount();
+					const COLLADAFW::FloatArray* colladaValues = colladaMesh->getUVCoords().getFloatValues();
+					for (size_t j = 0; j < arrayCount; j++) {
+						std::shared_ptr < std::vector<Babylon::Utils::Math::Vector2>> uvset = std::make_shared<std::vector<Babylon::Utils::Math::Vector2>>();
+						uvsCache.push_back(uvset);
+						auto accessor = std::make_shared<FeatureAccessor<Babylon::Utils::Math::Vector2>>("", indicesArray[j]->getIndices(), colladaValues->getData(), colladaValues->getCount(), 2, *uvset, _GEOM_TEST_TEXTCOORD_VALUE);
+						features.push_back(accessor);
+					}
+				}
+#endif
 			}
 
-			if (colladaPrimitive->hasTangentIndices()) {
-				const COLLADAFW::FloatArray* colladaValues = colladaMesh->getTangents().getFloatValues();
-				auto accessor = std::make_shared<FeatureAccessor<Babylon::Utils::Math::Vector4>>(colladaPrimitive->getTangentIndices(), colladaValues->getData(), colladaValues->getCount(), 3, tangentsCache, false, 1);
-				features.push_back(accessor);
-			}
-
+#ifdef _IMPORT_MATERIAL
 			if (colladaPrimitive->hasColorIndices()) {
 				COLLADAFW::IndexListArray& indicesArray = colladaPrimitive->getColorIndicesArray();
 				size_t arrayCount = indicesArray.getCount();
 				const COLLADAFW::FloatArray* colladaValues = colladaMesh->getColors().getFloatValues();
 				for (size_t j = 0; j < arrayCount; j++) {
-					colorsCache.push_back(std::vector<Babylon::Utils::Math::Vector3>());
-					std::vector<Babylon::Utils::Math::Vector3> colorset = colorsCache[j];
-					auto accessor = std::make_shared<FeatureAccessor<Babylon::Utils::Math::Vector3>>(indicesArray[j]->getIndices(), colladaValues->getData(), colladaValues->getCount(), 3, colorset);
+					std::shared_ptr < std::vector<Babylon::Utils::Math::Vector3>> colorset = std::make_shared<std::vector<Babylon::Utils::Math::Vector3>>();
+					colorsCache.push_back(colorset);
+					auto accessor = std::make_shared<FeatureAccessor<Babylon::Utils::Math::Vector3>>("", indicesArray[j]->getIndices(), colladaValues->getData(), colladaValues->getCount(), 3, *colorset, _GEOM_TEST_COLOR_VALUE);
 					features.push_back(accessor);
 				}
 			}
-
-			if (colladaPrimitive->hasUVCoordIndices()) {
-				COLLADAFW::IndexListArray& indicesArray = colladaPrimitive->getUVCoordIndicesArray();
-				size_t arrayCount = indicesArray.getCount();
-				const COLLADAFW::FloatArray* colladaValues = colladaMesh->getUVCoords().getFloatValues();
-				for (size_t j = 0; j < arrayCount; j++) {
-					uvsCache.push_back(std::vector<Babylon::Utils::Math::Vector2>());
-					std::vector<Babylon::Utils::Math::Vector2>& uvset = uvsCache[j];
-					auto accessor = std::make_shared<FeatureAccessor<Babylon::Utils::Math::Vector2>>(indicesArray[j]->getIndices(), colladaValues->getData(), colladaValues->getCount(), 2, uvset);
-					features.push_back(accessor);
-				}
-			}
+#endif
 
 			/// position indices is the face indexing 
 			COLLADAFW::UIntValuesArray & colladaPrimitiveIndices = colladaPrimitive->getPositionIndices();
 			size_t colladaPrimitiveIndicesCount = colladaPrimitiveIndices.getCount();
-
-			//// add extra indices if we need to triangulate
-			//if (shouldTriangulate) {
-			//	size_t faceCount = colladaPrimitive->getFaceCount();
-			//	for (size_t f = 0; f < faceCount; f++) {
-			//		size_t verticeCount = colladaPrimitive->getGroupedVerticesVertexCount(f);
-			//		if (verticeCount > 3) {
-			//			///	first project onto a 2D surface
-			//			/// then triangulate
-			//		}
-			//	}
-			//}
 
 
 			/// serve as cache to vertices infos while building. Key is the collada index of the vertex. 
@@ -246,9 +245,49 @@ std::shared_ptr<DAEMeshBuilder> DAEMeshConverter::Convert(const COLLADAFW::Mesh*
 			/// miscellaneous variables
 			size_t v, k=0;
 			int64_t index;
+			unsigned int totalVertexCount = 0;
+			unsigned int vertexCount = 0;
+
+			unsigned int face = 0;
+			unsigned int startFace = 0;
+			unsigned int faceVertexCount = colladaPrimitive->getGroupedVerticesVertexCount(face);
 
 			for (size_t fi = 0; fi < colladaPrimitiveIndicesCount; fi++) {
 
+				if (shouldTriangulate) {
+
+					/**
+					 * This work over 99% of the case found in the COLLADA FILE - convex, not holes poly. However, it's NOT follow the norm.
+					 * we should use another triangulation algorithm instead.
+					 */
+					if (vertexCount == faceVertexCount) {
+						if (vertexCount > 3) {
+							size_t end = indicesCache.size() - 2;
+							size_t a = indicesCache[startFace];
+							size_t b = indicesCache[end++];
+							size_t c = indicesCache[end];
+
+							indicesCache[end] = a;
+							indicesCache.push_back(b);
+							indicesCache.push_back(c);
+							totalVertexCount += 2;
+						}
+						face++;
+						faceVertexCount = colladaPrimitive->getGroupedVerticesVertexCount(face);
+						startFace = totalVertexCount;
+						vertexCount = 0;
+					} else if (vertexCount > 3) {
+						size_t end = indicesCache.size() - 2;
+						size_t a = indicesCache[startFace];
+						size_t b = indicesCache[end++];
+						size_t c = indicesCache[end];
+
+						indicesCache[end] = a;
+						indicesCache.push_back(b);
+						indicesCache.push_back(c);
+						totalVertexCount += 2;
+					}
+				}
 				/// indice of vertex
 				v = colladaPrimitiveIndices[fi];
 				/// new allocated index
@@ -263,7 +302,7 @@ std::shared_ptr<DAEMeshBuilder> DAEMeshConverter::Convert(const COLLADAFW::Mesh*
 						int32_t l = stack[p].line;
 						index = stack[p].buildedVertexIndice;
 						
-						for (int f = 0; f != features.size(); f++) {
+						for (int f = 0; f < features.size(); f++) {
 							std::shared_ptr<IFeatureAccessor> a = features[f];
 
 							if (!a->equals(fi, l)) {
@@ -272,11 +311,11 @@ std::shared_ptr<DAEMeshBuilder> DAEMeshConverter::Convert(const COLLADAFW::Mesh*
 							}
 						}
 
-					} while (--p < stack.size() && index == -1);
+					} while (--p < stack.size() && index == INDICE_NONE);
 				}
 
 				/// do not found any corresponding vertex (
-				if (index < 0) {
+				if (index == INDICE_NONE) {
 					for (int f = 0; f != features.size(); f++) {
 						std::shared_ptr<IFeatureAccessor> a = features[f];
 						a->move(fi);
@@ -287,165 +326,61 @@ std::shared_ptr<DAEMeshBuilder> DAEMeshConverter::Convert(const COLLADAFW::Mesh*
 
 				/// finally add the index
 				indicesCache.push_back(index);
+				totalVertexCount++;
+				vertexCount++;
 			}
 
+			if (shouldTriangulate) {
+				/// close last poly
+				if (vertexCount > 3) {
+					size_t end = indicesCache.size() - 2;
+					size_t a = indicesCache[startFace];
+					size_t b = indicesCache[end++];
+					size_t c = indicesCache[end];
 
-			///// serve as cache to vertices infos while building. Key is the collada index of the vertex. 
-			//std::map<uint32_t, std::vector<VertexInfos>> vertexMaping;
+					indicesCache[end] = a;
+					indicesCache.push_back(b);
+					indicesCache.push_back(c);
+					totalVertexCount += 2;
+				}
+			}
 
-
-			///// do we need to compute normals ?
-			//bool colladaPrimitiveHasNormals = colladaPrimitive->hasNormalIndices();
-			//COLLADAFW::UIntValuesArray & colladaNormalsIndices = colladaPrimitive->getNormalIndices();
-			//size_t colladaNormalIndicesCount = colladaNormalsIndices.getCount();
-
-			///// miscelaneous declarations
-			//Babylon::Utils::Math::Vector3 v3_cache0(0, 0, 0);
-			//Babylon::Utils::Math::Vector3 v3_cache1(0, 0, 0);
-			//Babylon::Utils::Math::Vector3 v3_cache2(0, 0, 0);
-			//Babylon::Utils::Math::Vector3 v3_cache3(0, 0, 0);
-			//const float* xPtr = nullptr;
-			//const float* xPtr1 = nullptr;
-
-			//uint32_t countUniqueVertex = 0;
-			//int32_t ni = -1;
-			//int32_t index = -1;
-			//size_t j3 = 0;
-
-			///** 
-			// * loop over all the indices of primitives. Indices are supposed to be arranged by 3 as they might define triangle.
-			// * However, primitive such Polygon and Polyline are often used with potentially more than 3 vertices per faces.
-			// * Regarding the normals, COLLADA files often define more than one normal per vertex (normal per face approach). 
-			// * In this case, it's mean the vertex MUST be duplicated in order to keep one to one relationship between vertex and normels (so on tangents).
-			// */
-			//for (size_t i0 = 0; i0 < colladaPrimitiveIndicesCount; i0++) {
-
-			//	/// indice of vertex
-			//	j = colladaPrimitiveIndices[i0];
-			//	j3 = j * 3; /// xyz stride
-
-			//	/// indice of normal : -1 means none
-			//	ni = -1;
-			//	/// new allocated index
-			//	index = -1;
-			//	/// get the vertex info
-			//	std::vector<VertexInfos>& stack = vertexMaping[j];
-
-			//	/// do we found an info ?
-			//	if (stack.size() != 0) {
-
-			//		if (colladaPrimitiveHasNormals) {
-			//			/**
-			//			 * Logic here is to get back to one to one relationship between vertex and normal.
-			//			 * to achieve this, we keep track the different vertex/normal couple.
-			//			 * normal is defines has beeing equals IF the index is the same (trivial) OR if the values are the same
-			//			 */
-			//			for (int p = 0; p != stack.size(); p++) {
-
-			//				/// verify normal index - work on the case where normal is -1 also
-			//				if (stack[p].normal == ni) {
-			//					index = stack[p].vertex;
-			//					break;
-			//				}
-
-			//				/// verify if the normals are equals.
-			//				ni = colladaNormalsIndices[i0];
-
-			//				xPtr = colladaNXyz + ni * 3;
-			//				xPtr1 = colladaNXyz + stack[p].normal * 3;
-			//				if (memcmp(xPtr, xPtr1, sizeof(float) * 3) == 0) {
-			//					index = stack[p].vertex;
-			//					break;
-			//				}
-			//			}
-			//		}
-			//		else {
-			//			/// optimized path when normal are not available
-			//			index = stack[0].vertex;
-			//		}
-			//	} 
-
-			//	/// do not found any corresponding vertex (index != -1) ?
-			//	if (index < 0) {
-
-			//		/// Add new position
-			//		xPtr = colladaXyz + j3; /// stride is always xyz
-			//		__VEC3_TRANSFER(upAxis, xPtr, v3_cache0)
-			//		verticesCache.push_back(v3_cache0);
-			//		//geometry->AddPosition(v3_cache0);
-
-			//		/// Add coresponding Normals. As transcoder, we DO NOT build normal if none defined.
-			//		if (colladaPrimitiveHasNormals) {
-			//			ni = colladaNormalsIndices[i0];
-			//			if (ni >= colladaNormalCount) {
-			//				/// corrupted data
-			//				continue;
-			//			}
-			//			xPtr = colladaNXyz + ni * 3; /// stride is always xyz
-			//			__VEC3_TRANSFER(upAxis, xPtr, v3_cache0)
-			//			float l = v3_cache0.Length();
-			//			switch (topo) {
-			//			case(GeometryTopology::kTriangles): {
-			//				/// zero length normals ?
-			//				if (l == 0) {
-			//					/// this is serious data error. Try to recover computing face normal
-			//					size_t fi = i0 / 3;
-			//					xPtr = colladaXyz + colladaPrimitiveIndices[fi++] * 3;
-			//					__VEC3_TRANSFER(upAxis, xPtr, v3_cache1)
-			//					xPtr = colladaXyz + colladaPrimitiveIndices[fi++] * 3;
-			//					__VEC3_TRANSFER(upAxis, xPtr, v3_cache2)
-			//					xPtr = colladaXyz + colladaPrimitiveIndices[fi] * 3;
-			//					__VEC3_TRANSFER(upAxis, xPtr, v3_cache3)
-			//					v3_cache0 = (v3_cache2 - v3_cache1).Cross(v3_cache3 - v3_cache1);
-			//					l = v3_cache0.Length();
-			//				}
-			//				/// not normalized ?
-			//				if (l != 1) {
-			//					/// easy to fix
-			//					v3_cache0.Normalize();
-			//				}
-			//				normalsCache.push_back(v3_cache0);
-			//				break;
-			//			}
-			//			case(GeometryTopology::kLines):
-			//			case(GeometryTopology::kPoints): {
-			//				if (l) {
-			//					/// not normalized ?
-			//					if (l != 1) {
-			//						/// easy to fix
-			//						v3_cache0.Normalize();
-			//					}
-			//					normalsCache.push_back(v3_cache0);
-			//				}
-			//				else {
-			//					/// zero length normals, then invalidate whole primitive
-			//					colladaPrimitiveHasNormals = false;
-			//				}
-			//			}
-			//			}
-			//		}
-
-			//		/// save the vertex infos
-			//		index = k++;
-			//		vertexMaping[j].push_back(VertexInfos(index, ni));
-			//		countUniqueVertex++;
-			//	}
-			//	/// finally add the index
-			//	indicesCache.push_back(index);
-			//}
-
+#ifdef _GEOM_NORMAL_POST_PROCESS
+			for (int j = 0; j != normalsCache.size(); j++) {
+#ifdef _GEOM_NORMAL_CLEAR_ZERO
+				if (normalsCache[j].LengthSquared() == 0) {
+					normalsCache.clear();
+					break;
+				}
+#endif
+#ifdef _GEOM_NORMAL_NORMALIZE
+				normalsCache[j].Normalize();
+#endif
+			}
+#endif
 			geometryBuilder->WithIndices(std::move(indicesCache))
 							.WithPositions(std::move(verticesCache))
 							.WithNormals(std::move(normalsCache))
 							.WithTangents(std::move(tangentsCache));
 
+#ifdef _IMPORT_MATERIAL
+
 			/// populate UVs
 			if (colladaPrimitive->hasUVCoordIndices()) {
 				for (size_t j = 0; j != uvsCache.size(); j++) {
-					geometryBuilder->WithUvs(std::move(uvsCache[i]), i);
+					auto tmp = *uvsCache[j];
+					/**
+					 * according to Asset3D First image pixel (UV coordinates origin) corresponds to the upper left corner of the image. 
+					 * according to Collada For texture coordinates, COLLADA’s right-handed coordinate system applies; therefore, an ST texture coordinate of [0,0] maps to the lower-left texel of a texture image
+					 * WARNING : COLLADA exporter are known to export uv coordinate outside the [0,1] range.. then we better to find another place to transform -> at the source (data of the texture).
+					 */
+					for (k = 0; k != tmp.size(); k++) {
+						tmp[k].y = 1.0 - tmp[k].y;
+					}
+					geometryBuilder->WithUvs(std::move(tmp), j);
 				}
 			}
-
+#endif
 			/// finally add geometry model to the current mesh builder
 			meshbuilderPtr->WithGeometry(geometryBuilder);
 		}

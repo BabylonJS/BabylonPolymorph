@@ -37,8 +37,9 @@ namespace Babylon
 					{
 						size_t textureSize = 0;
 						auto textureData = Babylon::Utils::ReadStreamIntoUniquePtr(*textureStream, textureSize);
-
 						m_cache = std::make_shared<TextureDescriptor>(std::move(textureData), textureSize);
+						uint32_t lineStride = m_cache->GetLineStrideInBytes();
+
 						m_cache->SetName(GetName());
 					}
 				}

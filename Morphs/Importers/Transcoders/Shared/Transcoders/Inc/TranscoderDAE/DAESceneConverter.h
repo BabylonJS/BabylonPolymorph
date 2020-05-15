@@ -8,6 +8,7 @@
 #include <TranscoderDAE/DAEConverter.h>
 #include <Asset3D/SceneNode.h>
 #include <COLLADAFWScene.h>
+#include <COLLADAFWNode.h>
 
 namespace Babylon
 {
@@ -19,7 +20,8 @@ namespace Babylon
 				DAEAbstractConverter(context) {
 			}
 			std::shared_ptr<SceneNode> Convert(const COLLADAFW::Node* from);
-			std::shared_ptr<SceneNode> DAENodeConverter:: Convert(const COLLADAFW::Node* colladaNode, std::shared_ptr<SceneNode> node);
+			std::shared_ptr<SceneNode> Convert(const COLLADAFW::Node* colladaNode, std::shared_ptr<SceneNode> node);
+			std::shared_ptr<SceneNode> ConvertBreadthFirst(const COLLADAFW::NodePointerArray* nodes, std::shared_ptr<SceneNode> node = nullptr);
 		};
 
 		class DAEVirtualSceneConverter : public DAEAbstractConverter<COLLADAFW::VisualScene, Asset3D> {

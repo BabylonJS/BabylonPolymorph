@@ -21,8 +21,6 @@ using namespace Babylon::Transcoder;
 
 #define _ToColor(c)  Babylon::Utils::Math::Color(c.getRed(),c.getGreen(), c.getBlue(),c.getAlpha())
 
-
-
 std::shared_ptr<MaterialDescriptor::LayerInfo> DAEEffectConverter::SetLayer(const COLLADAFW::EffectCommon* effectCommon, const COLLADAFW::ColorOrTexture* src, std::shared_ptr<DAEMaterialBuilder> material) {
 
 	std::shared_ptr<MaterialDescriptor::LayerInfo> layer = nullptr;
@@ -65,21 +63,12 @@ std::shared_ptr<DAEMaterialBuilder> DAEEffectConverter::Convert(const COLLADAFW:
 		/// non sens to get more than one common effect
 		const COLLADAFW::EffectCommon* effectCommon = commonEffects[0];
 
-		materialBuilderPtr->WithEmissive(SetLayer(effectCommon, &effectCommon->getEmission(), materialBuilderPtr))
-						.WithDiffuse(SetLayer(effectCommon, &effectCommon->getDiffuse(), materialBuilderPtr))
-						.WithSpecular(SetLayer(effectCommon, &effectCommon->getSpecular(), materialBuilderPtr));
+		materialBuilderPtr->	
+			WithEmissive(SetLayer(effectCommon, &effectCommon->getEmission(), materialBuilderPtr))
+			.WithDiffuse(SetLayer(effectCommon, &effectCommon->getDiffuse(), materialBuilderPtr))
+			.WithSpecular(SetLayer(effectCommon, &effectCommon->getSpecular(), materialBuilderPtr));
 
 
-
-		//COLLADAFW::ColorOrTexture specular = effectCommon->getSpecular();
-		//if (specular.isTexture()) {
-		//	material->values->specularTexture = fromColladaTexture(effectCommon, specular.getTexture());
-		//	textureMapping[specular.getTexture().getTexcoord()] = material->values->specularTexture;
-		//}
-		//else if (specular.isColor()) {
-		//	material->values->specular = new float[4];
-		//	packColladaColor(specular.getColor(), material->values->specular);
-		//}
 
 		//COLLADAFW::ColorOrTexture transparent = effectCommon->getTransparent();
 		//if (transparent.isTexture()) {
