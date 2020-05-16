@@ -38,4 +38,4 @@ enum InvertYMode {
 	TextureLevel
 };
 
-#define _INVERT_Y_MODE InvertYMode::TextureLevel
+#define _INVERT_Y_MODE InvertYMode::UVLevel
