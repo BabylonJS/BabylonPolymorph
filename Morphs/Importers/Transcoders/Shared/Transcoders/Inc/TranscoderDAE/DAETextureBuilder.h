@@ -16,43 +16,32 @@ namespace Babylon
 {
 	namespace Transcoder
 	{
-		class DAETextureBuilder : public DAEAsset3DBuilder<TextureDescriptor> {
+		class DAETextureBuilder : public DAEAsset3DBuilderWithCache<TextureDescriptor> {
 
 		private:
 			std::string m_path;
-			std::shared_ptr<TextureDescriptor> m_cache;
 
 		public:
-			DAETextureBuilder(DAEToAsset3DWriterContextPtr context) : DAEAsset3DBuilder(context),
-				m_path(""),
-				m_cache(nullptr)
-			{
+			DAETextureBuilder(DAEToAsset3DWriterContextPtr context) : DAEAsset3DBuilderWithCache(context),
+				m_path(""){
 			}
 
-			std::shared_ptr<TextureDescriptor> Build() {
-
-				if (!m_cache) {
-					DAEToAsset3DWriterContextPtr ctx = GetContext();
-					if (auto textureStream = ctx->getRessourceServer()->RequestResource(m_path))
-					{
-						size_t textureSize = 0;
-						auto textureData = Babylon::Utils::ReadStreamIntoUniquePtr(*textureStream, textureSize);
-						m_cache = std::make_shared<TextureDescriptor>(std::move(textureData), textureSize);
-						uint32_t lineStride = m_cache->GetLineStrideInBytes();
-
-						m_cache->SetName(GetName());
-					}
+			std::shared_ptr<TextureDescriptor> BuildCache() {
+				std::shared_ptr<TextureDescriptor> td;
+				DAEToAsset3DWriterContextPtr ctx = GetContext();
+				if (auto textureStream = ctx->getRessourceServer()->RequestResource(m_path))
+				{
+					size_t textureSize = 0;
+					auto textureData = Babylon::Utils::ReadStreamIntoUniquePtr(*textureStream, textureSize);
+					td = std::make_shared<TextureDescriptor>(std::move(textureData), textureSize);
+					uint32_t lineStride = td->GetLineStrideInBytes();
+					td->SetName(GetName());
 				}
-				return m_cache;
+				return td;
 			}
 
 			inline DAETextureBuilder & WithPath(std::string path) {
 				m_path = path;
-				return *this;
-			}
-
-			inline DAETextureBuilder& ClearCache() {
-				m_cache = nullptr;
 				return *this;
 			}
 		};

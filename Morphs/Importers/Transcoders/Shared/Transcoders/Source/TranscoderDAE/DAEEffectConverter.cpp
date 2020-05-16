@@ -64,7 +64,7 @@ std::shared_ptr<DAEMaterialBuilder> DAEEffectConverter::Convert(const COLLADAFW:
 		const COLLADAFW::EffectCommon* effectCommon = commonEffects[0];
 
 		materialBuilderPtr->	
-			WithEmissive(SetLayer(effectCommon, &effectCommon->getEmission(), materialBuilderPtr))
+			 WithEmissive(SetLayer(effectCommon, &effectCommon->getEmission(), materialBuilderPtr))
 			.WithDiffuse(SetLayer(effectCommon, &effectCommon->getDiffuse(), materialBuilderPtr))
 			.WithSpecular(SetLayer(effectCommon, &effectCommon->getSpecular(), materialBuilderPtr));
 

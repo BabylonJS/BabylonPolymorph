@@ -31,3 +31,11 @@
 #define _GEOM_TEST_TANGENT_VALUE true
 #define _GEOM_TEST_TEXTCOORD_VALUE true
 #define _GEOM_TEST_COLOR_VALUE true
+
+/// used to invert Y at ST to UV level using  U=S and V = 1-T 
+enum InvertYMode {
+	UVLevel,
+	TextureLevel
+};
+
+#define _INVERT_Y_MODE InvertYMode::TextureLevel

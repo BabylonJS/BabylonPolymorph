@@ -374,8 +374,10 @@ std::shared_ptr<DAEMeshBuilder> DAEMeshConverter::Convert(const COLLADAFW::Mesh*
 					 * according to Collada For texture coordinates, COLLADA’s right-handed coordinate system applies; therefore, an ST texture coordinate of [0,0] maps to the lower-left texel of a texture image
 					 * WARNING : COLLADA exporter are known to export uv coordinate outside the [0,1] range.. then we better to find another place to transform -> at the source (data of the texture).
 					 */
-					for (k = 0; k != tmp.size(); k++) {
-						tmp[k].y = 1.0 - tmp[k].y;
+					if (_INVERT_Y_MODE == InvertYMode::UVLevel) {
+						for (k = 0; k != tmp.size(); k++) {
+							tmp[k].y = 1.0 - tmp[k].y;
+						}
 					}
 					geometryBuilder->WithUvs(std::move(tmp), j);
 				}

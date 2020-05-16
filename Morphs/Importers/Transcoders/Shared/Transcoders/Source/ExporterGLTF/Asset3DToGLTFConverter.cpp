@@ -1165,6 +1165,12 @@ bool Asset3DToGLTFConverter::ApplyMaterialSG(glTF::Material& material, IGLTFWrit
         }
     }
 
+    /// FIX - Material with Diffuse only are exported without specular factor, which lead to texture NOT rendered. 
+    if (!specGlossLayer || specGlossLayer->Color) {
+        float v = 0;
+        sgExtension->specularFactor = glTF::Color3(v,v,v);
+    }
+
     material.SetExtension(std::move(sgExtension));
     return true;
 }

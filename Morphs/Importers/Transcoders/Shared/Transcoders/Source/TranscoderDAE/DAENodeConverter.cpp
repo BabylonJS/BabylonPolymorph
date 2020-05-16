@@ -72,7 +72,7 @@ namespace {
 
 				/// assign new material builder
 				for (int g = 0; g != geometryBuilders.size(); g++) {
-					geometryBuilders[g]->WithMaterial(materialBuilder).WithChannelO(g);
+					geometryBuilders[g]->WithMaterial(materialBuilder).WithChannelO(0);
 				}
 			}
 		}

@@ -24,18 +24,17 @@ namespace Babylon
 		using LayerInfo = Babylon::Transcoder::MaterialLayer;
 
 
-		class DAEMaterialBuilder : public DAEAsset3DBuilder<MaterialDescriptor> {
+		class DAEMaterialBuilder : public DAEAsset3DBuilderWithCache<MaterialDescriptor> {
 
 		private:
 			/// default material 
 			std::array<std::shared_ptr<LayerInfo>, static_cast<size_t>(LayerType::kNumLayers)> m_layers;
 
 		public:
-			DAEMaterialBuilder(DAEToAsset3DWriterContextPtr context) : DAEAsset3DBuilder(context)
-			{
+			DAEMaterialBuilder(DAEToAsset3DWriterContextPtr context) : DAEAsset3DBuilderWithCache(context){
 			}
 
-			std::shared_ptr<MaterialDescriptor> Build() {
+			std::shared_ptr<MaterialDescriptor> BuildCache() {
 				std::shared_ptr<MaterialDescriptor> desc = std::make_shared<MaterialDescriptor>(false);
 				for (int i = 0; i != m_layers.size(); i++) {
 					if (m_layers[i]) {

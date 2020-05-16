@@ -135,6 +135,10 @@ namespace Babylon
 				return *this;
 			}
 
+			inline bool HasUVs() {
+				return m_uvs.size() != 0;
+			}
+
 			inline DAEGeometryBuilder& WithChannelO(int16_t channel)
 			{
 				m_uvChannel0 = channel;

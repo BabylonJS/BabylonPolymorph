@@ -37,5 +37,31 @@ namespace Babylon
 
 			virtual std::shared_ptr<T> Build() = 0 ;
 		};
+
+		template<typename T>
+		class DAEAsset3DBuilderWithCache : public DAEAsset3DBuilder<T> {
+		protected:
+			std::shared_ptr<T> m_cache;
+		public:
+			DAEAsset3DBuilderWithCache(DAEToAsset3DWriterContextPtr context) :
+				DAEAsset3DBuilder(context),
+				m_cache(nullptr)
+			{
+			}
+
+			std::shared_ptr<T> Build() {
+				if (!m_cache) {
+					m_cache = BuildCache();
+				}
+				return m_cache;
+			}
+
+			inline DAEMaterialBuilder& ClearCache() {
+				m_cache = nullptr;
+				return *this;
+			}
+
+			virtual std::shared_ptr<T> BuildCache() = 0;
+		};
 	}
 }
