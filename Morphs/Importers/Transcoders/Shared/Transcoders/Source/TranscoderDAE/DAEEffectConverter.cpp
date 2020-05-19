@@ -30,13 +30,14 @@ std::shared_ptr<MaterialDescriptor::LayerInfo> DAEEffectConverter::SetLayer(cons
 		COLLADAFW::Texture colladaTexture = src->getTexture();
 		const COLLADAFW::SamplerPointerArray& colladaSamplers = effectCommon->getSamplerPointerArray();
 		COLLADAFW::Sampler* colladaSampler = (COLLADAFW::Sampler*)colladaSamplers[colladaTexture.getSamplerId()];
-		std::shared_ptr<DAETextureBuilder> tb = getContext()->getImageLibrary()[colladaSampler->getSourceImage()];
+		std::shared_ptr<DAETextureBuilder> tb = getContext()->getImageLibrary()[ colladaSampler ? colladaSampler->getSourceImage() : colladaTexture.getUniqueId() ];
 		if (tb) {
 			layer->Texture = tb->Build();
 			std::shared_ptr<MaterialLayer::TextureSampler> sampler = std::make_shared<MaterialLayer::TextureSampler>();
 			layer->Sampler = *sampler;
 		}
-	} else if (src->isColor()) {
+	}
+	else if (src->isColor()) {
 		layer = std::make_shared<LayerInfo>();
 		const COLLADAFW::Color& color = src->getColor();
 		layer->SetColor(_ToColor(color));
