@@ -156,6 +156,9 @@ bool RewriteAlphaChannel(
     const float alphaCutOff
 );
 
+bool InvertY(CanvasTex::Image image);
+
+
 } // namespace ImaginineComponent
 } // namespace ImagingV2
 } // namespace Babylon

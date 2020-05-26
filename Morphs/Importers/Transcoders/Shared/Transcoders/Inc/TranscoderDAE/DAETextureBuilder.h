@@ -34,8 +34,11 @@ namespace Babylon
 					size_t textureSize = 0;
 					auto textureData = Babylon::Utils::ReadStreamIntoUniquePtr(*textureStream, textureSize);
 					td = std::make_shared<TextureDescriptor>(std::move(textureData), textureSize);
-					uint32_t lineStride = td->GetLineStrideInBytes();
 					td->SetName(GetName());
+					/// we choose to inverty at data level
+					if (_INVERT_Y_MODE == InvertYMode::TextureLevel) {
+						td->InvertY();
+					}
 				}
 				return td;
 			}

@@ -1168,6 +1168,33 @@ bool ConvertGrayscaleNormalMap(CanvasTex::Image& image, float scale)
     return imageWasModified;
 }
 
+bool InvertY(CanvasTex::Image image) {
+
+    size_t stride = image.GetRowPitch();
+    uint8_t* data = image.GetPixels();
+    uint8_t* line = (uint8_t*)malloc(stride);
+    if (line) {
+        try {
+            uint8_t* top = data;
+            uint8_t* bottom = data + (image.GetHeight() - 1) * stride;
+            if (top < bottom) {
+                do {
+                    memcpy(line, top, stride);
+                    memcpy(top, bottom, stride);
+                    memcpy(bottom, line, stride);
+                    top += stride;
+                    bottom -= stride;
+                } while (top < bottom);
+            }
+        }
+        catch (...) {
+            free(line);
+            throw;
+        }
+        free(line);
+    }
+    return true;
+}
 }  // namespace ImagingComponent
 }  // namespace ImagingV2
 }  // namespace Babylon
@@ -1253,6 +1280,8 @@ void ProcessLODs(
         writers,
         options);
 }
+
+
 
 }  // namespace ImagingComponent
 }  // namespace ImagingV1
