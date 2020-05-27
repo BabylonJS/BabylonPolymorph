@@ -7,10 +7,11 @@
 
 #include <TranscoderDAE/TranscoderDAEConfig.h>
 #include <TranscoderDAE/TranscoderDAEUtils.h>
-#include <TranscoderDAE/DAESceneConverter.h>
+#include <TranscoderDAE/DAECoreConverter.h>
 
 #include <TranscoderDAE/DAEMeshBuilder.h>
 #include <TranscoderDAE/DAEFXBuilder.h>
+#include <TranscoderDAE/DAECameraBuilder.h>
 
 #include <Asset3D/Asset3D.h>
 
@@ -115,9 +116,6 @@ std::shared_ptr<SceneNode> DAENodeConverter::Convert(const COLLADAFW::Node* coll
 	size_t countGeometry = colladaGeometries.getCount();
 	COLLADAFW::InstanceControllerPointerArray colladaControllers = colladaNode->getInstanceControllers();
 	size_t countController = colladaControllers.getCount();
-	COLLADAFW::InstanceNodePointerArray colladaNodes = colladaNode->getInstanceNodes();
-	size_t countNode = colladaNodes.getCount();
-	size_t totalMeshCount = countGeometry + countController ;
 
 	/// Note : because Asset3D node do NOT accept more than one Mesh, we might create direct children to hold differents meshes
 	std::vector<std::shared_ptr<Mesh>> meshes;
@@ -158,12 +156,14 @@ std::shared_ptr<SceneNode> DAENodeConverter::Convert(const COLLADAFW::Node* coll
 		}
 	}
 
-	/// build the corresponding nodes if we made meshes
+	/// Process the meshes
 	if (meshes.size()) {
+		/// bind the mesh to the current node
 		if (meshes.size() == 1) {
 			node->SetMesh(meshes[0]);
 		}
 		else {
+			/// or create new childrens to hold the meshes
 			for (int j = 0; j != meshes.size(); j++) {
 				std::shared_ptr<SceneNode> tmp = node->CreateChildNode();
 				if (tmp) {
@@ -175,13 +175,34 @@ std::shared_ptr<SceneNode> DAENodeConverter::Convert(const COLLADAFW::Node* coll
 	}
 
 	/// NODES Instance
-	for (size_t i = 0; i != countNode; i++) {
+	COLLADAFW::InstanceNodePointerArray colladaNodes = colladaNode->getInstanceNodes();
+	size_t countNode = colladaNodes.getCount();
 
+	for (size_t i = 0; i != countNode; i++) {
 		COLLADAFW::InstanceNode* colladaInstance = colladaNodes[i];
 		const COLLADAFW::UniqueId& colladaUid = colladaInstance->getInstanciatedObjectId();
 		std::shared_ptr<SceneNode> sn = m_context->getNodeLibrary()[colladaUid];
 		if (sn) {
 			node->AddChildNode(sn);
+		}
+	}
+
+	/// CAMERAS Instance
+	COLLADAFW::InstanceCameraPointerArray colladaCameras = colladaNode->getInstanceCameras();
+	size_t countCamera = colladaCameras.getCount();
+	for (size_t i = 0; i != countCamera; i++) {
+		COLLADAFW::InstanceCamera* colladaCamera = colladaCameras[i];
+		const COLLADAFW::UniqueId& colladaUid = colladaCamera->getInstanciatedObjectId();
+		std::shared_ptr<DAECameraBuilder> cb = m_context->getCameraLibrary()[colladaUid];
+		if (cb) {
+			if (countCamera == 1) {
+				node->SetCamera(cb->Build());
+				continue;
+			}
+			/// add child node to allow multiple camera
+			std::shared_ptr<SceneNode> tmp = node->CreateChildNode();
+			tmp->SetCamera(cb->Build());
+			tmp->SetName(cb->GetName());
 		}
 	}
 

@@ -15,8 +15,9 @@
 /// default scene name for the root node
 #define _DEFAULT_SCENE_NAME "SCENE"
 
-/// this directive is to compile with material import - usefull for debuging of files
+/// this directives is to compile with import - usefull for debuging of files
 #define _IMPORT_MATERIAL
+#define _IMPORT_CAMERA
 
 /// define post process operation for normal to avoid <0 or >1
 #define _GEOM_NORMAL_POST_PROCESS

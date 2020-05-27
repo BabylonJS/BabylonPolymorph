@@ -40,14 +40,14 @@ namespace Babylon
 			}
 
 			inline DAEMeshBuilder& Save() {
-				for (int i = 0; i != m_geometries.size(); i++) {
+				for (size_t i = 0; i != m_geometries.size(); i++) {
 					m_geometries[i]->Save();
 				}
 				return *this;
 			}
 
 			inline DAEMeshBuilder& Restore() {
-				for (int i = 0; i != m_geometries.size(); i++) {
+				for (size_t i = 0; i != m_geometries.size(); i++) {
 					m_geometries[i]->Restore();
 				}
 				return *this;
@@ -55,7 +55,7 @@ namespace Babylon
 
 			const std::vector<std::shared_ptr<DAEGeometryBuilder>> GetGeometries(std::function<bool(const const std::shared_ptr<DAEGeometryBuilder>&)> predicate = nullptr) {
 				std::vector<std::shared_ptr<DAEGeometryBuilder>> tmp;
-				for (int i = 0; i != m_geometries.size(); i++) {
+				for (size_t i = 0; i != m_geometries.size(); i++) {
 					if (!predicate || predicate(m_geometries[i])) {
 						tmp.push_back(m_geometries[i]);
 					}

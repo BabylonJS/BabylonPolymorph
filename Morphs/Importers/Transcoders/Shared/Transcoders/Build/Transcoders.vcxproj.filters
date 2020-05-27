@@ -186,6 +186,9 @@
     <ClCompile Include="..\Source\TranscoderDAE\DAENodeConverter.cpp">
       <Filter>Source\Importers\ImporterDAE</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\TranscoderDAE\DAECameraConverter.cpp">
+      <Filter>Source\Importers\ImporterDAE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\TranscodersPch.h">
@@ -309,12 +312,6 @@
     <ClInclude Include="..\Inc\TranscoderDAE\DAEFXConverter.h">
       <Filter>Public Headers\Importers\ImporterDAE\Converters</Filter>
     </ClInclude>
-    <ClInclude Include="..\Inc\TranscoderDAE\DAESceneConverter.h">
-      <Filter>Public Headers\Importers\ImporterDAE\Converters</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Inc\TranscoderDAE\DAEGeometryConverter.h">
-      <Filter>Public Headers\Importers\ImporterDAE\Converters</Filter>
-    </ClInclude>
     <ClInclude Include="..\Inc\TranscoderDAE\DAEAsset3DBuilder.h">
       <Filter>Public Headers\Importers\ImporterDAE</Filter>
     </ClInclude>
@@ -328,6 +325,12 @@
       <Filter>Public Headers\Importers\ImporterDAE\Builders</Filter>
     </ClInclude>
     <ClInclude Include="..\Inc\TranscoderDAE\DAEFXBuilder.h">
+      <Filter>Public Headers\Importers\ImporterDAE\Builders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\TranscoderDAE\DAECoreConverter.h">
+      <Filter>Public Headers\Importers\ImporterDAE\Converters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\TranscoderDAE\DAECameraBuilder.h">
       <Filter>Public Headers\Importers\ImporterDAE\Builders</Filter>
     </ClInclude>
   </ItemGroup>

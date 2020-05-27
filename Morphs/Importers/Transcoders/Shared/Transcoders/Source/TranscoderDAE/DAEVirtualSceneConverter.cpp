@@ -7,7 +7,7 @@
 
 #include <TranscoderDAE/TranscoderDAEConfig.h>
 #include <TranscoderDAE/TranscoderDAEUtils.h>
-#include <TranscoderDAE/DAESceneConverter.h>
+#include <TranscoderDAE/DAECoreConverter.h>
 
 #include <Asset3D/Asset3D.h>
 

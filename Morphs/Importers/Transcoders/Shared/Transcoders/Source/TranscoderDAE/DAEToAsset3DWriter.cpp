@@ -7,10 +7,10 @@
 
 #include <iostream>
 #include <TranscoderDAE/DAEToAsset3DWriter.h>
-#include <TranscoderDAE/DAEGeometryConverter.h>
-#include <TranscoderDAE/DAESceneConverter.h>
+#include <TranscoderDAE/DAECoreConverter.h>
 #include <TranscoderDAE/DAEFXConverter.h>
 #include <TranscoderDAE/DAEGeometryBuilder.h>
+#include <TranscoderDAE/DAECameraBuilder.h>
 #include <TranscoderDAE/DAEFXBuilder.h>
 
 #include <Asset3D\Asset3D.h>
@@ -189,7 +189,14 @@ bool DAEToAsset3DWriter::writeEffect(const COLLADAFW::Effect* colladaEffect) {
 
 /** When this method is called, the writer must write the camera.
 @return The writer should return true, if writing succeeded, false otherwise.*/
-bool DAEToAsset3DWriter::writeCamera(const COLLADAFW::Camera* camera) {
+bool DAEToAsset3DWriter::writeCamera(const COLLADAFW::Camera* colladaCamera) {
+#ifdef _IMPORT_CAMERA
+	DAECameraConverter c(&m_context);
+	std::shared_ptr<DAECameraBuilder> b = c.GetNode(colladaCamera);
+	if (b) {
+		m_context.getCameraLibrary()[colladaCamera->getUniqueId()] = b;
+	}
+#endif
 	return true;
 }
 

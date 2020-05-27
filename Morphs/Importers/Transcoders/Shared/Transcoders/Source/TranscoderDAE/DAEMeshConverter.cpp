@@ -8,7 +8,7 @@
 #include <TranscoderDAE/TranscoderDAEConfig.h>
 #include <TranscoderDAE/TranscoderDAEUtils.h>
 
-#include <TranscoderDAE\DAEGeometryConverter.h>
+#include <TranscoderDAE\DAECoreConverter.h>
 #include <earcut.hpp>
 
 #include <iostream>
