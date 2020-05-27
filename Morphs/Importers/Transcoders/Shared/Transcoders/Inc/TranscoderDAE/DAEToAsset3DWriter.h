@@ -42,6 +42,7 @@ namespace Babylon
 			COLLADAFW::FileInfo::UpAxisType m_upAxis ;
 			Babylon::Utils::Math::Matrix m_upAxisTransform ;
 			float m_scale_meter;
+			std::string m_authtool;
 
 			/// builders.
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAEMeshBuilder>> m_geometryLibrary;
@@ -146,6 +147,14 @@ namespace Babylon
 
 			inline void setPrimarySceneId(COLLADAFW::UniqueId uid) {
 				m_primarySceneId = uid;
+			}
+
+			inline void SetAuthoringTool(std::string authoring_tool) {
+				m_authtool = authoring_tool;
+			}
+
+			inline const std::string  getAuthoringTool() {
+				return m_authtool;
 			}
 
 		};

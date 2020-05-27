@@ -187,6 +187,7 @@ std::shared_ptr<SceneNode> DAENodeConverter::Convert(const COLLADAFW::Node* coll
 		}
 	}
 
+#ifdef _IMPORT_CAMERA
 	/// CAMERAS Instance
 	COLLADAFW::InstanceCameraPointerArray colladaCameras = colladaNode->getInstanceCameras();
 	size_t countCamera = colladaCameras.getCount();
@@ -205,6 +206,7 @@ std::shared_ptr<SceneNode> DAENodeConverter::Convert(const COLLADAFW::Node* coll
 			tmp->SetName(cb->GetName());
 		}
 	}
+#endif
 
 	/// HIERARCHY
 	const COLLADAFW::NodePointerArray colladaChildren = colladaNode->getChildNodes();

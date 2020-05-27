@@ -105,6 +105,14 @@ void DAEToAsset3DWriter::finish() {
 bool DAEToAsset3DWriter::writeGlobalAsset(const COLLADAFW::FileInfo* asset) {
 
 	DAEToAsset3DWriterContextPtr ctx = getContext();
+	const COLLADAFW::FileInfo::ValuePairPointerArray& valuePairs = asset->getValuePairArray();
+	for (size_t i = 0; i < valuePairs.getCount(); i++) {
+		const COLLADAFW::FileInfo::ValuePair* valuePair = valuePairs[i];
+		const COLLADAFW::String& key = valuePair->first;
+		if (key == "authoring_tool") {
+			ctx->SetAuthoringTool(valuePair->second);
+		}
+	}	
 	ctx->setUpAxisType(asset->getUpAxisType());
 	ctx->setScaleMeter((float)asset->getUnit().getLinearUnitMeter());
 	return true;
