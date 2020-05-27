@@ -11,6 +11,7 @@
 
 /// options
 #define _BASEPATH_OPTION_KEY "basepath"
+#define _MAX_MESH_PRIMITIVE_OPTION_KEY "maxgeometry"
 
 /// default scene name for the root node
 #define _DEFAULT_SCENE_NAME "SCENE"

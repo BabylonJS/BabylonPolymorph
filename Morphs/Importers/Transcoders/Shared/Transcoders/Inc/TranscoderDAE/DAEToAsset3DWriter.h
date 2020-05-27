@@ -126,6 +126,15 @@ namespace Babylon
 				return m_options[_BASEPATH_OPTION_KEY];
 			}
 
+			inline const size_t  getMaxMeshPrimitiveOption() {
+				std::string str = m_options[_MAX_MESH_PRIMITIVE_OPTION_KEY];
+				if (!str.empty()) {
+					uint32_t n = strtoul(str.c_str(), nullptr,  10);
+					return errno ? UINT_MAX : n;
+				}
+				return UINT_MAX;
+			}
+
 			inline const Babylon::Utils::Math::Matrix getUpAxisTransfrom() {
 				return m_upAxisTransform;
 			}

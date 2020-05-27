@@ -107,14 +107,18 @@ std::shared_ptr<DAEMeshBuilder> DAEMeshConverter::Convert(const COLLADAFW::Mesh*
 	
 	std::shared_ptr<DAEMeshBuilder> meshbuilderPtr;
 
+
+	/// get the context
+	DAEToAsset3DWriterContextPtr ctx = getContext();
+	size_t maxMeshPrimitive = ctx->getMaxMeshPrimitiveOption();
+
+	/// bypass primitives when more than wished by options "maxgeometry"
 	const COLLADAFW::MeshPrimitiveArray& meshPrimitives = colladaMesh->getMeshPrimitives();
-	size_t meshPrimitivesCount = meshPrimitives.getCount();
+	size_t meshPrimitivesCount = std::min(maxMeshPrimitive, meshPrimitives.getCount());
+
 	if (meshPrimitivesCount > 0) {
 
-        /// get the context
-		DAEToAsset3DWriterContextPtr ctx = getContext();
-
-		/// get the up axis reference
+ 		/// get the up axis reference
 		COLLADAFW::FileInfo::UpAxisType upAxis = ctx->getUpAxisType();
 
 		/// create the mesh builder.
