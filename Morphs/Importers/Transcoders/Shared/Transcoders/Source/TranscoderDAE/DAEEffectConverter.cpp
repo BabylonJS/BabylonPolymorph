@@ -19,7 +19,6 @@
 
 using namespace Babylon::Transcoder;
 
-#define _ToColor(c)  Babylon::Utils::Math::Color(c.getRed(),c.getGreen(), c.getBlue(),c.getAlpha())
 
 std::shared_ptr<MaterialDescriptor::LayerInfo> DAEEffectConverter::SetLayer(const COLLADAFW::EffectCommon* effectCommon, const COLLADAFW::ColorOrTexture* src, std::shared_ptr<DAEMaterialBuilder> material) {
 
@@ -40,7 +39,7 @@ std::shared_ptr<MaterialDescriptor::LayerInfo> DAEEffectConverter::SetLayer(cons
 	else if (src->isColor()) {
 		layer = std::make_shared<LayerInfo>();
 		const COLLADAFW::Color& color = src->getColor();
-		layer->SetColor(_ToColor(color));
+		layer->SetColor(_ToColor(color)); /// _ToColor macro from TranscoderDAEUtil.h
 	}
 	return layer;
 }

@@ -20,6 +20,7 @@
 #include <COLLADAFWImage.h>
 #include <COLLADAFWEffect.h>
 #include <COLLADAFWLibraryNodes.h>
+#include <COLLADAFWLight.h>
 
 
 #include <COLLADASaxFWLIError.h>
@@ -223,7 +224,14 @@ bool DAEToAsset3DWriter::writeImage(const COLLADAFW::Image* colladaImage) {
 
 /** When this method is called, the writer must write the light.
 @return The writer should return true, if writing succeeded, false otherwise.*/
-bool DAEToAsset3DWriter::writeLight(const COLLADAFW::Light* light) {
+bool DAEToAsset3DWriter::writeLight(const COLLADAFW::Light* colladaLight) {
+#ifdef _IMPORT_LIGHT
+	DAELightConverter c(&m_context);
+	std::shared_ptr<DAELightBuilder> b = c.GetNode(colladaLight);
+	if (b) {
+		m_context.getLightLibrary()[colladaLight->getUniqueId()] = b;
+	}
+#endif
 	return true;
 }
 

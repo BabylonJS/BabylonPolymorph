@@ -303,6 +303,17 @@ void SceneNode::SetCamera(std::shared_ptr<Camera> camera)
     m_camera = std::move(camera);
 }
 
+
+const std::shared_ptr<Light> SceneNode::GetLight() const
+{
+    return m_light;
+}
+
+void SceneNode::SetLight(std::shared_ptr<Light> light)
+{
+    m_light = std::move(light);
+}
+
 std::unordered_set<std::shared_ptr<TextureDescriptor>> SceneNode::GetUniqueTextures() const
 {
     std::unordered_set<std::shared_ptr<TextureDescriptor>> textures;

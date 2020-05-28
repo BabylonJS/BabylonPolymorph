@@ -113,5 +113,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Asset3D\TexturePackingUtils.h">
       <Filter>Public Headers\Asset3D</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Asset3D\Light.h" />
   </ItemGroup>
 </Project>

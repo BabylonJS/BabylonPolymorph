@@ -189,6 +189,9 @@
     <ClCompile Include="..\Source\TranscoderDAE\DAECameraConverter.cpp">
       <Filter>Source\Importers\ImporterDAE</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\TranscoderDAE\DAELightConverter.cpp">
+      <Filter>Source\Importers\ImporterDAE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\TranscodersPch.h">
@@ -331,6 +334,9 @@
       <Filter>Public Headers\Importers\ImporterDAE\Converters</Filter>
     </ClInclude>
     <ClInclude Include="..\Inc\TranscoderDAE\DAECameraBuilder.h">
+      <Filter>Public Headers\Importers\ImporterDAE\Builders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\TranscoderDAE\DAELightBuilder.h">
       <Filter>Public Headers\Importers\ImporterDAE\Builders</Filter>
     </ClInclude>
   </ItemGroup>

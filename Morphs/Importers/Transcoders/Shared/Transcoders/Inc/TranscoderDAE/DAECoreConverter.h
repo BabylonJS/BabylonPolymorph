@@ -40,6 +40,16 @@ namespace Babylon
 			std::shared_ptr<DAECameraBuilder> Convert(const COLLADAFW::Camera* from);
 		};
 
+
+		class DAELightConverter : public DAEAbstractConverter<COLLADAFW::Light, DAELightBuilder> {
+		public:
+			DAELightConverter(DAEToAsset3DWriterContext* context) :
+				DAEAbstractConverter(context) {
+			}
+			std::shared_ptr<DAELightBuilder> Convert(const COLLADAFW::Light* from);
+		};
+
+
 		class DAENodeConverter : public DAEAbstractConverter<COLLADAFW::Node, SceneNode> {
 		public:
 			DAENodeConverter(DAEToAsset3DWriterContext* context) :

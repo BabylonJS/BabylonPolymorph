@@ -12,6 +12,7 @@
 #include <TranscoderDAE/DAEMeshBuilder.h>
 #include <TranscoderDAE/DAEFXBuilder.h>
 #include <TranscoderDAE/DAECameraBuilder.h>
+#include <TranscoderDAE/DAELightBuilder.h>
 
 #include <Asset3D/Asset3D.h>
 
@@ -207,6 +208,29 @@ std::shared_ptr<SceneNode> DAENodeConverter::Convert(const COLLADAFW::Node* coll
 		}
 	}
 #endif
+
+
+#ifdef _IMPORT_LIGHT
+	/// CAMERAS Instance
+	COLLADAFW::InstanceLightPointerArray colladaLights = colladaNode->getInstanceLights();
+	size_t countLight = colladaLights.getCount();
+	for (size_t i = 0; i != countLight; i++) {
+		COLLADAFW::InstanceLight* colladaLight = colladaLights[i];
+		const COLLADAFW::UniqueId& colladaUid = colladaLight->getInstanciatedObjectId();
+		std::shared_ptr<DAELightBuilder> cb = m_context->getLightLibrary()[colladaUid];
+		if (cb) {
+			if (countLight == 1) {
+				node->SetLight(cb->Build());
+				continue;
+			}
+			/// add child node to allow multiple light
+			std::shared_ptr<SceneNode> tmp = node->CreateChildNode();
+			tmp->SetLight(cb->Build());
+			tmp->SetName(cb->GetName());
+		}
+	}
+#endif
+
 
 	/// HIERARCHY
 	const COLLADAFW::NodePointerArray colladaChildren = colladaNode->getChildNodes();

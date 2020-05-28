@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\TranscoderDAE\DAECameraConverter.cpp" />
+    <ClCompile Include="..\Source\TranscoderDAE\DAELightConverter.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\DAENodeConverter.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\DAEToAsset3DWriter.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\DAEImageConverter.cpp" />
@@ -119,6 +120,7 @@
     <ClInclude Include="..\Inc\TranscoderDAE\DAECoreConverter.h" />
     <ClInclude Include="..\Inc\TranscoderDAE\DAEFXBuilder.h" />
     <ClInclude Include="..\Inc\TranscoderDAE\DAEGeometryBuilder.h" />
+    <ClInclude Include="..\Inc\TranscoderDAE\DAELightBuilder.h" />
     <ClInclude Include="..\Inc\TranscoderDAE\DAEMeshBuilder.h" />
     <ClInclude Include="..\Inc\TranscoderDAE\DAETextureBuilder.h" />
     <ClInclude Include="..\Inc\TranscoderDAE\DAEToAsset3DWriter.h" />

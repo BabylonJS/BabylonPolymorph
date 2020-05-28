@@ -35,6 +35,9 @@ case(COLLADAFW::FileInfo::UpAxisType::Z_UP): { __VEC3_TRANSFER_Z_UP(ptr, v3_cach
 default: { __VEC3_TRANSFER_NONE(ptr, v3_cache0) break; } }
 
 
+#define _ToColor(c)  Babylon::Utils::Math::Color(c.getRed(),c.getGreen(), c.getBlue(),c.getAlpha())
+
+
 /// macros could be used to average incrementally vector3
 #define __AVERAGE_INC(v,b,n) (b) + ((v) - (b)) / (n)
 #define __VEC3_AVERAGE_INC_X_UP(ptr,v,n) v.y = __AVERAGE_INC(*(ptr++), v.y, n); v.x = __AVERAGE_INC(-*(ptr++), v.x, n); v.x = __AVERAGE_INC(*(ptr), v.z, n);

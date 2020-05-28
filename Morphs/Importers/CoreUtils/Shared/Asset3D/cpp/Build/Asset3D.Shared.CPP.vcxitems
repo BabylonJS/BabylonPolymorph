@@ -39,6 +39,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Asset3D\Geometry.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Asset3D\IAsset3DProcessor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Asset3D\ITraversable.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Asset3D\Light.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Asset3D\MaterialConversionUtils.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Asset3D\MaterialDescriptor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Asset3D\MaterialLayer.h" />

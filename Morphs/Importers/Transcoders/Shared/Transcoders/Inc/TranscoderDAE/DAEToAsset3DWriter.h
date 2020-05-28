@@ -29,6 +29,7 @@ namespace Babylon
 		class DAETextureBuilder;
 		class DAEMaterialBuilder;
 		class DAECameraBuilder;
+		class DAELightBuilder;
 
 		class DAEToAsset3DWriterContext {
 		public:
@@ -49,6 +50,7 @@ namespace Babylon
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAETextureBuilder>> m_imageLibrary;
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAEMaterialBuilder>> m_effectLibrary;
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAECameraBuilder>> m_cameraLibrary;
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAELightBuilder>> m_lightLibrary;
 
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<Asset3D>> m_visualSceneLibrary;
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<SceneNode>> m_nodeLibrary;
@@ -86,6 +88,10 @@ namespace Babylon
 
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAECameraBuilder>>& getCameraLibrary() {
 				return m_cameraLibrary;
+			}
+
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAELightBuilder>>& getLightLibrary() {
+				return m_lightLibrary;
 			}
 
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAEMaterialBuilder>>& getEffectLibrary() {
