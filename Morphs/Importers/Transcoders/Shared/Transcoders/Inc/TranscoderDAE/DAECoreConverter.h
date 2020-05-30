@@ -50,14 +50,12 @@ namespace Babylon
 		};
 
 
-		class DAENodeConverter : public DAEAbstractConverter<COLLADAFW::Node, SceneNode> {
+		class DAENodeConverter : public DAEAbstractConverter<COLLADAFW::Node, DAENodeBuilder> {
 		public:
 			DAENodeConverter(DAEToAsset3DWriterContext* context) :
 				DAEAbstractConverter(context) {
 			}
-			std::shared_ptr<SceneNode> Convert(const COLLADAFW::Node* from);
-			std::shared_ptr<SceneNode> Convert(const COLLADAFW::Node* colladaNode, std::shared_ptr<SceneNode> node);
-			std::shared_ptr<SceneNode> ConvertBreadthFirst(const COLLADAFW::NodePointerArray* nodes, std::shared_ptr<SceneNode> node = nullptr);
+			std::shared_ptr<DAENodeBuilder> Convert(const COLLADAFW::Node* from);
 		};
 
 		class DAEVirtualSceneConverter : public DAEAbstractConverter<COLLADAFW::VisualScene, Asset3D> {

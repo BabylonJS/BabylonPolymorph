@@ -26,6 +26,7 @@ namespace Babylon
 				for (int i = 0; i != m_geometries.size(); i++) {
 					mesh->AddGeometry(std::move(*m_geometries[i]->Build()));
 				}
+				mesh->SetName(GetName());
 				return mesh;
 			}
 

@@ -5,8 +5,10 @@
 ********************************************************/
 #pragma once
 
+#include <TranscoderDAE/TranscoderDAEConfig.h>
 #include <COLLADAFWTransformation.h>
 #include <COLLADAFWMatrix.h>
+#include <Asset3D/SceneNode.h>
 
 /**
  * According to COLLADA specification 5-17, All coordinates are righthanded by definition.
@@ -45,7 +47,7 @@ default: { __VEC3_TRANSFER_NONE(ptr, v3_cache0) break; } }
 #define __VEC3_AVERAGE_INC_Z_UP(ptr,v,n) v.x = __AVERAGE_INC(*(ptr++), v.x, n); v.z = __AVERAGE_INC(-*(ptr++), v.z, n); v.y = __AVERAGE_INC(*(ptr), v.y, n);
 #define __VEC3_AVERAGE_INC_NONE(ptr,v,n) __VEC3_AVERAGE_INC_Z_UP(ptr, v,n)
 
-
+#define NAME_OR_ID(nodePtr) (nodePtr)->getName().empty() ? (nodePtr)->getOriginalId(): (nodePtr)->getName()
 namespace Babylon
 {
     namespace Transcoder

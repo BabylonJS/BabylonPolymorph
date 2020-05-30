@@ -43,10 +43,10 @@ namespace Babylon
 					std::unique_ptr<Perspective> p = std::make_unique<Perspective>(m_znear, m_yfov);
 
 					if (m_zfar.Valid()) {
-						p->zfar = m_zfar;
+						p->zfar = *m_zfar;
 					}
 					if (m_aspectRatio.Valid()) {
-						p->aspectRatio = m_aspectRatio;
+						p->aspectRatio = *m_aspectRatio;
 					}
 					ptr = std::make_shared<Camera>(std::move(p));
 				}
@@ -70,7 +70,9 @@ namespace Babylon
 			}
 
 			inline DAECameraBuilder& WithAspectRatio(float aspectRatio) {
-				m_aspectRatio = aspectRatio;
+				if( !DISCARD_ZERO_ASPECT_RATIO || aspectRatio != 0){
+					m_aspectRatio = aspectRatio;
+				}
 				return *this;
 			}
 

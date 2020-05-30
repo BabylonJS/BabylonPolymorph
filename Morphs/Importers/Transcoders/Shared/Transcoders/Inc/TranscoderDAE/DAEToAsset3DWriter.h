@@ -30,6 +30,7 @@ namespace Babylon
 		class DAEMaterialBuilder;
 		class DAECameraBuilder;
 		class DAELightBuilder;
+		class DAENodeBuilder;
 
 		class DAEToAsset3DWriterContext {
 		public:
@@ -51,9 +52,9 @@ namespace Babylon
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAEMaterialBuilder>> m_effectLibrary;
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAECameraBuilder>> m_cameraLibrary;
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAELightBuilder>> m_lightLibrary;
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAENodeBuilder>> m_nodeLibrary;
 
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<Asset3D>> m_visualSceneLibrary;
-			std::map<COLLADAFW::UniqueId, std::shared_ptr<SceneNode>> m_nodeLibrary;
 			std::map<COLLADAFW::UniqueId, COLLADAFW::UniqueId> m_materialUIdToEffectIndex;
 			std::map<COLLADAFW::String, COLLADAFW::UniqueId> m_materialOriginalIdToEffectIndex;
 			// THIS IS TEMPORARY BINDING TO ALLOW SCENE MOUNT GEOMETRY WITH CONTROLLER WITHOUT THE CONTROLLER LIBRARY SUPPORT - Version 0.1.
@@ -98,7 +99,7 @@ namespace Babylon
 				return m_effectLibrary;
 			}
 
-			std::map<COLLADAFW::UniqueId, std::shared_ptr<SceneNode>>& getNodeLibrary() {
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAENodeBuilder>>& getNodeLibrary() {
 				return m_nodeLibrary;
 			}
 
@@ -190,9 +191,7 @@ namespace Babylon
 
 			inline const DAEToAsset3DWriterContextPtr getContext() { return &(this->m_context); }
 			
-			inline std::shared_ptr<Asset3D> getAsset3D() { 
-				return m_context.getVisualSceneLibrary()[m_context.getPrimarySceneId()];
-			}
+			std::shared_ptr<Asset3D> getAsset3D();
 
  			/** If this method returns true, the loader stops parsing immediately. If severity is nor CRITICAL
 			and this method returns false, the loader continues loading.*/

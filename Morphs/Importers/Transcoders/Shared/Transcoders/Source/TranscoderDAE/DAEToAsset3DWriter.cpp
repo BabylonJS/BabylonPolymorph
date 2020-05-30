@@ -78,6 +78,20 @@ DAEToAsset3DWriter::DAEToAsset3DWriter(IResourceServer* resourceServer, const st
 DAEToAsset3DWriter::~DAEToAsset3DWriter() {
 }
 
+std::shared_ptr<Asset3D> DAEToAsset3DWriter::getAsset3D() {
+	auto l = m_context.getVisualSceneLibrary().find(m_context.getPrimarySceneId());
+	if (l != m_context.getVisualSceneLibrary().end()) {
+		return l->second;
+	}
+	if (m_context.getVisualSceneLibrary().size()) {
+		return m_context.getVisualSceneLibrary().begin()->second;
+	}
+	return std::make_shared<Asset3D>();
+}
+
+
+
+
 /** If this method returns true, the loader stops parsing immediately. If severity is nor CRITICAL
 and this method returns false, the loader continues loading.*/
 bool DAEToAsset3DWriter::handleError(const COLLADASaxFWL::IError* error) {
@@ -147,7 +161,9 @@ bool DAEToAsset3DWriter::writeLibraryNodes(const COLLADAFW::LibraryNodes* collad
 	int count = nodes.getCount();
 	if (count) {
 		DAENodeConverter c(&m_context);
-		c.ConvertBreadthFirst(&nodes);
+		for (int i = 0; i != count; i++) {
+			c.Convert(nodes[i]);
+		}
 	}
 	return true;
 }

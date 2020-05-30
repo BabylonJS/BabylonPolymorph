@@ -8,11 +8,11 @@
 #include <TranscoderDAE/TranscoderDAEConfig.h>
 #include <TranscoderDAE/TranscoderDAEUtils.h>
 #include <TranscoderDAE/DAECoreConverter.h>
+#include <TranscoderDAE/DAENodeBuilder.h>
 
 #include <Asset3D/Asset3D.h>
 
 #include "COLLADAFWVisualScene.h"
-
 
 using namespace Babylon::Transcoder;
 
@@ -30,9 +30,12 @@ std::shared_ptr<Asset3D> DAEVirtualSceneConverter::Convert(const COLLADAFW::Visu
 	if (count != 0) {
 		for (int i = 0; i != count; i++) {
 			COLLADAFW::Node* colladaNode = colladaRootNodes[i];
-			std::shared_ptr<SceneNode> child = nc.Convert(colladaRootNodes[i]);
-			if (child) {
-				scene->AddChildNode(child);
+			std::shared_ptr<DAENodeBuilder> builder = nc.Convert(colladaRootNodes[i]);
+			if (builder) {
+				std::shared_ptr<SceneNode> node = builder->Build();
+				if (node) {
+					scene->AddChildNode(node);
+				}
 			}
 		}
 	}

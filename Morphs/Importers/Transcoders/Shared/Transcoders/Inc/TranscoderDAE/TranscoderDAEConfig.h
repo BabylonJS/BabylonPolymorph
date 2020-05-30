@@ -45,3 +45,7 @@ enum InvertYMode {
 
 #define _INVERT_Y_MODE_DEFAULT InvertYMode::UVLevel
 #define _INVERT_Y_MODE _INVERT_Y_MODE_DEFAULT
+
+/// camera
+/// use to discard zero aspect ratio as found in some file (sketchup). 
+#define DISCARD_ZERO_ASPECT_RATIO true

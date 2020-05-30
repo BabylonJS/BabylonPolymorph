@@ -92,3 +92,5 @@ COLLADABU::Math::Matrix4  Babylon::Transcoder::getMatrixFromTransform(const COLL
 	}
 	return COLLADABU::Math::Matrix4::IDENTITY;
 }
+
+

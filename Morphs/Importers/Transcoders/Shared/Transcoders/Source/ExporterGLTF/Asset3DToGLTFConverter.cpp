@@ -809,7 +809,7 @@ void Asset3DToGLTFConverter::PopulateDocument(IGLTFWriter& writer)
 {
     std::unordered_map<uint32_t, MaterialDescriptor*> materials;
     std::unordered_map<std::string, glTF::Node> nodes;
-
+ 
     CopyToGltfProperty(m_asset3d, *m_gltfDocument, *m_gltfDocument.get(), Babylon::Utils::glTF::kExtensionsRootGltfKey);
 
     glTF::Scene gltfScene;
@@ -817,12 +817,19 @@ void Asset3DToGLTFConverter::PopulateDocument(IGLTFWriter& writer)
 
     CopyToGltfProperty(m_asset3d, *m_gltfDocument, gltfScene, Babylon::Utils::glTF::kExtensionsDefaultSceneKey);
 
-    ISceneNodeUtils::DFS(&m_asset3d,
-        [&](const SceneNode* sceneNode, const SceneNode* parentNode)
+    ISceneNodeUtils::DFS(&m_asset3d, [&](const SceneNode* sceneNode, const SceneNode* parentNode)
     {
+ /*       if (parentNode) {
+            auto& v = nodes[parentNode->GetIdString()].children;
+            if (std::count(v.begin(), v.end(), sceneNode->GetIdString())) {
+                return true;
+            }
+        }*/
+
         glTF::Node gltfNode;
         gltfNode.id = sceneNode->GetIdString();
         gltfNode.name = sceneNode->GetName();
+
         gltfNode.weights = sceneNode->GetMorphWeights();
 
         if (parentNode == nullptr) // SceneNode = glTF::Node (root)
@@ -878,7 +885,7 @@ void Asset3DToGLTFConverter::PopulateDocument(IGLTFWriter& writer)
         }
 
         nodes.emplace(gltfNode.id, gltfNode);
-
+ 
         return true;
     });
 
