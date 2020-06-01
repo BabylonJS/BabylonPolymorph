@@ -32,6 +32,7 @@ namespace Babylon
 		class DAELightBuilder;
 		class DAENodeBuilder;
 
+
 		class DAEToAsset3DWriterContext {
 		public:
 			static const COLLADAFW::FileInfo::UpAxisType defaultUpAxis = COLLADAFW::FileInfo::UpAxisType::Y_UP;
@@ -45,6 +46,9 @@ namespace Babylon
 			Babylon::Utils::Math::Matrix m_upAxisTransform ;
 			float m_scale_meter;
 			std::string m_authtool;
+
+			/// animation data
+			std::map<COLLADAFW::UniqueId, std::tuple<std::vector<float>, std::vector<float>>> m_animationData;
 
 			/// builders.
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAEMeshBuilder>> m_geometryLibrary;
@@ -73,6 +77,10 @@ namespace Babylon
 
 			inline const IResourceServer* getRessourceServer() {
 				return m_resourceServer;
+			}
+
+			std::map<COLLADAFW::UniqueId, std::tuple<std::vector<float>, std::vector<float>>>& getAnimationData() {
+				return m_animationData;
 			}
 
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAEMeshBuilder>>& getGeometryLibrary() {

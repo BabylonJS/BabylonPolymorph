@@ -82,6 +82,12 @@
     <Filter Include="Public Headers\Importers\ImporterDAE\Converters">
       <UniqueIdentifier>{75c6bb76-aa6a-4d40-b29b-6e25a7a13a61}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Public Headers\Importers\ImporterDAE\Builders\Animations">
+      <UniqueIdentifier>{f4f4212a-1c48-430b-8fe4-bd3015389245}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Importers\ImporterDAE\Animation">
+      <UniqueIdentifier>{a7c4405f-17cf-42be-93b2-48fdd74373b2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -194,6 +200,15 @@
     </ClCompile>
     <ClCompile Include="..\Source\TranscoderDAE\DAENodeBuilder.cpp">
       <Filter>Source\Importers\ImporterDAE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\TranscoderDAE\DAESkeletonConverter.cpp">
+      <Filter>Source\Importers\ImporterDAE\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\TranscoderDAE\DAEMorphConverter.cpp">
+      <Filter>Source\Importers\ImporterDAE\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\TranscoderDAE\DAESkeletalAnimationConverter.cpp">
+      <Filter>Source\Importers\ImporterDAE\Animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -344,6 +359,18 @@
     </ClInclude>
     <ClInclude Include="..\Inc\TranscoderDAE\DAENodeBuilder.h">
       <Filter>Public Headers\Importers\ImporterDAE\Builders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\TranscoderDAE\DAEAnimationConverter.h">
+      <Filter>Public Headers\Importers\ImporterDAE\Converters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\TranscoderDAE\DAENodeAnimationBuilder.h">
+      <Filter>Public Headers\Importers\ImporterDAE\Builders\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\TranscoderDAE\DAESkeletalAnimationBuilder.h">
+      <Filter>Public Headers\Importers\ImporterDAE\Builders\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\TranscoderDAE\DAESkeletonBuilder.h">
+      <Filter>Public Headers\Importers\ImporterDAE\Builders\Animations</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

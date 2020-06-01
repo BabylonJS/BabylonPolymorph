@@ -71,8 +71,11 @@
   <ItemGroup>
     <ClCompile Include="..\Source\TranscoderDAE\DAECameraConverter.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\DAELightConverter.cpp" />
+    <ClCompile Include="..\Source\TranscoderDAE\DAEMorphConverter.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\DAENodeBuilder.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\DAENodeConverter.cpp" />
+    <ClCompile Include="..\Source\TranscoderDAE\DAESkeletalAnimationConverter.cpp" />
+    <ClCompile Include="..\Source\TranscoderDAE\DAESkeletonConverter.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\DAEToAsset3DWriter.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\DAEImageConverter.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\DAEEffectConverter.cpp" />
@@ -117,6 +120,8 @@
     <ClInclude Include="..\Inc\ExporterOBJ\ExporterObj.h" />
     <ClInclude Include="..\Inc\ExporterSTL\ExporterAsciiStl.h" />
     <ClInclude Include="..\Inc\ExporterTexture\ExporterTexture.h" />
+    <ClInclude Include="..\Inc\TranscoderDAE\DAENodeAnimationBuilder.h" />
+    <ClInclude Include="..\Inc\TranscoderDAE\DAEAnimationConverter.h" />
     <ClInclude Include="..\Inc\TranscoderDAE\DAECameraBuilder.h" />
     <ClInclude Include="..\Inc\TranscoderDAE\DAECoreConverter.h" />
     <ClInclude Include="..\Inc\TranscoderDAE\DAEFXBuilder.h" />
@@ -124,6 +129,8 @@
     <ClInclude Include="..\Inc\TranscoderDAE\DAELightBuilder.h" />
     <ClInclude Include="..\Inc\TranscoderDAE\DAEMeshBuilder.h" />
     <ClInclude Include="..\Inc\TranscoderDAE\DAENodeBuilder.h" />
+    <ClInclude Include="..\Inc\TranscoderDAE\DAESkeletalAnimationBuilder.h" />
+    <ClInclude Include="..\Inc\TranscoderDAE\DAESkeletonBuilder.h" />
     <ClInclude Include="..\Inc\TranscoderDAE\DAETextureBuilder.h" />
     <ClInclude Include="..\Inc\TranscoderDAE\DAEToAsset3DWriter.h" />
     <ClInclude Include="..\Inc\TranscoderDAE\DAEFXConverter.h" />

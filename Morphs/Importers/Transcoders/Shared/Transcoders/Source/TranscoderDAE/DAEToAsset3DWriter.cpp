@@ -21,6 +21,9 @@
 #include <COLLADAFWEffect.h>
 #include <COLLADAFWLibraryNodes.h>
 #include <COLLADAFWLight.h>
+#include <COLLADAFWAnimation.h>
+#include <COLLADAFWAnimationCurve.h>
+
 
 
 #include <COLLADASaxFWLIError.h>
@@ -254,6 +257,42 @@ bool DAEToAsset3DWriter::writeLight(const COLLADAFW::Light* colladaLight) {
 /** When this method is called, the writer must write the Animation.
 @return The writer should return true, if writing succeeded, false otherwise.*/
 bool DAEToAsset3DWriter::writeAnimation(const COLLADAFW::Animation* animation) {
+
+	if (animation->getAnimationType() == COLLADAFW::Animation::ANIMATION_CURVE) {
+		COLLADAFW::AnimationCurve* animationCurve = (COLLADAFW::AnimationCurve*)animation;
+		COLLADAFW::FloatOrDoubleArray inputArray = animationCurve->getInputValues();
+		COLLADAFW::FloatOrDoubleArray outputArray = animationCurve->getOutputValues();
+
+		int inputLength = inputArray.getValuesCount();
+		std::vector<float> inputValues = std::vector<float>();
+		int outputLength = outputArray.getValuesCount();
+		std::vector<float> outputValues = std::vector<float>();
+
+		float value;
+		for (int i = 0; i < inputLength; i++) {
+			switch (inputArray.getType()) {
+			case COLLADAFW::FloatOrDoubleArray::DATA_TYPE_DOUBLE:
+				value = (float)(inputArray.getDoubleValues()->getData()[i]);
+				break;
+			case COLLADAFW::FloatOrDoubleArray::DATA_TYPE_FLOAT:
+				value = inputArray.getFloatValues()->getData()[i];
+				break;
+			}
+			inputValues.push_back(value);
+		}
+		for (int i = 0; i < outputLength; i++) {
+			switch (outputArray.getType()) {
+			case COLLADAFW::FloatOrDoubleArray::DATA_TYPE_DOUBLE:
+				value = (float)(outputArray.getDoubleValues()->getData()[i]);
+				break;
+			case COLLADAFW::FloatOrDoubleArray::DATA_TYPE_FLOAT:
+				value = outputArray.getFloatValues()->getData()[i];
+				break;
+			}
+			outputValues.push_back(value);
+		}
+		getContext()->getAnimationData()[animation->getUniqueId()] = std::make_tuple(inputValues, outputValues);
+	}	
 	return true;
 }
 
