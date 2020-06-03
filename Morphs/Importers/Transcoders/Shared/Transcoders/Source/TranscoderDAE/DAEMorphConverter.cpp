@@ -5,9 +5,6 @@
 ********************************************************/
 #include "TranscodersPch.h"
 
-#define _USE_MATH_DEFINES
-#include <math.h>
-
 #include <TranscoderDAE/DAEAnimationConverter.h>
 #include <TranscoderDAE/DAESkeletonBuilder.h>
 #include <COLLADAFWMorphController.h>

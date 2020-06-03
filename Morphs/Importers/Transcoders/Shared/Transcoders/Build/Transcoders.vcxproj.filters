@@ -201,13 +201,19 @@
     <ClCompile Include="..\Source\TranscoderDAE\DAENodeBuilder.cpp">
       <Filter>Source\Importers\ImporterDAE</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\TranscoderDAE\DAESkeletonConverter.cpp">
-      <Filter>Source\Importers\ImporterDAE\Animation</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\TranscoderDAE\DAEMorphConverter.cpp">
       <Filter>Source\Importers\ImporterDAE\Animation</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\TranscoderDAE\DAESkeletalAnimationConverter.cpp">
+      <Filter>Source\Importers\ImporterDAE\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\TranscoderDAE\DAESkinControllerDataConverter.cpp">
+      <Filter>Source\Importers\ImporterDAE\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\TranscoderDAE\DAEAnimationConverter.cpp">
+      <Filter>Source\Importers\ImporterDAE\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\TranscoderDAE\DAESkinControllerConverter.cpp">
       <Filter>Source\Importers\ImporterDAE\Animation</Filter>
     </ClCompile>
   </ItemGroup>
@@ -370,6 +376,9 @@
       <Filter>Public Headers\Importers\ImporterDAE\Builders\Animations</Filter>
     </ClInclude>
     <ClInclude Include="..\Inc\TranscoderDAE\DAESkeletonBuilder.h">
+      <Filter>Public Headers\Importers\ImporterDAE\Builders\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\TranscoderDAE\DAEAnimation.h">
       <Filter>Public Headers\Importers\ImporterDAE\Builders\Animations</Filter>
     </ClInclude>
   </ItemGroup>

@@ -77,4 +77,10 @@ DAENodeBuilder& DAENodeBuilder::WithInstance(COLLADAFW::UniqueId id) {
 	return *this;
 }
 
-
+std::shared_ptr<Animation::Joint> DAENodeBuilder::BuildJoint() {
+	std::shared_ptr<Animation::Joint> ptr = nullptr;
+	if (IsJoint()) {
+		ptr = std::make_shared<Animation::Joint>(GetName());
+	}
+	return ptr;
+}

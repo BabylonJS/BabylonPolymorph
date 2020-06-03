@@ -69,13 +69,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Source\TranscoderDAE\DAEAnimationConverter.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\DAECameraConverter.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\DAELightConverter.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\DAEMorphConverter.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\DAENodeBuilder.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\DAENodeConverter.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\DAESkeletalAnimationConverter.cpp" />
-    <ClCompile Include="..\Source\TranscoderDAE\DAESkeletonConverter.cpp" />
+    <ClCompile Include="..\Source\TranscoderDAE\DAESkinControllerConverter.cpp" />
+    <ClCompile Include="..\Source\TranscoderDAE\DAESkinControllerDataConverter.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\DAEToAsset3DWriter.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\DAEImageConverter.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\DAEEffectConverter.cpp" />
@@ -120,6 +122,7 @@
     <ClInclude Include="..\Inc\ExporterOBJ\ExporterObj.h" />
     <ClInclude Include="..\Inc\ExporterSTL\ExporterAsciiStl.h" />
     <ClInclude Include="..\Inc\ExporterTexture\ExporterTexture.h" />
+    <ClInclude Include="..\Inc\TranscoderDAE\DAEAnimation.h" />
     <ClInclude Include="..\Inc\TranscoderDAE\DAENodeAnimationBuilder.h" />
     <ClInclude Include="..\Inc\TranscoderDAE\DAEAnimationConverter.h" />
     <ClInclude Include="..\Inc\TranscoderDAE\DAECameraBuilder.h" />

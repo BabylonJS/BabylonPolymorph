@@ -31,7 +31,8 @@ namespace Babylon
 		class DAECameraBuilder;
 		class DAELightBuilder;
 		class DAENodeBuilder;
-
+		struct DAESkinData;
+		struct DAEAnimationData;
 
 		class DAEToAsset3DWriterContext {
 		public:
@@ -48,7 +49,8 @@ namespace Babylon
 			std::string m_authtool;
 
 			/// animation data
-			std::map<COLLADAFW::UniqueId, std::tuple<std::vector<float>, std::vector<float>>> m_animationData;
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAEAnimationData>> m_animationData;
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAESkinData>> m_skinLibrary;
 
 			/// builders.
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAEMeshBuilder>> m_geometryLibrary;
@@ -57,6 +59,7 @@ namespace Babylon
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAECameraBuilder>> m_cameraLibrary;
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAELightBuilder>> m_lightLibrary;
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAENodeBuilder>> m_nodeLibrary;
+
 
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<Asset3D>> m_visualSceneLibrary;
 			std::map<COLLADAFW::UniqueId, COLLADAFW::UniqueId> m_materialUIdToEffectIndex;
@@ -79,8 +82,12 @@ namespace Babylon
 				return m_resourceServer;
 			}
 
-			std::map<COLLADAFW::UniqueId, std::tuple<std::vector<float>, std::vector<float>>>& getAnimationData() {
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAEAnimationData>>& getAnimationData() {
 				return m_animationData;
+			}
+
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAESkinData>>& getSkinLibrary() {
+				return m_skinLibrary;
 			}
 
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAEMeshBuilder>>& getGeometryLibrary() {

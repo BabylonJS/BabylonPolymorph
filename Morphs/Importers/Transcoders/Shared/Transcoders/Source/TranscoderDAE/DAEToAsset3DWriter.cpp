@@ -12,6 +12,7 @@
 #include <TranscoderDAE/DAEGeometryBuilder.h>
 #include <TranscoderDAE/DAECameraBuilder.h>
 #include <TranscoderDAE/DAEFXBuilder.h>
+#include <TranscoderDAE/DAEAnimationConverter.h>
 
 #include <Asset3D\Asset3D.h>
 
@@ -23,6 +24,7 @@
 #include <COLLADAFWLight.h>
 #include <COLLADAFWAnimation.h>
 #include <COLLADAFWAnimationCurve.h>
+#include <COLLADAFWSkinControllerData.h>
 
 
 
@@ -257,42 +259,11 @@ bool DAEToAsset3DWriter::writeLight(const COLLADAFW::Light* colladaLight) {
 /** When this method is called, the writer must write the Animation.
 @return The writer should return true, if writing succeeded, false otherwise.*/
 bool DAEToAsset3DWriter::writeAnimation(const COLLADAFW::Animation* animation) {
-
-	if (animation->getAnimationType() == COLLADAFW::Animation::ANIMATION_CURVE) {
-		COLLADAFW::AnimationCurve* animationCurve = (COLLADAFW::AnimationCurve*)animation;
-		COLLADAFW::FloatOrDoubleArray inputArray = animationCurve->getInputValues();
-		COLLADAFW::FloatOrDoubleArray outputArray = animationCurve->getOutputValues();
-
-		int inputLength = inputArray.getValuesCount();
-		std::vector<float> inputValues = std::vector<float>();
-		int outputLength = outputArray.getValuesCount();
-		std::vector<float> outputValues = std::vector<float>();
-
-		float value;
-		for (int i = 0; i < inputLength; i++) {
-			switch (inputArray.getType()) {
-			case COLLADAFW::FloatOrDoubleArray::DATA_TYPE_DOUBLE:
-				value = (float)(inputArray.getDoubleValues()->getData()[i]);
-				break;
-			case COLLADAFW::FloatOrDoubleArray::DATA_TYPE_FLOAT:
-				value = inputArray.getFloatValues()->getData()[i];
-				break;
-			}
-			inputValues.push_back(value);
-		}
-		for (int i = 0; i < outputLength; i++) {
-			switch (outputArray.getType()) {
-			case COLLADAFW::FloatOrDoubleArray::DATA_TYPE_DOUBLE:
-				value = (float)(outputArray.getDoubleValues()->getData()[i]);
-				break;
-			case COLLADAFW::FloatOrDoubleArray::DATA_TYPE_FLOAT:
-				value = outputArray.getFloatValues()->getData()[i];
-				break;
-			}
-			outputValues.push_back(value);
-		}
-		getContext()->getAnimationData()[animation->getUniqueId()] = std::make_tuple(inputValues, outputValues);
-	}	
+	DAEAnimationConverter c(&m_context);
+	std::shared_ptr<DAEAnimationData> s = c.GetNode(animation);
+	if (s) {
+		m_context.getAnimationData()[animation->getUniqueId()] = s;
+	}
 	return true;
 }
 
@@ -311,13 +282,32 @@ bool DAEToAsset3DWriter::writeAnimationClip(const COLLADAFW::AnimationClip* anim
 /** When this method is called, the writer must write the skin controller data.
 @return The writer should return true, if writing succeeded, false otherwise.*/
 bool DAEToAsset3DWriter::writeSkinControllerData(const COLLADAFW::SkinControllerData* skinControllerData) {
-	/// nothing to do so far
+	DAESkinControllerDataConverter c(&m_context);
+	std::shared_ptr<DAESkinData> s = c.GetNode(skinControllerData);
+	if (s) {
+		m_context.getSkinLibrary()[skinControllerData->getUniqueId()] = s;
+	}
 	return true;
 }
 
 /** When this method is called, the writer must write the controller.
 @return The writer should return true, if writing succeeded, false otherwise.*/
 bool DAEToAsset3DWriter::writeController(const COLLADAFW::Controller* controller) {
+
+	switch (controller->getControllerType()) {
+	case COLLADAFW::Controller::CONTROLLER_TYPE_SKIN: {
+		DAESkinControllerConverter c(&m_context);
+		std::shared_ptr<DAESkeletonBuilder> s = c.GetNode((const COLLADAFW::SkinController*)controller);
+		//if (s) {
+		//	m_context.getSkinData()[controller->getUniqueId()] = s;
+		//}
+
+		break;
+	}
+	case COLLADAFW::Controller::CONTROLLER_TYPE_MORPH: {
+		break;
+	}
+	}
 
 	/// just index the skin geometry to keep the geometry part of the export even without controller support
 	const COLLADAFW::UniqueId& src = controller->getSource();

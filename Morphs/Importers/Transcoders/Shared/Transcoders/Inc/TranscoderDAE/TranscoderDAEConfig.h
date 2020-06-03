@@ -49,3 +49,7 @@ enum InvertYMode {
 /// camera
 /// use to discard zero aspect ratio as found in some file (sketchup). 
 #define DISCARD_ZERO_ASPECT_RATIO true
+
+/// skin
+/// used to normalize the weight
+#define SKIN_NORMALIZE_WEIGHT

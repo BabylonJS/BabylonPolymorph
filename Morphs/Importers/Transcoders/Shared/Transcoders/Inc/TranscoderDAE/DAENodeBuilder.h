@@ -7,6 +7,7 @@
 
 #include <TranscoderDAE/DAEAsset3DBuilder.h>
 #include <Asset3D/SceneNode.h>
+#include <COLLADAFWNode.h>
 
 namespace Babylon
 {
@@ -20,8 +21,10 @@ namespace Babylon
 		class DAENodeBuilder : public DAEAsset3DBuilder<SceneNode> {
 
 		private:
+			DAENodeBuilder * m_parent;
 			COLLADAFW::UniqueId m_id;
 			COLLADAFW::String m_oid;
+			COLLADAFW::Node::NodeType m_type = COLLADAFW::Node::NodeType::NODE;
 			std::vector<COLLADAFW::UniqueId> m_instances;
 			std::vector<Babylon::Utils::Math::Matrix> m_transforms;
 			std::vector<std::shared_ptr<DAENodeBuilder>> m_children;
@@ -30,7 +33,7 @@ namespace Babylon
 			std::shared_ptr<Light> m_light;
 
 		public:
-			DAENodeBuilder(DAEToAsset3DWriterContextPtr context) : DAEAsset3DBuilder(context){
+			DAENodeBuilder(DAEToAsset3DWriterContextPtr context) : DAEAsset3DBuilder(context), m_parent(nullptr){
 			}
 
 			inline std::shared_ptr<SceneNode> Build() {
@@ -38,6 +41,16 @@ namespace Babylon
 			}
 
 			std::shared_ptr<SceneNode> Build(CircularMap* map); 
+
+			std::shared_ptr<Animation::Joint> BuildJoint();
+
+			inline COLLADAFW::Node::NodeType GetType() {
+				return m_type;
+			}
+
+			inline bool IsJoint() {
+				return m_type == COLLADAFW::Node::NodeType::JOINT;
+			}
 
 			inline DAENodeBuilder& WithId(COLLADAFW::UniqueId id) {
 				m_id = id;
@@ -56,8 +69,14 @@ namespace Babylon
 				return *this;
 			}
 
+			inline DAENodeBuilder& WithNodeType(COLLADAFW::Node::NodeType t) {
+				m_type== t;
+				return *this;
+			}
+
 			inline DAENodeBuilder& WithChild(std::shared_ptr<DAENodeBuilder> child) {
 				m_children.push_back(child);
+				child->m_parent = this;
 				return *this;
 			}
 

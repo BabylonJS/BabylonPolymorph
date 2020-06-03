@@ -21,19 +21,43 @@ namespace Babylon
 {
 	namespace Transcoder
 	{
-		template<typename F, typename T>
-		class DAEAbstractConverter {
+		template<typename F>
+		class DAEAbstractHandler {
 
 		protected:
 			DAEToAsset3DWriterContext* m_context;
 
 		public:
-			DAEAbstractConverter(DAEToAsset3DWriterContext * context) :
+			DAEAbstractHandler(DAEToAsset3DWriterContext* context) :
 				m_context(context)
 			{
 			}
 
+			~DAEAbstractHandler() {
+			}
+
+			inline DAEToAsset3DWriterContext* getContext() { return m_context; }
+
+			virtual bool Handle(const F* from) = 0;
+		};
+
+
+		template<typename F, typename T>
+		class DAEAbstractConverter : public DAEAbstractHandler<F> {
+
+		public:
+			DAEAbstractConverter(DAEToAsset3DWriterContext * context) : DAEAbstractHandler<F>(context)
+			{
+			}
+
 			~DAEAbstractConverter() {
+			}
+
+			bool Handle(const F* from) {
+				if (m_context) {
+					m_context->CheckCancelledAndThrow();
+				}
+				return this->Convert(from) != nullptr;
 			}
 
 			inline std::shared_ptr<T> GetNode(const F* from) {
@@ -42,8 +66,6 @@ namespace Babylon
 				}
 				return  this->Convert(from);
 			}
-
-			inline DAEToAsset3DWriterContext* getContext() { return m_context; }
 
 			virtual std::shared_ptr<T> Convert(const F* from) = 0;
 		};

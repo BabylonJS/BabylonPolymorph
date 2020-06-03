@@ -100,7 +100,7 @@ namespace {
 std::shared_ptr<DAENodeBuilder> DAENodeConverter::Convert(const COLLADAFW::Node* colladaNode) {
 
 	std::shared_ptr<DAENodeBuilder> builder = std::make_shared<DAENodeBuilder>(getContext());
-	builder->WithId(colladaNode->getUniqueId()).WithName(NAME_OR_ID(colladaNode));
+	builder->WithId(colladaNode->getUniqueId()).WithNodeType(colladaNode->getType()).WithName(NAME_OR_ID(colladaNode));
 	getContext()->getNodeLibrary()[colladaNode->getUniqueId()] = builder;
 
 	/// TRANSFORM
