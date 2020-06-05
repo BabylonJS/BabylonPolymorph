@@ -5,6 +5,9 @@
 ********************************************************/
 #pragma once
 
+#include <algorithm>
+#include <stack>
+
 #include <TranscoderDAE/DAEAsset3DBuilder.h>
 #include <TranscoderDAE/DAEFXBuilder.h>
 
@@ -14,36 +17,35 @@ namespace Babylon
 	{
 #define UV_CHANNEL_NONE -1
 #define UV_CHANNEL_ZERO  0
-#define UV_CHANNEL_ZERO  1
+#define UV_CHANNEL_ONE   1
 
 		class DAEGeometryBuilder : public DAEAsset3DBuilder<Geometry> {
 
-		private:
-			int16_t m_uvChannel0;
-			int16_t m_uvChannel1;
-			std::shared_ptr<DAEMaterialBuilder> m_materialBuilder;
+			struct params {
+				int16_t uvChannel0 = UV_CHANNEL_NONE;
+				int16_t uvChannel1 = UV_CHANNEL_NONE;
+				std::shared_ptr<DAEMaterialBuilder> materialBuilder;
+				std::vector<uint32_t> jointIndices;
+				std::vector<float> jointWeights;
+			};
 
-			struct {
-				int16_t m_uvChannel0;
-				int16_t m_uvChannel1;
-				std::shared_ptr<DAEMaterialBuilder> m_materialBuilder;
-			} saved;
+		private:
+			/// TODO : Improve Save/Restore mechanism
+			params m_parameters;
+			std::stack<params> m_saved;
 
 			GeometryTopology m_topo;
 			std::string m_materialName;
 			std::vector<uint32_t> m_indices;
+			std::vector<uint32_t> m_originalIndices;
 			std::vector<Babylon::Utils::Math::Vector3> m_positions;
 			std::vector<Babylon::Utils::Math::Vector3> m_normals;
 			std::vector<Babylon::Utils::Math::Vector4> m_tangents;
 			std::map<int16_t, std::vector<Babylon::Utils::Math::Vector2>> m_uvs;
 			std::vector<uint32_t> m_colors;
-			std::vector<uint32_t> m_jointIndices;
-			std::vector<uint32_t> m_jointWeights;
 
 		public:
-			DAEGeometryBuilder(DAEToAsset3DWriterContextPtr context) : DAEAsset3DBuilder(context), 
-				m_uvChannel0(UV_CHANNEL_NONE),
-				m_uvChannel1(UV_CHANNEL_NONE)
+			DAEGeometryBuilder(DAEToAsset3DWriterContextPtr context) : DAEAsset3DBuilder(context)
 			{
 				m_topo = GeometryTopology::kTriangles;
 				Save();
@@ -51,33 +53,46 @@ namespace Babylon
 
 			std::shared_ptr<Geometry> Build() {
 
-				std::shared_ptr<MaterialDescriptor> desc = m_materialBuilder ? m_materialBuilder->Build() : nullptr;
+				std::shared_ptr<MaterialDescriptor> desc = m_parameters.materialBuilder ? m_parameters.materialBuilder->Build() : nullptr;
 				std::shared_ptr<Geometry> geom = std::make_shared<Geometry>(desc);
 				geom->SetTopology(m_topo);
 				if (m_indices.size()) {
 					geom->SetIndices(m_indices);
 				}
+
 				if (m_positions.size()) {
 					geom->SetPositions(m_positions);
 				}
+
 				if (m_normals.size()) {
 					geom->SetNormals(m_normals);
 				}
+
 				if (m_tangents.size()) {
 					geom->SetTangents(m_tangents);
 				}
-				if (m_uvChannel0 != UV_CHANNEL_NONE && m_uvs.find(m_uvChannel0) != m_uvs.end()) {
-					geom->SetUv0s(m_uvs[m_uvChannel0]);
+
+				if (m_parameters.uvChannel0 != UV_CHANNEL_NONE && m_uvs.find(m_parameters.uvChannel0) != m_uvs.end()) {
+					geom->SetUv0s(m_uvs[m_parameters.uvChannel0]);
 				}
-				if (m_uvChannel1 != UV_CHANNEL_NONE && m_uvs.find(m_uvChannel1) != m_uvs.end()) {
-					geom->SetUv1s(m_uvs[m_uvChannel1]);
+
+				if (m_parameters.uvChannel1 != UV_CHANNEL_NONE && m_uvs.find(m_parameters.uvChannel1) != m_uvs.end()) {
+					geom->SetUv1s(m_uvs[m_parameters.uvChannel1]);
 				}
+
 				if (m_colors.size()) {
 					geom->SetColors(m_colors);
 				}
-				if (m_jointIndices.size()) {
-					/// doing RInstance explicit copy
-					geom->SetJoints(std::vector<uint32_t>(m_jointIndices), std::vector<uint32_t>(m_jointWeights));
+
+				if (m_parameters.jointIndices.size()) {
+					/// build a unique vector, sorted ascendant, of POSITION indices, which may reffer to weight
+					std::vector<uint32_t> weights;
+					weights.reserve(m_parameters.jointWeights.size());
+					for (auto w : m_parameters.jointWeights) {
+						/// save the weight as uint32_t normalized 
+						weights.push_back(normalized_pack<uint16_t>(w));
+					}
+					geom->SetJoints(std::vector<uint32_t>(m_parameters.jointIndices), std::move(weights));
 				}
 				return geom;
 			}
@@ -93,12 +108,14 @@ namespace Babylon
 			}
 
 			inline DAEGeometryBuilder& WithMaterial(std::shared_ptr<DAEMaterialBuilder> material) {
-				m_materialBuilder = material;
+				m_parameters.materialBuilder = material;
 				return *this;
 			}
 
-			inline DAEGeometryBuilder& WithIndices(std::vector<uint32_t>&& indices) {
+			/// Original indices is used to keep trace of indices used in the original format. This allow us to bind features, such weight to vertices
+			inline DAEGeometryBuilder& WithIndices(std::vector<uint32_t>&& indices, std::vector<uint32_t>&& originals) {
 				m_indices = std::move(indices);
+				m_originalIndices = std::move(originals) ;
 				return *this;
 			}
 
@@ -122,15 +139,13 @@ namespace Babylon
 				return *this;
 			}
 			
-			inline DAEGeometryBuilder& WithJoints(std::vector<uint32_t>&& jointIndices, std::vector<uint32_t>&& jointWeights)
-			{
-				m_jointIndices = std::move(jointIndices);
-				m_jointWeights = std::move(jointWeights);
+			inline DAEGeometryBuilder& WithJoints(std::vector<uint32_t>&& jointIndices, std::vector<float>&& jointWeights) {
+				m_parameters.jointIndices = std::move(jointIndices);
+				m_parameters.jointWeights = std::move(jointWeights);
 				return *this;
 			}
 
-			inline DAEGeometryBuilder& WithUvs(std::vector<Babylon::Utils::Math::Vector2>&& uvs, int16_t channel)
-			{
+			inline DAEGeometryBuilder& WithUvs(std::vector<Babylon::Utils::Math::Vector2>&& uvs, int16_t channel) {
 				m_uvs[channel] = std::move(uvs);
 				return *this;
 			}
@@ -139,15 +154,13 @@ namespace Babylon
 				return m_uvs.size() != 0;
 			}
 
-			inline DAEGeometryBuilder& WithChannelO(int16_t channel)
-			{
-				m_uvChannel0 = channel;
+			inline DAEGeometryBuilder& WithChannelO(int16_t channel) {
+				m_parameters.uvChannel0 = channel;
 				return *this;
 			}
 
-			inline DAEGeometryBuilder& WithChannel1(int16_t channel)
-			{
-				m_uvChannel1 = channel;
+			inline DAEGeometryBuilder& WithChannel1(int16_t channel) {
+				m_parameters.uvChannel1 = channel;
 				return *this;
 			}
 
@@ -155,17 +168,18 @@ namespace Babylon
 				return m_materialName;
 			}
 
+			inline const std::vector<uint32_t>& GetOriginalIndices() {
+				return m_originalIndices;
+			}
+
 			inline DAEGeometryBuilder& Save() {
-				saved.m_materialBuilder = m_materialBuilder;
-				saved.m_uvChannel0 = m_uvChannel0;
-				saved.m_uvChannel1 = m_uvChannel1;
+				m_saved.push(m_parameters);
 				return *this;
 			}
 
 			inline DAEGeometryBuilder& Restore() {
-				m_materialBuilder = saved.m_materialBuilder;
-				m_uvChannel0 = saved.m_uvChannel0;
-				m_uvChannel1 = saved.m_uvChannel1;
+				m_parameters = m_saved.top();
+				m_saved.pop();
 				return *this;
 			}
 		};

@@ -32,6 +32,7 @@ namespace Babylon
 		class DAELightBuilder;
 		class DAENodeBuilder;
 		struct DAESkinData;
+		class DAESkinControllerBuilder;
 		struct DAEAnimationData;
 
 		class DAEToAsset3DWriterContext {
@@ -50,7 +51,8 @@ namespace Babylon
 
 			/// animation data
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAEAnimationData>> m_animationData;
-			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAESkinData>> m_skinLibrary;
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAESkinData>> m_skinDataLibrary;
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAESkinControllerBuilder>> m_skinControllerLibrary;
 
 			/// builders.
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAEMeshBuilder>> m_geometryLibrary;
@@ -64,8 +66,7 @@ namespace Babylon
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<Asset3D>> m_visualSceneLibrary;
 			std::map<COLLADAFW::UniqueId, COLLADAFW::UniqueId> m_materialUIdToEffectIndex;
 			std::map<COLLADAFW::String, COLLADAFW::UniqueId> m_materialOriginalIdToEffectIndex;
-			// THIS IS TEMPORARY BINDING TO ALLOW SCENE MOUNT GEOMETRY WITH CONTROLLER WITHOUT THE CONTROLLER LIBRARY SUPPORT - Version 0.1.
-			std::map<COLLADAFW::UniqueId, COLLADAFW::UniqueId> m_controllerToSkinIndex;
+
 			COLLADAFW::UniqueId m_primarySceneId;
 
 		public:
@@ -86,8 +87,11 @@ namespace Babylon
 				return m_animationData;
 			}
 
-			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAESkinData>>& getSkinLibrary() {
-				return m_skinLibrary;
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAESkinData>>& getSkinDataLibrary() {
+				return m_skinDataLibrary;
+			}
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAESkinControllerBuilder>>& getSkinControllerLibrary() {
+				return m_skinControllerLibrary;
 			}
 
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAEMeshBuilder>>& getGeometryLibrary() {
@@ -125,11 +129,6 @@ namespace Babylon
 			std::map<COLLADAFW::String, COLLADAFW::UniqueId>& getMaterialOriginalIdToEffectIndex() {
 				return m_materialOriginalIdToEffectIndex;
 			}
-
-			std::map<COLLADAFW::UniqueId, COLLADAFW::UniqueId>& getControllerToSkinIndex() {
-				return m_controllerToSkinIndex;
-			}
-
 
 			inline bool hasGeometries() {
 				return m_geometryLibrary.size() != 0;
@@ -188,6 +187,8 @@ namespace Babylon
 				return m_authtool;
 			}
 
+			inline bool hasSkins() { return m_skinControllerLibrary.size() > 0; }
+
 		};
 
 		typedef DAEToAsset3DWriterContext* DAEToAsset3DWriterContextPtr;
@@ -206,6 +207,8 @@ namespace Babylon
 
 			inline const DAEToAsset3DWriterContextPtr getContext() { return &(this->m_context); }
 			
+			inline bool hasSkins() { return m_context.hasSkins();  }
+
 			std::shared_ptr<Asset3D> getAsset3D();
 
  			/** If this method returns true, the loader stops parsing immediately. If severity is nor CRITICAL

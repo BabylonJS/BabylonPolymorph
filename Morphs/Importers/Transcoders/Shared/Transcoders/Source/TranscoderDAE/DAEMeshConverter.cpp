@@ -118,10 +118,7 @@ std::shared_ptr<DAEMeshBuilder> DAEMeshConverter::Convert(const COLLADAFW::Mesh*
 
 	if (meshPrimitivesCount > 0) {
 
- 		/// get the up axis reference
-		COLLADAFW::FileInfo::UpAxisType upAxis = ctx->getUpAxisType();
-
-		/// create the mesh builder.
+ 		/// create the mesh builder.
 		meshbuilderPtr = std::make_shared<DAEMeshBuilder>(ctx);
 
 		std::string name = colladaMesh->getName();
@@ -183,6 +180,7 @@ std::shared_ptr<DAEMeshBuilder> DAEMeshConverter::Convert(const COLLADAFW::Mesh*
 
 			/// building targets
 			std::vector<uint32_t> indicesCache;
+			std::vector<uint32_t> originalIndicesCache;
 			std::vector<Babylon::Utils::Math::Vector3> verticesCache;
 			std::vector<Babylon::Utils::Math::Vector3> normalsCache;
 			std::vector<Babylon::Utils::Math::Vector4> tangentsCache;
@@ -263,17 +261,26 @@ std::shared_ptr<DAEMeshBuilder> DAEMeshConverter::Convert(const COLLADAFW::Mesh*
 					/**
 					 * This work over 99% of the case found in the COLLADA FILE - convex, not holes poly. However, it's NOT follow the norm.
 					 * we should use another triangulation algorithm instead.
+					 * Also, we need to keep trace of new indices, in order to re-assign weight in case of skinned mesh !!
 					 */
 					if (vertexCount == faceVertexCount) {
 						if (vertexCount > 3) {
 							size_t end = indicesCache.size() - 2;
+							
 							size_t a = indicesCache[startFace];
-							size_t b = indicesCache[end++];
+							size_t oa = originalIndicesCache[startFace];
+							size_t b = indicesCache[end];
+							size_t ob = originalIndicesCache[end++];
 							size_t c = indicesCache[end];
+							size_t oc = originalIndicesCache[end];
 
 							indicesCache[end] = a;
 							indicesCache.push_back(b);
 							indicesCache.push_back(c);
+							originalIndicesCache[end] = oa;
+							originalIndicesCache.push_back(ob);
+							originalIndicesCache.push_back(oc);
+							
 							totalVertexCount += 2;
 						}
 						face++;
@@ -282,18 +289,27 @@ std::shared_ptr<DAEMeshBuilder> DAEMeshConverter::Convert(const COLLADAFW::Mesh*
 						vertexCount = 0;
 					} else if (vertexCount > 3) {
 						size_t end = indicesCache.size() - 2;
+						
 						size_t a = indicesCache[startFace];
-						size_t b = indicesCache[end++];
+						size_t oa = originalIndicesCache[startFace];
+						size_t b = indicesCache[end];
+						size_t ob = originalIndicesCache[end++];
 						size_t c = indicesCache[end];
+						size_t oc = originalIndicesCache[end];
 
 						indicesCache[end] = a;
 						indicesCache.push_back(b);
 						indicesCache.push_back(c);
+						originalIndicesCache[end] = oa;
+						originalIndicesCache.push_back(ob);
+						originalIndicesCache.push_back(oc);
+
 						totalVertexCount += 2;
 					}
 				}
 				/// indice of vertex
 				v = colladaPrimitiveIndices[fi];
+				originalIndicesCache.push_back(v);
 				/// new allocated index
 				index = INDICE_NONE;
 				/// get the vertex info
@@ -338,13 +354,21 @@ std::shared_ptr<DAEMeshBuilder> DAEMeshConverter::Convert(const COLLADAFW::Mesh*
 				/// close last poly
 				if (vertexCount > 3) {
 					size_t end = indicesCache.size() - 2;
+
 					size_t a = indicesCache[startFace];
-					size_t b = indicesCache[end++];
+					size_t oa = originalIndicesCache[startFace];
+					size_t b = indicesCache[end];
+					size_t ob = originalIndicesCache[end++];
 					size_t c = indicesCache[end];
+					size_t oc = originalIndicesCache[end];
 
 					indicesCache[end] = a;
 					indicesCache.push_back(b);
 					indicesCache.push_back(c);
+					originalIndicesCache[end] = oa;
+					originalIndicesCache.push_back(ob);
+					originalIndicesCache.push_back(oc);
+
 					totalVertexCount += 2;
 				}
 			}
@@ -362,7 +386,8 @@ std::shared_ptr<DAEMeshBuilder> DAEMeshConverter::Convert(const COLLADAFW::Mesh*
 #endif
 			}
 #endif
-			geometryBuilder->WithIndices(std::move(indicesCache))
+			
+			geometryBuilder->WithIndices(std::move(indicesCache), std::move(originalIndicesCache))
 							.WithPositions(std::move(verticesCache))
 							.WithNormals(std::move(normalsCache))
 							.WithTangents(std::move(tangentsCache));

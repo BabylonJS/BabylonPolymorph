@@ -11,13 +11,42 @@ namespace Babylon
 {
 	namespace Transcoder
 	{
-		class DAEMeshBuilder : public DAEAsset3DBuilder<Mesh> {
+		class IDAEMeshBuilder : public DAEAsset3DBuilder<Mesh> {
+
+		public:
+			IDAEMeshBuilder(DAEToAsset3DWriterContextPtr context) : DAEAsset3DBuilder(context)
+			{
+			}
+
+			virtual std::shared_ptr<Mesh> Build() = 0;
+
+			inline IDAEMeshBuilder& Save() {
+
+				for (auto g : GetGeometries()) {
+					g->Save();
+				}
+				return *this;
+			}
+
+			inline IDAEMeshBuilder& Restore() {
+
+				for (auto g : GetGeometries()) {
+					g->Restore();
+				}
+				return *this;
+			}
+
+			virtual const std::vector<std::shared_ptr<DAEGeometryBuilder>> GetGeometries(std::function<bool(const const std::shared_ptr<DAEGeometryBuilder>&)> predicate = nullptr) = 0;
+		};
+
+
+		class DAEMeshBuilder : public IDAEMeshBuilder {
 
 		private:
 			std::vector<std::shared_ptr<DAEGeometryBuilder>> m_geometries ;
 
 		public:
-			DAEMeshBuilder(DAEToAsset3DWriterContextPtr context) : DAEAsset3DBuilder(context)
+			DAEMeshBuilder(DAEToAsset3DWriterContextPtr context) : IDAEMeshBuilder(context)
 			{
 			}
 
@@ -37,20 +66,6 @@ namespace Babylon
 
 			inline DAEMeshBuilder& WithGeometry(std::shared_ptr<DAEGeometryBuilder> geometry) {
 				m_geometries.push_back(geometry);
-				return *this;
-			}
-
-			inline DAEMeshBuilder& Save() {
-				for (size_t i = 0; i != m_geometries.size(); i++) {
-					m_geometries[i]->Save();
-				}
-				return *this;
-			}
-
-			inline DAEMeshBuilder& Restore() {
-				for (size_t i = 0; i != m_geometries.size(); i++) {
-					m_geometries[i]->Restore();
-				}
 				return *this;
 			}
 

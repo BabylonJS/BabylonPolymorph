@@ -56,9 +56,12 @@ std::shared_ptr<SceneNode> DAENodeBuilder::Build(CircularMap* map) {
 	if (m_children.size()) {
 		for (size_t i = 0; i != m_children.size(); i++) {
 			std::shared_ptr<DAENodeBuilder> nb = m_children[i];
-			std::shared_ptr<SceneNode> clone = nb->Build();
-			if (clone) {
-				ptr->AddChildNode(clone);
+			/// do NOT mix NODE and JOINT
+			if (nb->GetType() == GetType()) {
+				std::shared_ptr<SceneNode> clone = nb->Build();
+				if (clone) {
+					ptr->AddChildNode(clone);
+				}
 			}
 		}
 	}

@@ -69,6 +69,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Source\TranscoderDAE\DAEAnimation.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\DAEAnimationConverter.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\DAECameraConverter.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\DAELightConverter.cpp" />
@@ -76,13 +77,14 @@
     <ClCompile Include="..\Source\TranscoderDAE\DAENodeBuilder.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\DAENodeConverter.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\DAESkeletalAnimationConverter.cpp" />
+    <ClCompile Include="..\Source\TranscoderDAE\DAESkinControllerBuilder.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\DAESkinControllerConverter.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\DAESkinControllerDataConverter.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\DAEToAsset3DWriter.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\DAEImageConverter.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\DAEEffectConverter.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\DAEMeshConverter.cpp" />
-    <ClCompile Include="..\Source\TranscoderDAE\DAEVirtualSceneConverter.cpp" />
+    <ClCompile Include="..\Source\TranscoderDAE\DAEVisualSceneConverter.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\TranscoderDAE.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\TranscoderDAEUtils.cpp" />
     <ClCompile Include="..\Source\TranscodersTelemetryHelper.cpp" />
@@ -133,7 +135,7 @@
     <ClInclude Include="..\Inc\TranscoderDAE\DAEMeshBuilder.h" />
     <ClInclude Include="..\Inc\TranscoderDAE\DAENodeBuilder.h" />
     <ClInclude Include="..\Inc\TranscoderDAE\DAESkeletalAnimationBuilder.h" />
-    <ClInclude Include="..\Inc\TranscoderDAE\DAESkeletonBuilder.h" />
+    <ClInclude Include="..\Inc\TranscoderDAE\DAESkinControllerBuilder.h" />
     <ClInclude Include="..\Inc\TranscoderDAE\DAETextureBuilder.h" />
     <ClInclude Include="..\Inc\TranscoderDAE\DAEToAsset3DWriter.h" />
     <ClInclude Include="..\Inc\TranscoderDAE\DAEFXConverter.h" />

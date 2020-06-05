@@ -58,9 +58,9 @@ namespace Babylon
 			std::shared_ptr<DAENodeBuilder> Convert(const COLLADAFW::Node* from);
 		};
 
-		class DAEVirtualSceneConverter : public DAEAbstractConverter<COLLADAFW::VisualScene, Asset3D> {
+		class DAEVisualSceneConverter : public DAEAbstractConverter<COLLADAFW::VisualScene, Asset3D> {
 		public:
-			DAEVirtualSceneConverter(DAEToAsset3DWriterContext* context) :
+			DAEVisualSceneConverter(DAEToAsset3DWriterContext* context) :
 				DAEAbstractConverter(context) {
 			}
 			std::shared_ptr<Asset3D> Convert(const COLLADAFW::VisualScene* from);

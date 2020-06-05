@@ -38,12 +38,13 @@ std::shared_ptr<DAESkinData> DAESkinControllerDataConverter::Convert(const COLLA
 	const COLLADAFW::UIntValuesArray& jointsPerVertexArray = colladaControllerData->getJointsPerVertex();
 
 	size_t totalVertices = 0;
+	size_t  maxJointsPerVertex = 0;
 	for (size_t i = 0; i < jointsPerVertexArray.getCount(); i++) {
 		size_t jointsPerVertex = jointsPerVertexArray[i];
 		totalVertices += jointsPerVertex;
+		maxJointsPerVertex = std::max(maxJointsPerVertex, jointsPerVertex);
 	}
 
-	size_t  maxJointsPerVertex = 0;
 
 	Microsoft::glTF::AccessorType type;
 	if (maxJointsPerVertex == 1) {
@@ -61,7 +62,7 @@ std::shared_ptr<DAESkinData> DAESkinControllerDataConverter::Convert(const COLLA
 		type = Microsoft::glTF::AccessorType::TYPE_MAT4;
 		maxJointsPerVertex = 16;
 	} else {
-		TRACE_WARN(DAESkinControllerDataConverter, "There is no GLTF accessor type big enough to store this many joint influences - discard controller %s", uniqueId.toAscii());
+		TRACE_WARN(DAESkinControllerDataConverter, "There is no Asset3D type accessor type big enough to store this many joint influences - discard controller %s", uniqueId.toAscii());
 		return false;
 	}
 
@@ -71,9 +72,10 @@ std::shared_ptr<DAESkinData> DAESkinControllerDataConverter::Convert(const COLLA
 	const COLLADAFW::UIntValuesArray& weightIndicesArray = colladaControllerData->getWeightIndices();
 	const COLLADAFW::FloatOrDoubleArray& weightsArray = colladaControllerData->getWeights();
 
+	/// TODO - Replace allocated array with std::unique_ptr<vector<>>
 	for (size_t i = 0; i < vertexCount; i++) {
 		unsigned int jointsPerVertex = jointsPerVertexArray[i];
-		int* joint = new int[maxJointsPerVertex];
+		uint32_t* joint = new uint32_t[maxJointsPerVertex];
 		float* weight = new float[maxJointsPerVertex];
 		for (size_t j = 0; j < maxJointsPerVertex; j++) {
 			if (j < jointsPerVertex) {
@@ -97,6 +99,7 @@ std::shared_ptr<DAESkinData> DAESkinControllerDataConverter::Convert(const COLLA
 		offset += jointsPerVertex;
 		skin->jointIndices.push_back(joint);
 		skin->weights.push_back(weight);
+		skin->type = type;
 	}
 	return skin;
 }

@@ -8,6 +8,9 @@
 #include <CoreUtils/GLTFSkins.h>
 #include <CoreUtils/Math/SimpleMath.h>
 
+#include <TranscoderDAE/DAEToAsset3DWriter.h>
+
+#include "COLLADAFWUniqueId.h"
 
 namespace Babylon
 {
@@ -19,12 +22,13 @@ namespace Babylon
 			Babylon::Utils::Math::Matrix bindShapeMatrix;
 			std::vector<Babylon::Utils::Math::Matrix> inverseBindMatrices;
 			Microsoft::glTF::AccessorType type;
-			std::vector<int*> jointIndices;
+			std::vector<uint32_t*> jointIndices;
 			std::vector<float*> weights;
 
 			~DAESkinData() {
 				/// free ressources allocated inside DAESkinControllerDataConverter.cpp
-				for (int* i : jointIndices) if (i) free(i);
+				/// TODO - Replace allocated array with std::unique_ptr<vector<>>
+				for (uint32_t* i : jointIndices) if (i) free(i);
 				for (float* i : weights) if (i) free(i);
 			}
 

@@ -13,6 +13,7 @@
 #include <TranscoderDAE/DAECameraBuilder.h>
 #include <TranscoderDAE/DAEFXBuilder.h>
 #include <TranscoderDAE/DAEAnimationConverter.h>
+#include <TranscoderDAE/DAEAnimation.h>
 
 #include <Asset3D\Asset3D.h>
 
@@ -25,8 +26,6 @@
 #include <COLLADAFWAnimation.h>
 #include <COLLADAFWAnimationCurve.h>
 #include <COLLADAFWSkinControllerData.h>
-
-
 
 #include <COLLADASaxFWLIError.h>
 
@@ -84,14 +83,15 @@ DAEToAsset3DWriter::~DAEToAsset3DWriter() {
 }
 
 std::shared_ptr<Asset3D> DAEToAsset3DWriter::getAsset3D() {
+	
+	std::shared_ptr<Asset3D> root = nullptr;
 	auto l = m_context.getVisualSceneLibrary().find(m_context.getPrimarySceneId());
 	if (l != m_context.getVisualSceneLibrary().end()) {
-		return l->second;
-	}
-	if (m_context.getVisualSceneLibrary().size()) {
-		return m_context.getVisualSceneLibrary().begin()->second;
-	}
-	return std::make_shared<Asset3D>();
+		root = l->second;
+	} else  if (m_context.getVisualSceneLibrary().size()) {
+		root = m_context.getVisualSceneLibrary().begin()->second;
+	} 
+	return root ? root: std::make_shared<Asset3D>();  /// ensure we return non null ptr !
 }
 
 
@@ -148,7 +148,7 @@ bool DAEToAsset3DWriter::writeScene(const COLLADAFW::Scene* scene) {
 /** When this method is called, the writer must write the entire visual scene.
 @return The writer should return true, if writing succeeded, false otherwise.*/
 bool DAEToAsset3DWriter::writeVisualScene(const COLLADAFW::VisualScene* visualScene) {
-	DAEVirtualSceneConverter c(&m_context);
+	DAEVisualSceneConverter c(&m_context);
 	std::shared_ptr<Asset3D> s = c.GetNode(visualScene);
 	if (s) {
 		m_context.getVisualSceneLibrary()[visualScene->getUniqueId()] = s;
@@ -285,7 +285,7 @@ bool DAEToAsset3DWriter::writeSkinControllerData(const COLLADAFW::SkinController
 	DAESkinControllerDataConverter c(&m_context);
 	std::shared_ptr<DAESkinData> s = c.GetNode(skinControllerData);
 	if (s) {
-		m_context.getSkinLibrary()[skinControllerData->getUniqueId()] = s;
+		m_context.getSkinDataLibrary()[skinControllerData->getUniqueId()] = s;
 	}
 	return true;
 }
@@ -297,10 +297,10 @@ bool DAEToAsset3DWriter::writeController(const COLLADAFW::Controller* controller
 	switch (controller->getControllerType()) {
 	case COLLADAFW::Controller::CONTROLLER_TYPE_SKIN: {
 		DAESkinControllerConverter c(&m_context);
-		std::shared_ptr<DAESkeletonBuilder> s = c.GetNode((const COLLADAFW::SkinController*)controller);
-		//if (s) {
-		//	m_context.getSkinData()[controller->getUniqueId()] = s;
-		//}
+		std::shared_ptr<DAESkinControllerBuilder> s = c.GetNode((const COLLADAFW::SkinController*)controller);
+		if (s) {
+			m_context.getSkinControllerLibrary()[controller->getUniqueId()] = s;
+		}
 
 		break;
 	}
@@ -308,10 +308,6 @@ bool DAEToAsset3DWriter::writeController(const COLLADAFW::Controller* controller
 		break;
 	}
 	}
-
-	/// just index the skin geometry to keep the geometry part of the export even without controller support
-	const COLLADAFW::UniqueId& src = controller->getSource();
-	m_context.getControllerToSkinIndex()[controller->getUniqueId()] = src;
 
 	return true;
 }

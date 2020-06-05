@@ -88,6 +88,15 @@
     <Filter Include="Source\Importers\ImporterDAE\Animation">
       <UniqueIdentifier>{a7c4405f-17cf-42be-93b2-48fdd74373b2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Importers\ImporterDAE\Converters">
+      <UniqueIdentifier>{7beb35dd-1013-482a-b2be-57c0721b6a07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Importers\ImporterDAE\Builders">
+      <UniqueIdentifier>{ac86c558-dd4e-49e0-8a8c-7a2dd5061e50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Importers\ImporterDAE\Converters\Animations">
+      <UniqueIdentifier>{2fe18775-c061-460a-a7de-d6c306f714d8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -174,47 +183,53 @@
     <ClCompile Include="..\Source\TranscoderDAE\TranscoderDAEUtils.cpp">
       <Filter>Source\Importers\ImporterDAE</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\TranscoderDAE\DAEVirtualSceneConverter.cpp">
-      <Filter>Source\Importers\ImporterDAE</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\TranscoderDAE\DAEMeshConverter.cpp">
-      <Filter>Source\Importers\ImporterDAE</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\TranscoderDAE\DAEImageConverter.cpp">
-      <Filter>Source\Importers\ImporterDAE</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\TranscoderDAE\DAEToAsset3DWriter.cpp">
       <Filter>Source\Importers\ImporterDAE</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\TranscoderDAE\DAEEffectConverter.cpp">
-      <Filter>Source\Importers\ImporterDAE</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\TranscoderDAE\DAENodeConverter.cpp">
-      <Filter>Source\Importers\ImporterDAE</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\TranscoderDAE\DAECameraConverter.cpp">
-      <Filter>Source\Importers\ImporterDAE</Filter>
+      <Filter>Source\Importers\ImporterDAE\Converters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\TranscoderDAE\DAEEffectConverter.cpp">
+      <Filter>Source\Importers\ImporterDAE\Converters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\TranscoderDAE\DAEImageConverter.cpp">
+      <Filter>Source\Importers\ImporterDAE\Converters</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\TranscoderDAE\DAELightConverter.cpp">
-      <Filter>Source\Importers\ImporterDAE</Filter>
+      <Filter>Source\Importers\ImporterDAE\Converters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\TranscoderDAE\DAEMeshConverter.cpp">
+      <Filter>Source\Importers\ImporterDAE\Converters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\TranscoderDAE\DAENodeConverter.cpp">
+      <Filter>Source\Importers\ImporterDAE\Converters</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\TranscoderDAE\DAENodeBuilder.cpp">
-      <Filter>Source\Importers\ImporterDAE</Filter>
+      <Filter>Source\Importers\ImporterDAE\Builders</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\TranscoderDAE\DAEMorphConverter.cpp">
+    <ClCompile Include="..\Source\TranscoderDAE\DAEAnimation.cpp">
       <Filter>Source\Importers\ImporterDAE\Animation</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\TranscoderDAE\DAESkeletalAnimationConverter.cpp">
-      <Filter>Source\Importers\ImporterDAE\Animation</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\TranscoderDAE\DAESkinControllerDataConverter.cpp">
-      <Filter>Source\Importers\ImporterDAE\Animation</Filter>
+    <ClCompile Include="..\Source\TranscoderDAE\DAEVisualSceneConverter.cpp">
+      <Filter>Source\Importers\ImporterDAE\Converters</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\TranscoderDAE\DAEAnimationConverter.cpp">
-      <Filter>Source\Importers\ImporterDAE\Animation</Filter>
+      <Filter>Source\Importers\ImporterDAE\Converters\Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\TranscoderDAE\DAEMorphConverter.cpp">
+      <Filter>Source\Importers\ImporterDAE\Converters\Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\TranscoderDAE\DAESkeletalAnimationConverter.cpp">
+      <Filter>Source\Importers\ImporterDAE\Converters\Animations</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\TranscoderDAE\DAESkinControllerConverter.cpp">
-      <Filter>Source\Importers\ImporterDAE\Animation</Filter>
+      <Filter>Source\Importers\ImporterDAE\Converters\Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\TranscoderDAE\DAESkinControllerDataConverter.cpp">
+      <Filter>Source\Importers\ImporterDAE\Converters\Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\TranscoderDAE\DAESkinControllerBuilder.cpp">
+      <Filter>Source\Importers\ImporterDAE\Builders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -375,10 +390,10 @@
     <ClInclude Include="..\Inc\TranscoderDAE\DAESkeletalAnimationBuilder.h">
       <Filter>Public Headers\Importers\ImporterDAE\Builders\Animations</Filter>
     </ClInclude>
-    <ClInclude Include="..\Inc\TranscoderDAE\DAESkeletonBuilder.h">
+    <ClInclude Include="..\Inc\TranscoderDAE\DAEAnimation.h">
       <Filter>Public Headers\Importers\ImporterDAE\Builders\Animations</Filter>
     </ClInclude>
-    <ClInclude Include="..\Inc\TranscoderDAE\DAEAnimation.h">
+    <ClInclude Include="..\Inc\TranscoderDAE\DAESkinControllerBuilder.h">
       <Filter>Public Headers\Importers\ImporterDAE\Builders\Animations</Filter>
     </ClInclude>
   </ItemGroup>

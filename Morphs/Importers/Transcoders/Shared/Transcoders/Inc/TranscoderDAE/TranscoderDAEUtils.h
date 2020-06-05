@@ -52,6 +52,43 @@ namespace Babylon
 {
     namespace Transcoder
     {
+        /// use to cast normalized int to float
+        template <typename T>
+        constexpr float normalized_unpack(T value) {
+            return value < 0
+                ? -static_cast<float>(value) / std::numeric_limits<T>::min()
+                : static_cast<float>(value) / std::numeric_limits<T>::max();
+        }
+
+        /// use to cast float to normalized int
+        template <typename T>
+        constexpr T normalized_pack(float value) {
+             assert(value >= -1 && value <= 1);
+             return value < 0
+                ? -std::roundf(value * std::numeric_limits<T>::min())
+                : std::roundf(value * std::numeric_limits<T>::max());
+        }
+
+        template<typename TK, typename TV>
+        std::vector<TK> extract_keys(std::map<TK, TV> const& input_map) {
+            std::vector<TK> retval;
+            retval.reserve(input_map.size());
+            for (auto const& element : input_map) {
+                retval.push_back(element.first);
+            }
+            return retval;
+        }
+
+        template<typename TK, typename TV>
+        std::vector<TV> extract_values(std::map<TK, TV> const& input_map) {
+            std::vector<TV> retval;
+            retval.reserve(input_map.size());
+            for (auto const& element : input_map) {
+                retval.push_back(element.second);
+            }
+            return retval;
+        }
+
         Babylon::Utils::Math::Matrix toBabylonMatrix(COLLADABU::Math::Matrix4 colladaMatrix);
         COLLADABU::Math::Matrix4 getMatrixFromTransform(const COLLADAFW::Transformation* transform, float assetScale);
     }
