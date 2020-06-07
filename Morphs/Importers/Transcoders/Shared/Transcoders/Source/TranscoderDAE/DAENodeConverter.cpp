@@ -16,7 +16,7 @@
 #include <TranscoderDAE/DAECameraBuilder.h>
 #include <TranscoderDAE/DAELightBuilder.h>
 #include <TranscoderDAE/DAENodeBuilder.h>
-#include <TranscoderDAE/DAESkinControllerBuilder.h>
+#include <TranscoderDAE/DAESkinGeometryBuilder.h>
 
 #include <Asset3D/Asset3D.h>
 
@@ -30,7 +30,7 @@ using namespace Babylon::Transcoder;
 namespace {
 
 	/// TODO : investigate to the UVSet
-	void BuildMeshWithDefaultMaterial( std::shared_ptr<IDAEMeshBuilder> meshBuilder, DAEToAsset3DWriterContext * ctx, std::vector<std::shared_ptr<Mesh>> * meshes) {
+	std::shared_ptr<Mesh> BuildMeshWithDefaultMaterial( std::shared_ptr<IDAEMeshBuilder> meshBuilder, DAEToAsset3DWriterContext * ctx) {
 		
 		meshBuilder->Save();
 
@@ -51,16 +51,15 @@ namespace {
 #endif
 
 		std::shared_ptr<Mesh> m = meshBuilder->Build();
-		if (m) {
-			meshes->push_back(m);
-		} else {
+		if (!m) {
 			TRACE_WARN(DAENodeConverter, "Unable to build mesh %s", meshBuilder->GetName());
 		}
 
 		meshBuilder->Restore();
+		return m;
 	}
 
-	void BuildMeshWithBindingMaterial(COLLADAFW::MaterialBindingArray& colladaBindMaterials, std::shared_ptr<IDAEMeshBuilder> meshBuilder, DAEToAsset3DWriterContext* ctx, std::vector<std::shared_ptr<Mesh>>* meshes) {
+	std::shared_ptr<Mesh> BuildMeshWithBindingMaterial(COLLADAFW::MaterialBindingArray& colladaBindMaterials, std::shared_ptr<IDAEMeshBuilder> meshBuilder, DAEToAsset3DWriterContext* ctx) {
 		meshBuilder->Save();
 
 #ifdef _IMPORT_MATERIAL
@@ -90,13 +89,12 @@ namespace {
 #endif
 
 		std::shared_ptr<Mesh> m = meshBuilder->Build();
-		if (m) {
-			meshes->push_back(m);
-		} else {
+		if (!m) {
 			TRACE_WARN(DAENodeConverter, "Unable to build mesh %s", meshBuilder->GetName());
 		}
 
 		meshBuilder->Restore();
+		return m ;
 	}
 }
 
@@ -120,35 +118,48 @@ std::shared_ptr<DAENodeBuilder> DAENodeConverter::Convert(const COLLADAFW::Node*
 	/// GEOMETRY
 	COLLADAFW::InstanceGeometryPointerArray colladaGeometries = colladaNode->getInstanceGeometries();
 	size_t countGeometry = colladaGeometries.getCount();
+	size_t meshCount = 0;
 	for (size_t i = 0; i != countGeometry; i++) {
 
 		COLLADAFW::InstanceGeometry* colladaInstance = colladaGeometries[i];
 		const COLLADAFW::UniqueId& colladaUid = colladaInstance->getInstanciatedObjectId();
 
-		std::shared_ptr<DAEMeshBuilder> meshBuilderPtr = getContext()->getGeometryLibrary()[colladaUid];
+		std::shared_ptr<Mesh> mesh = nullptr;
+		std::shared_ptr<IDAEMeshBuilder> meshBuilderPtr = getContext()->getGeometryLibrary()[colladaUid];
 		if (meshBuilderPtr) {
 
 #ifdef _IMPORT_MATERIAL
 			/// do we have binding material ??
-			COLLADAFW::MaterialBindingArray & colladaBindMaterials = colladaInstance->getMaterialBindings();
+			COLLADAFW::MaterialBindingArray& colladaBindMaterials = colladaInstance->getMaterialBindings();
 			if (colladaBindMaterials.getCount()) {
-				BuildMeshWithBindingMaterial(colladaBindMaterials, meshBuilderPtr, getContext(), &meshes);
+				mesh = BuildMeshWithBindingMaterial(colladaBindMaterials, meshBuilderPtr, getContext());
 			} else {
-				BuildMeshWithDefaultMaterial(meshBuilderPtr, getContext(), &meshes);
+				mesh = BuildMeshWithDefaultMaterial(meshBuilderPtr, getContext());
 			}
 #else
-			std::shared_ptr<Mesh> m = meshBuilder->Build();
-			if (m) {
-				meshes.push_back(m);
-			}
-			else {
-				TRACE_WARN(DAENodeConverter, "Unable to build mesh %s", meshBuilder.GetName());
-			}
+			mesh = meshBuilder->Build();
 #endif
-		} else {
+			if (mesh) {
+				if (meshCount == 0) {
+					builder->WithMesh(mesh);
+					continue;
+				} 
+				// subsequent mesh will be saved on dedicated children
+				std::shared_ptr<DAENodeBuilder> tmp = std::make_shared<DAENodeBuilder>(m_context);
+				if (tmp) {
+					tmp->WithMesh(mesh).WithName(mesh->GetName());
+					builder->WithChild(tmp);
+				}
+				meshCount++;
+			} else {
+				TRACE_WARN(DAENodeConverter, "Unable to build mesh %s", meshBuilderPtr->GetName());
+			}
+		}
+		else {
 			TRACE_WARN(DAENodeConverter, "Unable to find Geometry %s", colladaUid.toAscii());
 		}
 	}
+
 
 	/// CONTROLLER - Note the controller instance lead to skin which is binded to Mesh...
 	COLLADAFW::InstanceControllerPointerArray colladaControllers = colladaNode->getInstanceControllers();
@@ -157,44 +168,42 @@ std::shared_ptr<DAENodeBuilder> DAENodeConverter::Convert(const COLLADAFW::Node*
 
 		COLLADAFW::InstanceController* colladaInstance = colladaControllers[i];
 		const COLLADAFW::UniqueId& colladaUid = colladaInstance->getInstanciatedObjectId();
-		std::shared_ptr<DAESkinControllerBuilder> skinControllerBuilderPtr = m_context->getSkinControllerLibrary()[colladaUid];
-		if (skinControllerBuilderPtr) {
+
+		std::shared_ptr<Mesh> mesh = nullptr;
+		std::shared_ptr<IDAEMeshBuilder> meshBuilderPtr = getContext()->getGeometryLibrary()[colladaUid];
+		if (meshBuilderPtr) {
 #ifdef _IMPORT_MATERIAL
 			/// do we have binding material ??
 			COLLADAFW::MaterialBindingArray& colladaBindMaterials = colladaInstance->getMaterialBindings();
 			if (colladaBindMaterials.getCount()) {
-				BuildMeshWithBindingMaterial(colladaBindMaterials, skinControllerBuilderPtr, getContext(), &meshes);
-			}
-			else {
-				BuildMeshWithDefaultMaterial(skinControllerBuilderPtr, getContext(), &meshes);
+				mesh = BuildMeshWithBindingMaterial(colladaBindMaterials, meshBuilderPtr, getContext());
+			} else {
+				mesh = BuildMeshWithDefaultMaterial(meshBuilderPtr, getContext());
 			}
 #else
-			std::shared_ptr<Mesh> m = skinControllerBuilderPtr->Build();
-			if (m) {
-				meshes.push_back(m);
-			} else {
-				TRACE_WARN(DAENodeConverter, "Unable to build skinned mesh %s", skinControllerBuilderPtr->GetName());
-			}
+			mesh = meshBuilder->Build();
 #endif
-		} else {
-			TRACE_WARN(DAENodeConverter, "Unable to find Controller %s", colladaUid.toAscii());
-		}
-	}
-
-	/// Process the meshes
-	if (meshes.size()) {
-		/// bind the mesh to the current node
-		if (meshes.size() == 1) {
-			builder->WithMesh(meshes[0]);
-		} else {
-			/// or create new builder to hold the meshes
-			for (int j = 0; j != meshes.size(); j++) {
+			if (mesh) {
+				if (meshCount == 0) {
+					builder->WithMesh(mesh);
+					builder->WithController(colladaUid);
+					continue;
+				}
+				// subsequent mesh will be saved on dedicated children
 				std::shared_ptr<DAENodeBuilder> tmp = std::make_shared<DAENodeBuilder>(m_context);
 				if (tmp) {
-					tmp->WithMesh(meshes[j]).WithName(meshes[j]->GetName());
+					tmp->WithMesh(mesh).WithName(mesh->GetName());
+					tmp->WithController(colladaUid);
 					builder->WithChild(tmp);
 				}
+				meshCount++;
 			}
+			else {
+				TRACE_WARN(DAENodeConverter, "Unable to build mesh %s", meshBuilderPtr->GetName());
+			}
+		}
+		else {
+			TRACE_WARN(DAENodeConverter, "Unable to find Geometry %s", colladaUid.toAscii());
 		}
 	}
 

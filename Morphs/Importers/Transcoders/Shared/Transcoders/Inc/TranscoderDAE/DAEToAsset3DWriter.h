@@ -25,15 +25,17 @@ namespace Babylon
 		class SceneNode;
 		class IResourceServer;
 
-		class DAEMeshBuilder;
+		class IDAEMeshBuilder;
 		class DAETextureBuilder;
 		class DAEMaterialBuilder;
 		class DAECameraBuilder;
 		class DAELightBuilder;
 		class DAENodeBuilder;
+		class DAESkeletonBuilder;
 		struct DAESkinData;
-		class DAESkinControllerBuilder;
+		struct DAESkinController;
 		struct DAEAnimationData;
+		struct DAESkin;
 
 		class DAEToAsset3DWriterContext {
 		public:
@@ -52,10 +54,11 @@ namespace Babylon
 			/// animation data
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAEAnimationData>> m_animationData;
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAESkinData>> m_skinDataLibrary;
-			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAESkinControllerBuilder>> m_skinControllerLibrary;
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAESkinController>> m_skinControllerLibrary;
+			std::vector<std::shared_ptr<DAESkeletonBuilder>> m_skeletonLibrary;
 
 			/// builders.
-			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAEMeshBuilder>> m_geometryLibrary;
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<IDAEMeshBuilder>> m_geometryLibrary;
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAETextureBuilder>> m_imageLibrary;
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAEMaterialBuilder>> m_effectLibrary;
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAECameraBuilder>> m_cameraLibrary;
@@ -90,11 +93,16 @@ namespace Babylon
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAESkinData>>& getSkinDataLibrary() {
 				return m_skinDataLibrary;
 			}
-			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAESkinControllerBuilder>>& getSkinControllerLibrary() {
+			
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAESkinController>>& getSkinControllerLibrary() {
 				return m_skinControllerLibrary;
 			}
 
-			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAEMeshBuilder>>& getGeometryLibrary() {
+			std::vector<std::shared_ptr<DAESkeletonBuilder>>& getSkeletonLibrary() {
+				return m_skeletonLibrary;
+			}
+
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<IDAEMeshBuilder>>& getGeometryLibrary() {
 				return m_geometryLibrary;
 			}			
 			

@@ -9,6 +9,7 @@
 #include <CoreUtils/Math/SimpleMath.h>
 
 #include <TranscoderDAE/DAEToAsset3DWriter.h>
+#include <TranscoderDAE/DAEMeshBuilder.h>
 
 #include "COLLADAFWUniqueId.h"
 
@@ -50,6 +51,12 @@ namespace Babylon
 				}
 				return 0;
 			}
+		};
+
+		struct DAESkinController {
+			std::shared_ptr<DAESkinData> data;
+			std::shared_ptr<IDAEMeshBuilder> mesh;
+			std::vector<COLLADAFW::UniqueId> joints;
 		};
 
 		struct DAEAnimationData {

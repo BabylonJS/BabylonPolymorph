@@ -8,22 +8,12 @@
 #include <TranscoderDAE/DAEAnimation.h>
 #include <TranscoderDAE/DAEConverter.h>
 #include <TranscoderDAE/DAENodeAnimationBuilder.h>
-#include <TranscoderDAE/DAESkeletalAnimationBuilder.h>
 #include <TranscoderDAE/DAESkeletonBuilder.h>
-#include <TranscoderDAE/DAESkinControllerBuilder.h>
 
 namespace Babylon
 {
 	namespace Transcoder
 	{
-		class DAESkeletalAnimationConverter : public DAEAbstractConverter<COLLADAFW::Animation, DAESkeletalAnimationBuilder> {
-		public:
-			DAESkeletalAnimationConverter(DAEToAsset3DWriterContext* context) :
-				DAEAbstractConverter(context) {
-			}
-			std::shared_ptr<DAESkeletalAnimationBuilder> Convert(const COLLADAFW::Animation* from);
-		};
-
 		class DAEAnimationConverter : public DAEAbstractConverter<COLLADAFW::Animation, DAEAnimationData> {
 		public:
 			DAEAnimationConverter(DAEToAsset3DWriterContext* context) :
@@ -40,12 +30,12 @@ namespace Babylon
 			std::shared_ptr<DAENodeAnimationBuilder> Convert(const COLLADAFW::MorphController* from);
 		};
 
-		class DAESkinControllerConverter : public DAEAbstractConverter<COLLADAFW::SkinController, DAESkinControllerBuilder> {
+		class DAESkinControllerConverter : public DAEAbstractConverter<COLLADAFW::SkinController, DAESkinController> {
 		public:
 			DAESkinControllerConverter(DAEToAsset3DWriterContext* context) :
 				DAEAbstractConverter(context) {
 			}
-			std::shared_ptr<DAESkinControllerBuilder> Convert(const COLLADAFW::SkinController* from);
+			std::shared_ptr<DAESkinController> Convert(const COLLADAFW::SkinController* from);
 		};
 
 

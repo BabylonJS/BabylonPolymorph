@@ -6,6 +6,7 @@
 #include "TranscodersPch.h"
 
 #include <TranscoderDAE/TranscoderDAEUtils.h>
+#include <TranscoderDAE/DAENodeBuilder.h>
 
 #include <COLLADAFWRotate.h>
 #include <COLLADAFWTranslate.h>
@@ -93,4 +94,30 @@ COLLADABU::Math::Matrix4  Babylon::Transcoder::getMatrixFromTransform(const COLL
 	return COLLADABU::Math::Matrix4::IDENTITY;
 }
 
+float Babylon::Transcoder::sum_kahan(float *x, int N) {
+	float s = x[0];
+	float c = 0.0;
+	for (int i = 1; i < N; i++) {
+		float y = x[i] - c;
+		float t = s + y;
+		c = (t - s) - y;
+		s = t;
+	}
+	return s;
+}
 
+std::vector<COLLADAFW::UniqueId> Babylon::Transcoder::findRoots(std::vector<COLLADAFW::UniqueId>& elements, DAEToAsset3DWriterContext* context) {
+	/// build a list of corresponding builders
+	std::vector<DAENodeBuilder*> base;
+	base.reserve(elements.size());
+	for (auto id : elements) {
+		base.push_back(context->getNodeLibrary()[id].get());
+	}
+	std::vector<COLLADAFW::UniqueId> result;
+	for (auto b : base) {
+		if (b && (b->GetParent() == nullptr || !std::count(base.begin(), base.end(), b->GetParent()))) {
+			result.push_back(b->GetUniqueId());
+		}
+	}
+	return result;
+}

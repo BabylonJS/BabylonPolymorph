@@ -172,6 +172,10 @@ namespace Babylon
 				return m_originalIndices;
 			}
 
+			inline const std::vector<uint32_t>& GetIndices() {
+				return m_indices;
+			}
+
 			inline DAEGeometryBuilder& Save() {
 				m_saved.push(m_parameters);
 				return *this;

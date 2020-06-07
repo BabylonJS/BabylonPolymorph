@@ -26,8 +26,10 @@ namespace Babylon
 			COLLADAFW::String m_oid;
 			COLLADAFW::Node::NodeType m_type = COLLADAFW::Node::NodeType::NODE;
 			std::vector<COLLADAFW::UniqueId> m_instances;
+			COLLADAFW::UniqueId m_controller;
 			std::vector<Babylon::Utils::Math::Matrix> m_transforms;
 			std::vector<std::shared_ptr<DAENodeBuilder>> m_children;
+
 			std::shared_ptr<Mesh> m_mesh;
 			std::shared_ptr<Camera> m_camera;
 			std::shared_ptr<Light> m_light;
@@ -40,16 +42,19 @@ namespace Babylon
 				return Build(std::make_unique<CircularMap>().get());
 			}
 
-			std::shared_ptr<SceneNode> Build(CircularMap* map); 
+			std::shared_ptr<SceneNode> Build(CircularMap* map);
 
-			std::shared_ptr<Animation::Joint> BuildJoint();
-
+	
 			inline COLLADAFW::Node::NodeType GetType() {
 				return m_type;
 			}
 
-			inline bool IsJoint() {
-				return m_type == COLLADAFW::Node::NodeType::JOINT;
+			inline COLLADAFW::UniqueId GetUniqueId() {
+				return m_id;
+			}
+
+			inline const DAENodeBuilder * GetParent() {
+				return m_parent;
 			}
 
 			inline DAENodeBuilder& WithId(COLLADAFW::UniqueId id) {
@@ -64,13 +69,18 @@ namespace Babylon
 
 			DAENodeBuilder& WithInstance(COLLADAFW::UniqueId id);
 
+			DAENodeBuilder& WithController(COLLADAFW::UniqueId id) {
+				m_controller = id;
+				return *this;
+			}
+
 			inline DAENodeBuilder& WithTransform(Babylon::Utils::Math::Matrix t) {
 				m_transforms.push_back(t);
 				return *this;
 			}
 
 			inline DAENodeBuilder& WithNodeType(COLLADAFW::Node::NodeType t) {
-				m_type== t;
+				m_type = t;
 				return *this;
 			}
 
@@ -95,7 +105,5 @@ namespace Babylon
 				return *this;
 			}
 		};
-
-
 	}
 }

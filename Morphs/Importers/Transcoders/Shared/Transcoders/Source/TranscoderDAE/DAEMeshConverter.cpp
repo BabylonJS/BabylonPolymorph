@@ -22,6 +22,9 @@ namespace {
 		virtual void move(const size_t a) const = 0;
 	};
 
+	/**
+	 *  Feature Accessor will automate the test and transfert of data for collada semantics to Asset3D vector of component such vector2,vector3 or Vector4
+	 */
 	template<typename T>
 	struct FeatureAccessor : public IFeatureAccessor {
 
@@ -58,7 +61,9 @@ namespace {
 				delete[] _tmp;
 			}
 		}
-
+		/**
+		 * Used to test the equivalence of given vertex using a combination of attribute such UV (1 to n), Normal, Tangent.
+		 */
 		bool equals(const size_t a, const size_t b) const {
 			/// note in the way we use it inside a loop a is ALWAYS greater than b.
 			uint32_t ia = indices[a];
@@ -72,6 +77,9 @@ namespace {
 			return mayEqualsValues ? memcmp(values + ia * stride, values + ib * stride, _itemSize) == 0 : false;
 		}
 
+		/**
+		 * Used to transfert data.
+		 */
 		void move(const size_t a) const {
 			if (stride) {
 				uint32_t ia = indices[a];
@@ -89,16 +97,16 @@ namespace {
 	struct VertexBinding {
 
 		int32_t buildedVertexIndice;
-		int32_t line;
+		int32_t row;
 
 		VertexBinding() :
 			buildedVertexIndice(INDICE_NONE),
-			line(INDICE_NONE) {
+			row(INDICE_NONE) {
 		}
 
 		VertexBinding(int32_t builded, int32_t line) :
 			buildedVertexIndice(builded),
-			line(line) {
+			row(line) {
 		}
 	};
 }
@@ -263,33 +271,10 @@ std::shared_ptr<DAEMeshBuilder> DAEMeshConverter::Convert(const COLLADAFW::Mesh*
 					 * we should use another triangulation algorithm instead.
 					 * Also, we need to keep trace of new indices, in order to re-assign weight in case of skinned mesh !!
 					 */
-					if (vertexCount == faceVertexCount) {
-						if (vertexCount > 3) {
-							size_t end = indicesCache.size() - 2;
-							
-							size_t a = indicesCache[startFace];
-							size_t oa = originalIndicesCache[startFace];
-							size_t b = indicesCache[end];
-							size_t ob = originalIndicesCache[end++];
-							size_t c = indicesCache[end];
-							size_t oc = originalIndicesCache[end];
+					if (vertexCount > 3) {
 
-							indicesCache[end] = a;
-							indicesCache.push_back(b);
-							indicesCache.push_back(c);
-							originalIndicesCache[end] = oa;
-							originalIndicesCache.push_back(ob);
-							originalIndicesCache.push_back(oc);
-							
-							totalVertexCount += 2;
-						}
-						face++;
-						faceVertexCount = colladaPrimitive->getGroupedVerticesVertexCount(face);
-						startFace = totalVertexCount;
-						vertexCount = 0;
-					} else if (vertexCount > 3) {
 						size_t end = indicesCache.size() - 2;
-						
+
 						size_t a = indicesCache[startFace];
 						size_t oa = originalIndicesCache[startFace];
 						size_t b = indicesCache[end];
@@ -298,18 +283,26 @@ std::shared_ptr<DAEMeshBuilder> DAEMeshConverter::Convert(const COLLADAFW::Mesh*
 						size_t oc = originalIndicesCache[end];
 
 						indicesCache[end] = a;
-						indicesCache.push_back(b);
-						indicesCache.push_back(c);
 						originalIndicesCache[end] = oa;
+						indicesCache.push_back(b);
 						originalIndicesCache.push_back(ob);
+						indicesCache.push_back(c);
 						originalIndicesCache.push_back(oc);
 
 						totalVertexCount += 2;
 					}
+
+					if (vertexCount == faceVertexCount) {
+
+						face++;
+						faceVertexCount = colladaPrimitive->getGroupedVerticesVertexCount(face);
+						startFace = totalVertexCount;
+						vertexCount = 0;
+
+					} 
 				}
 				/// indice of vertex
 				v = colladaPrimitiveIndices[fi];
-				originalIndicesCache.push_back(v);
 				/// new allocated index
 				index = INDICE_NONE;
 				/// get the vertex info
@@ -319,7 +312,7 @@ std::shared_ptr<DAEMeshBuilder> DAEMeshConverter::Convert(const COLLADAFW::Mesh*
 					/// this is the place to find corresponding vertex by feature equality
 					size_t p = 0;
 					do {
-						int32_t l = stack[p].line;
+						int32_t l = stack[p].row;
 						index = stack[p].buildedVertexIndice;
 						
 						for (int f = 0; f < features.size(); f++) {
@@ -346,6 +339,7 @@ std::shared_ptr<DAEMeshBuilder> DAEMeshConverter::Convert(const COLLADAFW::Mesh*
 
 				/// finally add the index
 				indicesCache.push_back(index);
+				originalIndicesCache.push_back(v);
 				totalVertexCount++;
 				vertexCount++;
 			}
@@ -363,10 +357,10 @@ std::shared_ptr<DAEMeshBuilder> DAEMeshConverter::Convert(const COLLADAFW::Mesh*
 					size_t oc = originalIndicesCache[end];
 
 					indicesCache[end] = a;
-					indicesCache.push_back(b);
-					indicesCache.push_back(c);
 					originalIndicesCache[end] = oa;
+					indicesCache.push_back(b);
 					originalIndicesCache.push_back(ob);
+					indicesCache.push_back(c);
 					originalIndicesCache.push_back(oc);
 
 					totalVertexCount += 2;

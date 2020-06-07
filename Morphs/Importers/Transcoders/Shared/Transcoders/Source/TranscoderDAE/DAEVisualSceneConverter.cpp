@@ -10,6 +10,7 @@
 #include <TranscoderDAE/DAECoreConverter.h>
 #include <TranscoderDAE/DAENodeBuilder.h>
 #include <TranscoderDAE/DAEAnimation.h>
+#include <TranscoderDAE/DAESkeletonBuilder.h>
 
 #include <Asset3D/Asset3D.h>
 
@@ -29,18 +30,32 @@ std::shared_ptr<Asset3D> DAEVisualSceneConverter::Convert(const COLLADAFW::Visua
 	DAENodeConverter nc(getContext());
 	int count = colladaRootNodes.getCount();
 	if (count != 0) {
+		std::vector<std::shared_ptr<DAENodeBuilder>> builders;
+		builders.reserve(count);
+		/// first pass to generate the builder(s)
 		for (int i = 0; i != count; i++) {
 			COLLADAFW::Node* colladaNode = colladaRootNodes[i];
-			/// convert will reference the node into nodeLibrary
+			/// convert will reference the builder into nodeLibrary
 			std::shared_ptr<DAENodeBuilder> builder = nc.Convert(colladaRootNodes[i]);
+			builders.push_back(builder);
+		}
 
-			if (builder && colladaNode->getType() == COLLADAFW::Node::NodeType::NODE) {
-				std::shared_ptr<SceneNode> node = builder->Build();
+		/// second pass to build the SceneNode(s)
+		for (auto b : builders) {
+			/// Expand only NODE, while the JOINT will be processed by Controller instances
+			if (b->GetType() == COLLADAFW::Node::NodeType::NODE) {
+				std::shared_ptr<SceneNode> node = b->Build();
 				if (node) {
 					scene->AddChildNode(node);
 				}
 			}
 		}
+	}
+
+	/// skin
+	for (auto skeletonBuilder : getContext()->getSkeletonLibrary()) {
+		Animation::Skeleton sk = *(skeletonBuilder->Build());
+		scene->AddSkeleton(std::move(sk));
 	}
 
 	/// morphs

@@ -91,5 +91,10 @@ namespace Babylon
 
         Babylon::Utils::Math::Matrix toBabylonMatrix(COLLADABU::Math::Matrix4 colladaMatrix);
         COLLADABU::Math::Matrix4 getMatrixFromTransform(const COLLADAFW::Transformation* transform, float assetScale);
+        float sum_kahan(float *x, int N);
+
+        class DAEToAsset3DWriterContext;
+
+        std::vector<COLLADAFW::UniqueId> findRoots(std::vector<COLLADAFW::UniqueId>& elements, DAEToAsset3DWriterContext * context);
     }
 }

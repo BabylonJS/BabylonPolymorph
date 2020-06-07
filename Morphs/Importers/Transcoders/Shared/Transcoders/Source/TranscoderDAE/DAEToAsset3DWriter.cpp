@@ -10,6 +10,7 @@
 #include <TranscoderDAE/DAECoreConverter.h>
 #include <TranscoderDAE/DAEFXConverter.h>
 #include <TranscoderDAE/DAEGeometryBuilder.h>
+#include <TranscoderDAE/DAESkinGeometryBuilder.h>
 #include <TranscoderDAE/DAECameraBuilder.h>
 #include <TranscoderDAE/DAEFXBuilder.h>
 #include <TranscoderDAE/DAEAnimationConverter.h>
@@ -297,9 +298,12 @@ bool DAEToAsset3DWriter::writeController(const COLLADAFW::Controller* controller
 	switch (controller->getControllerType()) {
 	case COLLADAFW::Controller::CONTROLLER_TYPE_SKIN: {
 		DAESkinControllerConverter c(&m_context);
-		std::shared_ptr<DAESkinControllerBuilder> s = c.GetNode((const COLLADAFW::SkinController*)controller);
-		if (s) {
-			m_context.getSkinControllerLibrary()[controller->getUniqueId()] = s;
+		std::shared_ptr<DAESkinController> sc = c.GetNode((const COLLADAFW::SkinController*)controller);
+		if (sc) {
+			/// Register the controller data
+			m_context.getSkinControllerLibrary()[controller->getUniqueId()] = sc;
+			/// Construct and Register the Skin geometry builder
+			m_context.getGeometryLibrary()[controller->getUniqueId()] = std::make_shared<DAESkinGeometryBuilder>(&m_context, sc);
 		}
 
 		break;

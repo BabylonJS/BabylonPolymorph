@@ -219,16 +219,16 @@
     <ClCompile Include="..\Source\TranscoderDAE\DAEMorphConverter.cpp">
       <Filter>Source\Importers\ImporterDAE\Converters\Animations</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\TranscoderDAE\DAESkeletalAnimationConverter.cpp">
-      <Filter>Source\Importers\ImporterDAE\Converters\Animations</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\TranscoderDAE\DAESkinControllerConverter.cpp">
       <Filter>Source\Importers\ImporterDAE\Converters\Animations</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\TranscoderDAE\DAESkinControllerDataConverter.cpp">
       <Filter>Source\Importers\ImporterDAE\Converters\Animations</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\TranscoderDAE\DAESkinControllerBuilder.cpp">
+    <ClCompile Include="..\Source\TranscoderDAE\DAESkinGeometryBuilder.cpp">
+      <Filter>Source\Importers\ImporterDAE\Builders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\TranscoderDAE\DAESkeletonBuilder.cpp">
       <Filter>Source\Importers\ImporterDAE\Builders</Filter>
     </ClCompile>
   </ItemGroup>
@@ -387,13 +387,13 @@
     <ClInclude Include="..\Inc\TranscoderDAE\DAENodeAnimationBuilder.h">
       <Filter>Public Headers\Importers\ImporterDAE\Builders\Animations</Filter>
     </ClInclude>
-    <ClInclude Include="..\Inc\TranscoderDAE\DAESkeletalAnimationBuilder.h">
-      <Filter>Public Headers\Importers\ImporterDAE\Builders\Animations</Filter>
-    </ClInclude>
     <ClInclude Include="..\Inc\TranscoderDAE\DAEAnimation.h">
       <Filter>Public Headers\Importers\ImporterDAE\Builders\Animations</Filter>
     </ClInclude>
-    <ClInclude Include="..\Inc\TranscoderDAE\DAESkinControllerBuilder.h">
+    <ClInclude Include="..\Inc\TranscoderDAE\DAESkinGeometryBuilder.h">
+      <Filter>Public Headers\Importers\ImporterDAE\Builders\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\TranscoderDAE\DAESkeletonBuilder.h">
       <Filter>Public Headers\Importers\ImporterDAE\Builders\Animations</Filter>
     </ClInclude>
   </ItemGroup>
