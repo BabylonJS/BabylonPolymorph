@@ -134,5 +134,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\include\wsockcompat.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\libxml.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+Copyright 2008 Siemens Product Lifecycle Management Software Inc. All Rights Reserved.
+This software and related documentation are proprietary to 
+Siemens Product Lifecycle Management Software Inc.
+-->
+<xsd:schema targetNamespace="http://www.plmxml.org/Schemas/PLMXMLSchema" xmlns:plm="http://www.plmxml.org/Schemas/PLMXMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:include schemaLocation="PLMXMLSchema.xsd" />
+	<!-- ******************* PLMXML DEPRECATED SCHEMAS ************************ -->
+	<!-- Topology -->
+	<!-- Topology types -->
+	<xsd:complexType name="VertexType">
+		<xsd:complexContent>
+			<xsd:extension base="plm:EntityBase">
+				<xsd:attribute name="finRef" type="xsd:IDREF" use="required" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="EdgeType">
+		<xsd:complexContent>
+			<xsd:extension base="plm:EntityBase">
+				<xsd:attribute name="finRef" type="xsd:IDREF" use="required" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="FinType">
+		<xsd:complexContent>
+			<xsd:extension base="plm:EntityBase">
+				<xsd:attribute name="forwardRef" type="xsd:IDREF" use="required" />
+				<xsd:attribute name="nextOfEdgeRef" type="xsd:IDREF" use="required" />
+				<xsd:attribute name="nextOfVertexRef" type="xsd:IDREF" use="required" />
+				<xsd:attribute name="edgeRef" type="xsd:IDREF" use="optional" />
+				<xsd:attribute name="vertexRef" type="xsd:IDREF" use="optional" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="LoopType">
+		<xsd:complexContent>
+			<xsd:extension base="plm:EntityBase">
+				<xsd:choice>
+					<xsd:element ref="plm:Fin" maxOccurs="unbounded" />
+					<xsd:element ref="plm:Vertex" />
+				</xsd:choice>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="FaceType">
+		<xsd:complexContent>
+			<xsd:extension base="plm:EntityBase">
+				<xsd:sequence>
+					<xsd:element ref="plm:Loop" minOccurs="0" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ShellType">
+		<xsd:complexContent>
+			<xsd:extension base="plm:EntityBase">
+				<xsd:attribute name="frontFaceRefs" type="xsd:IDREFS" />
+				<xsd:attribute name="backFaceRefs" type="xsd:IDREFS" />
+				<xsd:attribute name="wireEdgeRefs" type="xsd:IDREFS" />
+				<xsd:attribute name="acornVertexRef" type="xsd:IDREF" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="RegionType">
+		<xsd:complexContent>
+			<xsd:extension base="plm:EntityBase">
+				<xsd:sequence>
+					<xsd:element ref="plm:Shell" minOccurs="0" maxOccurs="unbounded" />
+				</xsd:sequence>
+				<xsd:attribute name="regionIsSolid" type="xsd:boolean" default="true" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- Topology elements -->
+	<xsd:element name="Vertex" type="plm:VertexType" />
+	<xsd:element name="Edge" type="plm:EdgeType" />
+	<xsd:element name="Fin" type="plm:FinType" />
+	<xsd:element name="Loop" type="plm:LoopType" />
+	<xsd:element name="Face" type="plm:FaceType" />
+	<xsd:element name="Shell" type="plm:ShellType" />
+	<xsd:element name="Region" type="plm:RegionType" />
+	<!-- Topology shape and elements -->
+	<xsd:complexType name="ShapeTopologyType">
+		<xsd:complexContent>
+			<xsd:extension base="plm:InternalRepBase">
+				<xsd:choice minOccurs="0" maxOccurs="unbounded">
+					<xsd:element ref="plm:Region" />
+					<xsd:element ref="plm:Face" />
+					<xsd:element ref="plm:Edge" />
+					<xsd:element ref="plm:Vertex" />
+				</xsd:choice>
+				<xsd:attribute name="entityRef" type="plm:anyURIType" use="optional" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="ShapeTopology" type="plm:ShapeTopologyType" substitutionGroup="plm:InternalRep" />
+	<!-- BRepTopology -->
+	<xsd:complexType name="BRepVertexType">
+		<xsd:complexContent>
+			<xsd:extension base="plm:VertexType">
+				<xsd:attribute name="tolerance" type="xsd:double" use="optional" />
+				<xsd:attribute name="point" type="xsd:IDREF" use="optional">
+					<xsd:annotation>
+						<xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">validate=skipName</xsd:appinfo>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="BRepVertex" type="plm:BRepVertexType" substitutionGroup="plm:Vertex" />
+	<xsd:complexType name="BRepEdgeType">
+		<xsd:complexContent>
+			<xsd:extension base="plm:EdgeType">
+				<xsd:attribute name="tolerance" type="xsd:double" use="optional" />
+				<xsd:attribute name="curve" type="xsd:IDREF" use="optional">
+					<xsd:annotation>
+						<xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">validate=skipName</xsd:appinfo>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="BRepEdge" type="plm:BRepEdgeType" substitutionGroup="plm:Edge" />
+	<xsd:complexType name="BRepFinType">
+		<xsd:complexContent>
+			<xsd:extension base="plm:FinType">
+				<xsd:attribute name="curve" type="xsd:IDREF" use="optional">
+					<xsd:annotation>
+						<xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">validate=skipName</xsd:appinfo>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="isPositive" type="xsd:boolean" default="true" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="BRepFin" type="plm:BRepFinType" substitutionGroup="plm:Fin" />
+	<xsd:complexType name="BRepFaceType">
+		<xsd:complexContent>
+			<xsd:extension base="plm:FaceType">
+				<xsd:attribute name="surface" type="xsd:IDREF" use="optional">
+					<xsd:annotation>
+						<xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">validate=skipName</xsd:appinfo>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="isPositive" type="xsd:boolean" default="true" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="BRepFace" type="plm:BRepFaceType" substitutionGroup="plm:Face" />
+	<xsd:complexType name="BRepBodyType">
+		<xsd:complexContent>
+			<xsd:extension base="plm:ShapeTopologyType">
+				<xsd:choice minOccurs="0" maxOccurs="unbounded">
+					<xsd:element ref="plm:Surface" />
+					<xsd:element ref="plm:Curve" />
+					<xsd:element ref="plm:Point" />
+				</xsd:choice>
+				<xsd:attribute name="type" use="required">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:NMTOKEN">
+							<xsd:enumeration value="minimal" />
+							<xsd:enumeration value="wire" />
+							<xsd:enumeration value="solid" />
+							<xsd:enumeration value="sheet" />
+							<xsd:enumeration value="general" />
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+				<xsd:attribute name="resSize" type="xsd:double" use="required" />
+				<xsd:attribute name="resLinear" type="xsd:double" use="required" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="BRepBody" type="plm:BRepBodyType" substitutionGroup="plm:InternalRep" />
+	<!-- FacetRep -->
+	<xsd:complexType name="FacetVertexType">
+		<xsd:complexContent>
+			<xsd:extension base="plm:IdBase">
+				<xsd:attribute name="pointRef" type="xsd:IDREF" use="required" />
+				<xsd:attribute name="normalRef" type="xsd:IDREF" use="required" />
+				<xsd:attribute name="coordRef" type="xsd:IDREF" use="optional" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="FacetType">
+		<xsd:complexContent>
+			<xsd:extension base="plm:IdBase">
+				<xsd:sequence>
+					<xsd:element name="FacetVertex" type="plm:FacetVertexType" minOccurs="3" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:attributeGroup name="facetDetailsGroup">
+		<xsd:attribute name="materialRef" type="xsd:IDREF" use="optional" />
+		<xsd:attribute name="textureRef" type="xsd:IDREF" use="optional" />
+		<xsd:attribute name="curveChordTol" type="xsd:double" use="optional" />
+		<xsd:attribute name="surfacePlaneTol" type="xsd:double" use="optional" />
+		<xsd:attribute name="doubleSided" type="xsd:boolean" default="false" />
+		<xsd:attribute name="numberOfFacets" type="xsd:unsignedLong" use="optional" />
+		<xsd:attribute name="numberOfPoints" type="xsd:unsignedLong" use="optional" />
+		<xsd:attribute name="numberOfNormals" type="xsd:unsignedLong" use="optional" />
+	</xsd:attributeGroup>
+	<xsd:complexType name="FacetDataBase" abstract="true">
+		<xsd:complexContent>
+			<xsd:extension base="plm:PropertiesBase">
+				<xsd:sequence>
+					<xsd:element name="Point" type="plm:PositionType" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="Normal" type="plm:NormalType" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="TextureCoord" type="plm:TextureCoordType" minOccurs="0" maxOccurs="unbounded" />
+				</xsd:sequence>
+				<xsd:attributeGroup ref="plm:facetDetailsGroup" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="PatchType">
+		<xsd:complexContent>
+			<xsd:extension base="plm:FacetDataBase">
+				<xsd:sequence>
+					<xsd:element name="Facet" type="plm:FacetType" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element ref="plm:EntityRef" minOccurs="0" maxOccurs="1" />
+				</xsd:sequence>
+				<xsd:attributeGroup ref="plm:referenceGroup" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="MeshType">
+		<xsd:complexContent>
+			<xsd:extension base="plm:FacetDataBase">
+				<xsd:sequence>
+					<xsd:element name="Patch" type="plm:PatchType" maxOccurs="unbounded" />
+				</xsd:sequence>
+				<xsd:attribute name="topologyRef" type="xsd:anyURI" use="optional" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="FacetRepType">
+		<xsd:complexContent>
+			<xsd:extension base="plm:InternalRepBase">
+				<xsd:sequence>
+					<xsd:element name="Material" type="plm:MaterialType" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="TextureData" type="plm:TextureDataType" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="Texture" type="plm:TextureType" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="Mesh" type="plm:MeshType" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="FacetRep" type="plm:FacetRepType" substitutionGroup="plm:InternalRep" />
+	<!-- FacetTopology -->
+	<xsd:complexType name="FacetFinType">
+		<xsd:complexContent>
+			<xsd:extension base="plm:FinType">
+				<xsd:attribute name="facetVertexRef" type="xsd:anyURI" use="required" />
+				<xsd:attribute name="facetRef" type="xsd:anyURI" use="required" />
+				<xsd:attribute name="type" use="optional">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:NMTOKEN">
+							<xsd:enumeration value="internal" />
+							<xsd:enumeration value="boundary" />
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="FacetFin" type="plm:FacetFinType" substitutionGroup="plm:Fin" />
+	<xsd:complexType name="FacetFaceType">
+		<xsd:complexContent>
+			<xsd:extension base="plm:FaceType">
+				<xsd:sequence>
+					<xsd:element ref="plm:FacetFin" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element ref="plm:EntityRef" minOccurs="0" maxOccurs="1" />
+				</xsd:sequence>
+				<xsd:attribute name="patchRefs" use="optional">
+					<xsd:simpleType>
+						<xsd:restriction base="plm:uriReferenceListType">
+							<xsd:minLength value="1" />
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="FacetFace" type="plm:FacetFaceType" substitutionGroup="plm:Face" />
+	<xsd:complexType name="FacetTopologyType">
+		<xsd:complexContent>
+			<xsd:extension base="plm:ShapeTopologyType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="FacetTopology" type="plm:FacetTopologyType" substitutionGroup="plm:InternalRep" />
+	<!-- -->
+	<!-- Request Document and supporting elements -->
+	<!-- -->
+	<xsd:simpleType name="RequestIdType">
+		<xsd:annotation>
+			<xsd:documentation>
+		  Request identifier.
+		  </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string" />
+	</xsd:simpleType>
+	<!-- -->
+	<xsd:complexType name="QueryBase" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>
+			The abstract datatype and element for Query elements.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="plm:AttribOwnerBase" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="Query" type="plm:QueryBase" />
+	<!-- -->
+	<xsd:complexType name="RequestType">
+		<xsd:annotation>
+			<xsd:documentation>
+      The element describing the data context for PLMXML request.
+      This effectively identifies the part or application
+      context for the request.
+
+      Attributes:
+      name:          (optional) name of the data context or part.
+      format:        (required) the format of the context.
+      context:       (required) the location or identifier of the 
+                     data context. NB the name is 'context', not
+                     'contextRef'.
+
+      SubElements:
+      
+      Query          (required) the query itself. Note that this
+                     is an abstract element, so a substitution
+                     element must be used.
+      </xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:element ref="plm:Query" maxOccurs="unbounded" />
+		</xsd:choice>
+		<xsd:attribute name="name" type="xsd:string" use="optional" />
+		<xsd:attribute name="format" type="plm:RepresentationFormatType" use="required" />
+		<xsd:attribute name="context" type="xsd:string" use="required" />
+	</xsd:complexType>
+	<!-- -->
+	<xsd:complexType name="PLMXMLRequestType">
+		<xsd:annotation>
+			<xsd:documentation>
+      The main PLMXML data request element. This element must appear within it's own document.
+      The element contains a number of fields for describing the context of the request 
+      (e.g. the part name, etc) and the type of data to be returned. The application making the 
+      request provides it's own context within the data request element via the 'requestId' 
+      attribute. This attribute value must be returned in the resultant PLMXML document. 
+      This enables the application to match PLMXML documents with the data request.
+     
+      Attributes:
+    
+      application:    (mandatory) Name of the application making the request.
+      requestId:      (mandatory) Application supplied identifier for the 
+                      request. This value will be returned in the resulting
+                      PLMXML document.
+
+      Elements:
+    
+      Request:        (optional) The application part context and request. 
+    </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="plm:DocumentBase">
+				<xsd:sequence>
+					<xsd:element name="Request" type="plm:RequestType" />
+				</xsd:sequence>
+				<xsd:attribute name="application" type="xsd:string" use="required" />
+				<xsd:attribute name="requestId" type="plm:RequestIdType" use="required" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="PLMXMLRequest" type="plm:PLMXMLRequestType">
+		<xsd:annotation>
+			<xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">sdkname=RequestDocument</xsd:appinfo>
+		</xsd:annotation>
+	</xsd:element>
+	<!-- -->
+	<xsd:simpleType name="RepQueryType">
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="XT" />
+			<xsd:enumeration value="JT" />
+			<xsd:enumeration value="jXT" />
+			<xsd:enumeration value="All" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- -->
+	<xsd:simpleType name="TristripControl">
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="facets" />
+			<xsd:enumeration value="tristrips" />
+			<xsd:enumeration value="facetsAndTristrips" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- -->
+	<xsd:simpleType name="FacetsetControl">
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="unspecified" />
+			<xsd:enumeration value="perFace" />
+			<xsd:enumeration value="perMaterial" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- -->
+	<xsd:complexType name="FacetControlsType">
+		<xsd:annotation>
+			<xsd:documentation>
+      This type gives the parameters which control a facet generation
+      operation.
+    
+      Attributes:
+    
+      curveAngularTol:     max angular change between chords along edge
+      curveDistanceTol:    max edge/chord distance
+      surfaceAngularTol:   max angular change between facets
+      surfaceDistanceTol:  max face/facet distance
+      tristripControl :    whether tristrips allowed
+      facetsetControl:     whether facetsets are created per face, per material, or
+                           unspecified
+    
+      </xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="curveAngularTol" type="xsd:double" use="optional" />
+		<xsd:attribute name="curveDistanceTol" type="xsd:double" use="optional" />
+		<xsd:attribute name="surfaceAngularTol" type="xsd:double" use="optional" />
+		<xsd:attribute name="surfaceDistanceTol" type="xsd:double" use="optional" />
+		<xsd:attribute name="tristripControl" type="plm:TristripControl" use="optional" />
+		<xsd:attribute name="facetsetControl" type="plm:FacetsetControl" use="optional" />
+	</xsd:complexType>
+	<!-- -->
+	<xsd:complexType name="RepresentationQueryType">
+		<xsd:annotation>
+			<xsd:documentation>
+      This datatype is used to describe a representation query. The
+      element is defined as a substitution element for the abstract
+      Query element.
+      
+      Attributes:
+      
+      type:       (required) The type of representation requested.
+                  Currently, this is : XT, JT, jXT or All
+      label:      (optional) If a suitable application label is specified
+                  the request must return the representation matching the
+                  specified label.
+                  If no label is specified, then the request must return
+                  a PLMXML document that identifies all the appropriate 
+                  representations in the specified context.
+    </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="plm:QueryBase">
+				<xsd:sequence>
+					<xsd:element name="FacetControls" type="plm:FacetControlsType" minOccurs="0" />
+				</xsd:sequence>
+				<xsd:attribute name="type" type="plm:RepQueryType" use="required" />
+				<xsd:attribute name="label" type="xsd:string" use="optional" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="RepresentationQuery" type="plm:RepresentationQueryType" substitutionGroup="plm:Query" />
+	<!-- -->
+	<xsd:complexType name="ProductDefQueryType">
+		<xsd:annotation>
+			<xsd:documentation>
+      This datatype is used to describe a product structure query. The
+      element is defined as a substitution element for the abstract
+      Query element.
+      </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="plm:QueryBase" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="ProductDefQuery" type="plm:ProductDefQueryType" substitutionGroup="plm:Query" />
+	<!-- -->
+	<xsd:complexType name="FeatureQueryType">
+		<xsd:annotation>
+			<xsd:documentation>
+      This datatype is used to describe a Feature/FeatureTree query. The
+      element is defined as a substitution element for the abstract
+      Query element.
+    
+      Attributes:
+    
+      label:    (optional) If a suitable application label is specified
+                the request must return the feature matching the
+                specified label.
+                If no label is specified, then the request must return
+                an PLMXML document that specifies the whole feature tree 
+                within the specified context.
+      </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="plm:QueryBase">
+				<xsd:attribute name="label" type="xsd:string" use="optional" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="FeatureQuery" type="plm:FeatureQueryType" substitutionGroup="plm:Query" />
+	<!-- -->
+	<xsd:complexType name="AnnotationQueryType">
+		<xsd:annotation>
+			<xsd:documentation>
+      This datatype is used to describe an Annotation query. The
+      element is defined as a substitution element for the abstract
+      Query element.
+    
+      Attributes:
+   
+      label:    (optional) If a suitable application label is specified
+                the request must return the annotation matching the
+                specified label.
+                If no label is specified, then the request must return
+                an PLMXML document that specifies all the annotations 
+                within the specified context.
+      </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="plm:QueryBase">
+				<xsd:attribute name="label" type="xsd:string" use="optional" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="AnnotationQuery" type="plm:AnnotationQueryType" substitutionGroup="plm:Query" />
+	<!-- -->
+	<xsd:simpleType name="RequestResultType">
+		<xsd:annotation>
+			<xsd:documentation>
+      The request return types.
+      </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="Success" />
+			<xsd:enumeration value="InvalidRequest" />
+			<xsd:enumeration value="ContextNotIdentified" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- -->
+	<xsd:simpleType name="RequestSeverityType">
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="none" />
+			<xsd:enumeration value="mild" />
+			<xsd:enumeration value="severe" />
+			<xsd:enumeration value="aborted" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- -->
+	<xsd:complexType name="RequestInformationType">
+		<xsd:annotation>
+			<xsd:documentation>
+      This datatype is used to return status information to the user
+      within the resultant PLMXML document. The element is in the form
+      of a PLMXML attribute. This implies that an PLMXML docuemnt could 
+      just be returned with one RequestInformation element in it - 
+      useful for returning errors and no data.
+    
+      Attributes:
+    
+      requestId:     (required) The application request identifier.
+      result:        (default=Success) Indicates success or failure with a code.
+      description:   (optional) textual description of failure, etc. 
+    </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="plm:AttributeBase">
+				<xsd:attribute name="requestId" type="plm:RequestIdType" use="required" />
+				<xsd:attribute name="result" type="plm:RequestResultType" default="Success" />
+				<xsd:attribute name="description" type="xsd:string" use="optional" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="RequestInformation" type="plm:RequestInformationType" substitutionGroup="plm:Attribute" />
+</xsd:schema>

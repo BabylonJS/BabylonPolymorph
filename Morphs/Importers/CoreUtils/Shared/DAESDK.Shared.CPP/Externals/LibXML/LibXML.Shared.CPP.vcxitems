@@ -57,5 +57,6 @@
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\include\win32config.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\include\wsockcompat.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\libxml.h" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright 2010 Siemens Product Lifecycle Management Software Inc. All Rights Reserved.
+This software and related documentation are proprietary to 
+Siemens Product Lifecycle Management Software Inc.
+-->
+<xsd:schema targetNamespace="http://www.plmxml.org/Schemas/PLMXMLValidationRuleSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:plm="http://www.plmxml.org/Schemas/PLMXMLSchema" xmlns:rule="http://www.plmxml.org/Schemas/PLMXMLValidationRuleSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" xml:lang="en">
+  <xsd:import namespace="http://www.plmxml.org/Schemas/PLMXMLSchema" schemaLocation="PLMXMLSchema.xsd" />
+  <xsd:annotation>
+    <xsd:documentation source="http://www.plmxml.org/Schemas/PLMXMLSchema/History">
+      <plm:SchemaChange author="howardmu" date="2010-11-05" version="7.0.2.207">
+        <plm:Description>
+        Initial version.
+        </plm:Description>
+      </plm:SchemaChange>
+    </xsd:documentation>
+    <xsd:documentation>
+
+                                PLM XML Validation Rules Schema.
+
+    </xsd:documentation>
+    <xsd:documentation>
+    The validation rules are to define the criteria to verify that all needed
+    tests have been executed against certain objects with expected results.
+    </xsd:documentation>
+    <xsd:appinfo source="http://www.plmxml.org/Schemas/PLMXMLValidationRuleSchema">
+      <plm:SchemaInfo name="PLMXMLValidationRuleSchema.xsd" date="2010-11-05" version="6.0" status="release" />
+    </xsd:appinfo>
+  </xsd:annotation>
+  <!-- -->
+  <!-- ************************ ValidationRuleSetType ********************** -->
+  <!-- -->
+  <xsd:complexType name="ValidationRuleSetType">
+    <xsd:annotation>
+      <xsd:documentation>
+      A rule set references multiple validation rules.
+
+      Attributes:
+
+      ruleRefs:         References multiple ValidationRule objects.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:attribute name="ruleRefs" type="plm:uriReferenceListType" plm:refType="rule:ValidationRule" use="required" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ValidationRuleSet" type="rule:ValidationRuleSetType" substitutionGroup="plm:AttribOwner" />
+  <!-- -->
+  <!-- ************************ ValidationRuleType ************************* -->
+  <!-- -->
+  <xsd:complexType name="ValidationRuleType">
+    <xsd:annotation>
+      <xsd:documentation>
+      A rule specifies:
+        The types of validation checkers to choose and the results to expect,
+        and
+        When the rule needs to be applied, and
+        The type of objects as the target of validation.
+
+      A rule can be used to define the methods and moments how to find targets
+      for validation, or find appropriate checkers, or control the validation
+      results to be used, or control the relations between the targets, checkers
+      and results.
+
+      Attributes:
+
+      name:             Inherited from AttribOwner. The name of this rule.
+      checker:          The checker name. It supports wildcards.
+      checkerVersion:   The checker version.
+      mandated:         Indicates if the test result for this checker must be
+                        pass or not.
+                          True: Requires the checker to run and pass.
+                          False: Requires the checker to run but the result is
+                          ignored.
+      eventRefs:        References an array of ValidationEvent objects as
+                        conditions for this rule.
+      parameterRefs:    References an array of CheckerParameter objects as
+                        parameter name, value pairs for the checker defined by
+                        this rule. Refer to the PLMXMLPDMSchema.xsd for the
+                        details about the CheckerParameterType.
+
+      Sub-elements:
+
+      Target:           A Target type element, which defines the object types to
+                        be checked by this rule.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:sequence>
+          <xsd:element name="Target" type="rule:TargetType" />
+        </xsd:sequence>
+        <xsd:attribute name="checker" type="xsd:string" use="required" />
+        <xsd:attribute name="checkerVersion" type="xsd:string" use="optional" />
+        <xsd:attribute name="mandated" type="xsd:boolean" default="false" use="optional" />
+        <xsd:attribute name="eventRefs" type="plm:uriReferenceListType" plm:refType="rule:ValidationEvent" use="optional" />
+        <xsd:attribute name="parameterRefs" type="plm:uriReferenceListType" plm:refType="plm:CheckerParameter" use="optional" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ValidationRule" type="rule:ValidationRuleType" substitutionGroup="plm:AttribOwner" />
+  <!-- -->
+  <!-- ************************ ValidationEventType ************************ -->
+  <!-- -->
+  <xsd:complexType name="ValidationEventType">
+    <xsd:annotation>
+      <xsd:documentation>
+      An event defines a situation in which a rule should be selected or
+      deselected when the rule is applied to a set of objects.
+
+      Attributes:
+
+      exclude:          Indicates whether the ValidationRule will be selected by
+                        this event or not.
+                          True: The rule will be selected if the event value is
+                          evaluated as pass.
+                          False: The rule will be deselected if the event value
+                          is evaluated as pass.
+      eventClass:       The event class clause for Teamcenter. Given the class
+                        clause, it is able to get its values from the Teamcenter
+                        database, then the values will be used to match with the
+                        criterion. For example, ITEMREVISION:owning_group.
+      applyTo:          The event clause for other applications. Given the
+                        clause, it is able to get values from application
+                        system, then the values will be used to match with the
+                        criterion. For example, in NX, the clause could be
+                        PARTATTRIBUTES:MQC_CHECK, which means to get the
+                        "MQC_CHECK" attribute value from NX system.
+      application:      Indicates the application this event will be used for.
+                        For example, PLM means Teamcenter, NX means NX.
+
+      Sub-Elements:
+
+      ValueList:        Defines the criterion values for this event. It supports
+                        wildcards.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:sequence>
+          <xsd:element name="ValueList" type="plm:UserListDataType" minOccurs="0" />
+        </xsd:sequence>
+        <xsd:attribute name="eventClass" type="xsd:string" use="optional" />
+        <xsd:attribute name="exclude" type="xsd:boolean" default="false" use="optional" />
+        <xsd:attribute name="applyTo" type="xsd:string" use="optional" />
+        <xsd:attribute name="application" type="xsd:string" default="PLM" use="optional" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ValidationEvent" type="rule:ValidationEventType" substitutionGroup="plm:AttribOwner" />
+  <!-- -->
+  <!-- ************************ TargetType ************************* -->
+  <!-- -->
+  <xsd:complexType name="TargetType">
+    <xsd:annotation>
+      <xsd:documentation>
+      A target specifies the type of objects to be checked.
+
+      Attributes:
+
+      targetType:       The target type, for instance, Dataset.
+
+      Sub-Elements:
+
+      Item:             Inherited from UserListDataType. Represents the target
+                        sub-types, like UGMaster, UGPart or Text et cetera. It
+                        supports wildcards.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:UserListDataType">
+        <xsd:attribute name="targetType" type="xsd:string" use="optional" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+</xsd:schema>

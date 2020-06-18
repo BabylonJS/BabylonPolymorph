@@ -117,7 +117,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)..\Submodules\OpenCOLLADA\GeneratedSaxParser\include;$(SolutionDir)..\Submodules\OpenCOLLADA\externals\libxml\include;$(SolutionDir)..\Submodules\OpenCOLLADA\COLLADABaseUtils\include;$(SolutionDir)..\Submodules\OpenCOLLADA\COLLADABaseUtils\include\Math;$(SolutionDir)..\Submodules\OpenCOLLADA\externals\expat\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;DRACO_ATTRIBUTE_DEDUPLICATION_SUPPORTED;GENERATEDSAXPARSER_XMLPARSER_LIBXML;LIBXML_AUTOMATA_ENABLED;LIBXML_PATTERN_ENABLED;LIBXML_READER_ENABLED;LIBXML_REGEXP_ENABLED;LIBXML_SCHEMAS_ENABLED;LIBXML_XPATH_ENABLED;no_init_all=deprecated;HAVE_MEMMOVE;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

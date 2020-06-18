@@ -100,7 +100,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\Submodules\OpenCOLLADA\COLLADAFramework\include\;$(SolutionDir)..\Submodules\OpenCOLLADA\COLLADABaseUtils\include;$(SolutionDir)..\Submodules\OpenCOLLADA\COLLADABaseUtils\include\Math;$(SolutionDir)..\Submodules\OpenCOLLADA\Externals\MathMLSolver\include\AST;$(SolutionDir)..\Submodules\OpenCOLLADA\Externals\MathMLSolver\include\;$(SolutionDir)..\Submodules\OpenCOLLADA\Externals\pcre\include;$(SolutionDir)..\Submodules\OpenCOLLADA\Externals\UTF\include;%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\Submodules\OpenCOLLADA\COLLADAFramework\include\;$(SolutionDir)..\Submodules\OpenCOLLADA\COLLADABaseUtils\include;$(SolutionDir)..\Submodules\OpenCOLLADA\COLLADABaseUtils\include\Math;$(SolutionDir)..\Submodules\OpenCOLLADA\Externals\MathMLSolver\include\AST;$(SolutionDir)..\Submodules\OpenCOLLADA\Externals\MathMLSolver\include\;$(SolutionDir)..\Submodules\OpenCOLLADA\Externals\pcre\include;$(SolutionDir)..\Submodules\OpenCOLLADA\Externals\UTF\include;</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;PCRE_STATIC;_CRT_SECURE_NO_WARNINGS;__MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
@@ -117,7 +117,9 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\Submodules\OpenCOLLADA\COLLADAFramework\include\;$(SolutionDir)..\Submodules\OpenCOLLADA\COLLADABaseUtils\include;$(SolutionDir)..\Submodules\OpenCOLLADA\COLLADABaseUtils\include\Math;$(SolutionDir)..\Submodules\OpenCOLLADA\Externals\MathMLSolver\include\AST;$(SolutionDir)..\Submodules\OpenCOLLADA\Externals\MathMLSolver\include\;$(SolutionDir)..\Submodules\OpenCOLLADA\Externals\pcre\include;%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\Submodules\OpenCOLLADA\COLLADAFramework\include\;$(SolutionDir)..\Submodules\OpenCOLLADA\COLLADABaseUtils\include;$(SolutionDir)..\Submodules\OpenCOLLADA\COLLADABaseUtils\include\Math;$(SolutionDir)..\Submodules\OpenCOLLADA\Externals\MathMLSolver\include\AST;$(SolutionDir)..\Submodules\OpenCOLLADA\Externals\MathMLSolver\include\;$(SolutionDir)..\Submodules\OpenCOLLADA\Externals\pcre\include;$(SolutionDir)..\Submodules\OpenCOLLADA\Externals\UTF\include;</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;PCRE_STATIC;_CRT_SECURE_NO_WARNINGS;__MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

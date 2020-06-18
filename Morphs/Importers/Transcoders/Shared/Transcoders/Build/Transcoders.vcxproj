@@ -61,7 +61,8 @@
     <Import Project="$(CanvasConfigDirectory)Babylon.Configurations.props" />
     <Import Project="$(CanvasConfigDirectory)Babylon.Cpp.props" />
     <Import Project="$(TranscodersSharedDirectory)Transcoders\Build\Transcoders.vcxproj.projimport" />
-    <Import Project="$(CoreUtilsSharedDirectory)DAESDK\DAESDK.vcxproj.projimport" />
+    <Import Project="$(CoreUtilsSharedDirectory)DAESDK\ColladaPath.props" />
+    <Import Project="$(CoreUtilsSharedDirectory)JTSDK\cpp\JTSDKPath.props" />
   </ImportGroup>
   <ItemGroup>
     <None Include="packages.config">
@@ -87,6 +88,7 @@
     <ClCompile Include="..\Source\TranscoderDAE\DAEVisualSceneConverter.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\TranscoderDAE.cpp" />
     <ClCompile Include="..\Source\TranscoderDAE\TranscoderDAEUtils.cpp" />
+    <ClCompile Include="..\Source\TranscoderJT\TranscoderJT.cpp" />
     <ClCompile Include="..\Source\TranscodersTelemetryHelper.cpp" />
     <ClCompile Include="..\Source\ExporterGLTF\Asset3DToGLTFConverter.cpp" />
     <ClCompile Include="..\Source\ExporterGLTF\ExporterGLB.cpp" />
@@ -155,6 +157,7 @@
     <ClInclude Include="..\Inc\TranscoderGLTF\TransformMatrixUtils.h" />
     <ClInclude Include="..\Inc\TranscoderGLTF\TranscoderGLB.h" />
     <ClInclude Include="..\Inc\TranscoderGLTF\TranscoderGLTF.h" />
+    <ClInclude Include="..\Inc\TranscoderJT\TranscoderJT.h" />
     <ClInclude Include="..\Inc\TranscoderOBJ\AuthorType.h" />
     <ClInclude Include="..\Inc\TranscoderOBJ\GeometryLineType.h" />
     <ClInclude Include="..\Inc\TranscoderOBJ\GeometryParser.h" />
@@ -172,6 +175,11 @@
     <ClInclude Include="..\Source\TranscodersTelemetryHelper.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\CoreUtils\Shared\JTSDK\cpp\JTSDK.vcxproj">
+      <Project>{968e240e-fbaf-4df2-a49e-19b02d59301b}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <ItemDefinitionGroup>
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -181,6 +189,9 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</TreatWarningAsError>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(TranscodersSharedDirectory)Transcoders\source;$(CoreUtilsSharedDirectory)Earcut\cpp\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(TranscodersSharedDirectory)Transcoders\source;$(CoreUtilsSharedDirectory)Earcut\cpp\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalUsingDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(NativeExecutablePath);$(WindowsSDK_MetadataPath);$(WinmdUsingPath)%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</TreatWarningAsError>
     </ClCompile>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

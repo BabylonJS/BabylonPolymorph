@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright 2013 Siemens Product Lifecycle Management Software Inc. All Rights Reserved.
+This software and related documentation are proprietary to 
+Siemens Product Lifecycle Management Software Inc.
+-->
+<xsd:schema targetNamespace="http://www.plmxml.org/Schemas/PLMXMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:plm="http://www.plmxml.org/Schemas/PLMXMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" xml:lang="en">
+  <xsd:include schemaLocation="PLMXMLSchema.xsd" />
+  <xsd:annotation>
+    <xsd:documentation source="http://www.plmxml.org/Schemas/PLMXMLSchema/History">
+      <plm:SchemaChange author="howardmu" date="2013-09-04" version="7.0.3.307">
+        <plm:Description>
+        Initial version.
+        </plm:Description>
+      </plm:SchemaChange>
+    </xsd:documentation>
+    <xsd:documentation>
+
+                                PLM XML Class Library Schema
+
+    </xsd:documentation>
+    <xsd:appinfo source="http://www.plmxml.org/Schemas/PLMXMLSchema">
+      <plm:SchemaInfo name="PLMXMLClassLibrarySchema.xsd" date="2013-09-04" version="6.0" status="release"/>
+    </xsd:appinfo>
+  </xsd:annotation>
+  <!-- -->
+  <!-- Classification Hierarchy -->
+  <!-- -->
+  <xsd:complexType name="ClassificationHeaderBase" abstract="true">
+    <xsd:annotation>
+      <xsd:documentation>
+      Classification Header.
+
+      Attributes:
+
+      name:             Inherited from AttribOwner.
+      nameRef:          Inherited from AttribOwner. References a multiple
+                        language version of name.
+      descriptionTextRef: Inherited from AttribOwner. References a multiple
+                        language version of description.
+      objectId:         The identifier of the derived object.
+      subType:          Type of derived element.
+      siteRef:          References a Site.
+
+      Sub-elements:
+
+      Description:      Inherited from AttribOwner.
+      Property:         Custom node properties.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+          <xsd:element name="Property" type="plm:UserDataElementType" />
+        </xsd:choice>
+        <xsd:attribute name="objectId" type="xsd:string" use="required" />
+        <xsd:attribute name="subType" type="xsd:string" use="optional" />
+        <xsd:attribute name="siteRef" type="plm:anyURIType" use="optional" plm:refType="plm:Site" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ClassificationHeader" type="plm:ClassificationHeaderBase" substitutionGroup="plm:AttribOwner" />
+  <!--  -->
+  <xsd:complexType name="ClassLibraryIdentifierType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Class Library Identifier.
+
+      Attributes:
+
+      identifier:       String identifier.
+      referenceRef:     References the parent Classification Node, if there is
+                        one.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttributeBase">
+        <xsd:attribute name="identifier" type="xsd:string" use="required" />
+        <xsd:attribute name="referenceRef" type="plm:anyURIType" use="optional" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:complexType name="ClassificationNodeType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Classification Hierarchy Node.
+
+      Attributes:
+
+      objectId:         Inherited from ClassificationHeader. The identifier of
+      sortIndex:        Sort index.
+                        the Classification Node.
+      leaf:             Whether the Master Node is a leaf node.
+
+      Sub-elements:
+
+      Parent:           Identifies the parent Classification Node, if there is
+                        one.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ClassificationHeaderBase">
+        <xsd:choice minOccurs="0">
+          <xsd:element name="Parent" type="plm:ClassLibraryIdentifierType" />
+        </xsd:choice>
+        <xsd:attribute name="sortIndex" type="xsd:integer" use="optional" />
+        <xsd:attribute name="leaf" type="xsd:boolean" default="false" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ClassificationNode" type="plm:ClassificationNodeType" substitutionGroup="plm:ClassificationHeader" />
+  <!--  -->
+  <xsd:complexType name="GroupNodeType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Group Node.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ClassificationNodeType" />
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="GroupNode" type="plm:GroupNodeType" substitutionGroup="plm:ClassificationNode" />
+<!-- -->
+  <xsd:complexType name="MasterNodeType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Master Node.
+
+      Attributes:
+
+      storageClass:     Storage class.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ClassificationNodeType">
+        <xsd:attribute name="storageClass" type="xsd:string" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="MasterNode" type="plm:MasterNodeType" substitutionGroup="plm:ClassificationNode" />
+  <!-- -->
+  <xsd:complexType name="ClassificationMemberType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Classification Member.
+
+      Attributes:
+
+      objectId:         Inherited from ClassificationHeader. The identifier of
+                        the Classification Member.
+      objectRef:        References the object in the product structure.
+      local:            Whether the classification is local to a Library.
+
+      Sub-elements:
+
+      OwningNode:       Identifies the owning Classification Node in the
+                        Classification Hierarchy.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ClassificationHeaderBase">
+        <xsd:choice>
+          <xsd:element name="OwningNode" type="plm:ClassLibraryIdentifierType" />
+        </xsd:choice>
+        <xsd:attribute name="objectRef" type="plm:anyURIType" use="optional" />
+        <xsd:attribute name="local" type="xsd:boolean" default="false" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ClassificationMember" type="plm:ClassificationMemberType" substitutionGroup="plm:ClassificationHeader" />
+  <!-- -->
+  <!-- Classification Library -->
+  <!-- -->
+  <xsd:complexType name="LibraryType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Classification Library.
+
+      Attributes:
+
+      objectId:         Inherited from ClassificationHeader. The identifier of
+                        the Classification Library.
+      libraryType:      The type of the Library.
+      disciplineRefs:   A list of references to Disciplines.
+      version:          The version of the Classification Library.
+      administratorRefs: A list of references to administrative Users.
+
+      Sub-elements:
+
+      Specification:    Identifies a Specification in the Classification
+                        Library.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ClassificationHeaderBase">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+          <xsd:element name="Specification" type="plm:ClassLibraryIdentifierType" />
+        </xsd:choice>
+        <xsd:attribute name="libraryType" type="xsd:string" use="optional" />
+        <xsd:attribute name="disciplineRefs" type="plm:uriReferenceListType" use="optional" plm:refType="plm:Discipline" />
+        <xsd:attribute name="version" type="xsd:string" use="optional" />
+        <xsd:attribute name="administratorRefs" type="plm:uriReferenceListType" use="optional" plm:refType="plm:Owner" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Library" type="plm:LibraryType" substitutionGroup="plm:ClassificationHeader" />
+  <!-- -->
+  <xsd:complexType name="LibraryNodeType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Library Hierarchy Node.
+
+      Attributes:
+
+      classificationNodeRef: References a Classification Hierarchy Node.
+      virtual:          Whether the Library Node is virtual.
+
+      Sub-elements:
+
+      OwningHierarchy:  Identifies the owning LibraryHierarchy.
+      OwningLibrary:    Identifies the owning Library.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ClassificationNodeType">
+        <xsd:sequence>
+          <xsd:element name="OwningHierarchy" type="plm:ClassLibraryIdentifierType" />
+          <xsd:element name="OwningLibrary" type="plm:ClassLibraryIdentifierType" />
+        </xsd:sequence>
+        <xsd:attribute name="classificationNodeRef" type="plm:anyURIType" use="optional" plm:refType="plm:ClassificationNode" />
+        <xsd:attribute name="virtual" type="xsd:boolean" default="false" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="LibraryNode" type="plm:LibraryNodeType" substitutionGroup="plm:ClassificationNode" />
+  <!-- -->
+  <xsd:complexType name="LibraryHierarchyType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Library Hierarchy.
+
+      Attributes:
+
+      objectId:         Inherited from ClassificationHeader. The identifier of
+                        the Library Hierarchy.
+      disciplineRefs:   A list of references to Disciplines.
+
+      Sub-elements:
+
+      OwningLibrary:    Identifies the owning Library.
+      </xsd:documentation> 
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ClassificationHeaderBase">
+        <xsd:choice minOccurs="0">
+          <xsd:element name="OwningLibrary" type="plm:ClassLibraryIdentifierType" />
+        </xsd:choice>
+        <xsd:attribute name="disciplineRefs" type="plm:uriReferenceListType" use="optional" plm:refType="plm:Discipline" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="LibraryHierarchy" type="plm:LibraryHierarchyType" substitutionGroup="plm:ClassificationHeader" />
+  <!-- -->
+  <xsd:complexType name="LibraryMemberType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Library Member.
+
+      Attributes:
+
+      objectId:         The identifier of the Library Member.
+      objectRef:        References the object in the product structure.
+      classificationMemberRef: References the Classification Member.
+      published:        Whether the Library Member is published.
+      replacedByRef:    References the Library Member that replaces this
+                        Library Member.
+
+      Sub-elements:
+
+      OwningNode:       Identifies the owning Library Node in the Library
+                        Hierarchy.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ManagedBase">
+        <xsd:choice>
+          <xsd:element name="OwningNode" type="plm:ClassLibraryIdentifierType" />
+        </xsd:choice>
+        <xsd:attribute name="objectId" type="xsd:string" use="required" />
+        <xsd:attribute name="objectRef" type="plm:anyURIType" use="optional" />
+        <xsd:attribute name="classificationMemberRef" type="plm:anyURIType" use="optional" plm:refType="plm:ClassificationMember" />
+        <xsd:attribute name="published" type="xsd:boolean" default="false" />
+        <xsd:attribute name="replacedByRef" type="plm:anyURIType" use="optional" plm:refType="plm:LibraryMember" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="LibraryMember" type="plm:LibraryMemberType" substitutionGroup="plm:Managed" />
+  <!-- -->
+  <!-- Library Specification -->
+  <!-- -->
+  <xsd:complexType name="SpecificationType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Library Specification.
+
+      Attributes:
+
+      objectId:         Inherited from ClassificationHeader. The identifier of
+                        the Library Specification.
+      disciplineRef:    References the Discipline.
+      version:          The version of the Library Specification.
+      administratorRefs: A list of references to administrative Users.
+      childRulesOverride: Whether child rules referencing this Library
+                        Specification override or extend parent rules.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ClassificationHeaderBase">
+        <xsd:attribute name="disciplineRef" type="plm:anyURIType" use="optional" plm:refType="plm:Discipline" />
+        <xsd:attribute name="version" type="xsd:string" use="optional" />
+        <xsd:attribute name="administratorRefs" type="plm:uriReferenceListType" use="optional" plm:refType="plm:Owner" />
+        <xsd:attribute name="childRulesOverride" type="xsd:boolean" default="false" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Specification" type="plm:SpecificationType" substitutionGroup="plm:ClassificationHeader" />
+  <!-- -->
+  <xsd:complexType name="SpecificationHeaderBase" abstract="true">
+    <xsd:annotation>
+      <xsd:documentation>
+      Specification Header.
+
+      Attributes:
+
+      name:             Inherited from AttribOwner.
+      nameRef:          Inherited from AttribOwner. References a multiple
+                        language version of name.
+      descriptionTextRef: Inherited from AttribOwner. References a multiple
+                        language version of description.
+      objectId:         The identifier of the derived object.
+      active:           Whether the Specification Header is active in the
+                        Specification.
+
+      Sub-elements:
+
+      Description:      Inherited from AttribOwner.
+      OwningSpecification: Identifies the owning Specification.
+      </xsd:documentation> 
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:choice minOccurs="0">
+          <xsd:element name="OwningSpecification" type="plm:ClassLibraryIdentifierType" />
+        </xsd:choice>
+        <xsd:attribute name="objectId" type="xsd:string" use="required" />
+        <xsd:attribute name="active" type="xsd:boolean" default="false" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="SpecificationHeader" type="plm:SpecificationHeaderBase" substitutionGroup="plm:AttribOwner" />
+  <!-- -->
+  <xsd:complexType name="SpecificationRuleSetType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Specification Rule Set.
+
+      Attributes:
+
+      objectId:         Inherited from SpecificationHeader. The identifier of
+                        the Specification Rule Set.
+      </xsd:documentation> 
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:SpecificationHeaderBase" />
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="SpecificationRuleSet" type="plm:SpecificationRuleSetType" substitutionGroup="plm:SpecificationHeader" />
+  <!-- -->
+  <xsd:simpleType name="SpecRuleEnum">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="specification" />
+      <xsd:enumeration value="action" />
+      <xsd:enumeration value="interfaceConstraint" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:complexType name="SpecConditionIsType">
+    <xsd:annotation>
+      <xsd:documentation>
+      SpecConditionIs returns the truth of the operation attribute operating on
+      the name attribute on the containing SpecCondition and the value
+      attribute.
+
+      Attributes:
+
+      operation:        The type of operation.
+      value:            The second operand.
+      inputValue:       Whether the input value for the target condition is
+                        obtained from the input value to the source condition.
+      </xsd:documentation> 
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:LogicalExpressionBase">
+        <xsd:attribute name="operation" type="plm:LogicalOperationType" default="eq" />
+        <xsd:attribute name="value" type="xsd:string" use="optional" />
+        <xsd:attribute name="inputValue" type="xsd:boolean" default="false" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="SpecConditionIs" type="plm:SpecConditionIsType" substitutionGroup="plm:LogicalExpression" />
+  <!-- -->
+  <xsd:complexType name="SpecConditionType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Specification Condition.
+
+      Sub-elements:
+
+      LogicalExpression: The expression specifying the truth of the condition.
+      </xsd:documentation> 
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:sequence>
+          <xsd:element ref="plm:LogicalExpression" minOccurs="0" />
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:complexType name="SpecificationRuleType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Specification Rule.
+
+      Attributes:
+
+      objectId:         Inherited from SpecificationHeader. The identifier of
+                        the Specification Rule.
+      ruleType:         The type of Specification Rule.
+
+      Sub-elements:
+
+      OwningSet:        Identifies the Set in which the Specification Rule lies.
+      AssignedNode:     Identifies the assigned Library Node.
+      SourceCondition:  The condition under which the Specification Rule
+                        applies.
+      TargetCondition:  The condition imposed by the Specification Rule.
+      </xsd:documentation> 
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:SpecificationHeaderBase">
+        <xsd:sequence>
+          <xsd:element name="OwningSet" type="plm:ClassLibraryIdentifierType" minOccurs="0" />
+          <xsd:element name="AssignedNode" type="plm:ClassLibraryIdentifierType" />
+          <xsd:element name="SourceCondition" type="plm:SpecConditionType" minOccurs="0" />
+          <xsd:element name="TargetCondition" type="plm:SpecConditionType" />
+        </xsd:sequence>
+        <xsd:attribute name="ruleType" type="plm:SpecRuleEnum" default="specification" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="SpecificationRule" type="plm:SpecificationRuleType" substitutionGroup="plm:SpecificationHeader" />
+  <!-- -->
+  <xsd:simpleType name="SpecActionSetEnum">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="postPlacement" />
+      <xsd:enumeration value="connectionCompatibility" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:complexType name="SpecificationActionSetType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Specification Action Set.
+
+      Attributes:
+
+      objectId:         Inherited from SpecificationHeader. The identifier of
+                        the Specification Action Set.
+      setType:          The type of Specification Action Set.
+      actionRefs:       A list of references to the Specification Actions in the
+                        Set.
+      dataRefs:         A list of references to Specification Application Data
+                        elements.
+
+      Sub-elements:
+
+      Source:           Identifies the Library Node that invokes the
+                        Specification Action Set.
+      Target:           When setType is connectionCompatibility, Target
+                        identifies the other Library Node involved.
+      </xsd:documentation> 
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:SpecificationHeaderBase">
+        <xsd:sequence>
+          <xsd:element name="Source" type="plm:ClassLibraryIdentifierType" />
+          <xsd:element name="Target" type="plm:ClassLibraryIdentifierType" minOccurs="0" />
+        </xsd:sequence>
+        <xsd:attribute name="setType" type="plm:SpecActionSetEnum" default="postPlacement" />
+        <xsd:attribute name="actionRefs" type="plm:uriReferenceListType" use="optional" plm:refType="plm:SpecificationAction" />
+        <xsd:attribute name="dataRefs" type="plm:uriReferenceListType" use="optional" plm:refType="plm:SpecAppData" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="SpecificationActionSet" type="plm:SpecificationActionSetType" substitutionGroup="plm:SpecificationHeader" />
+  <!-- -->
+  <xsd:simpleType name="SpecActionEnum">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="add" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:complexType name="SpecificationActionType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Specification Action.
+
+      Attributes:
+
+      objectId:         Inherited from SpecificationHeader. The identifier of
+                        the Specification Action.
+      actionType:       The action performed by the Specification Action.
+      quantity:         The number of components involved in the Specification
+                        Action.
+      ruleRefs:         A list of references to Specification Rules that select
+                        suitable components. 
+      </xsd:documentation> 
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:SpecificationHeaderBase">
+        <xsd:attribute name="actionType" type="plm:SpecActionEnum" default="add" />
+        <xsd:attribute name="quantity" type="xsd:integer" default="1" />
+        <xsd:attribute name="ruleRefs" type="plm:uriReferenceListType" use="optional" plm:refType="plm:SpecificationRule" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="SpecificationAction" type="plm:SpecificationActionType" substitutionGroup="plm:SpecificationHeader" />
+  <!-- -->
+  <xsd:complexType name="SpecAppDataType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Specification Application Data.
+
+      Attributes:
+
+      objectId:         Inherited from SpecificationHeader. The identifier of
+                        the Specification Application Data.
+      global:           Whether the Specification Application Data element is
+                        global.
+      usage:            What the Specification Application Data element is used
+                        for.
+
+      Sub-elements:
+
+      DataItem:         Name / value pairs that constitute the Specification
+                        Application Data element.
+      </xsd:documentation> 
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:SpecificationHeaderBase">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+          <xsd:element name="DataItem" type="plm:UserDataElementType" />
+        </xsd:choice>
+        <xsd:attribute name="global" type="xsd:boolean" default="false" />
+        <xsd:attribute name="usage" type="xsd:string" use="optional" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="SpecAppData" type="plm:SpecAppDataType" substitutionGroup="plm:SpecificationHeader" />
+</xsd:schema>

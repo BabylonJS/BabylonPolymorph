@@ -1,0 +1,468 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Fichiers sources">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Fichiers de ressources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\JTOpenToolkit">
+      <UniqueIdentifier>{7879c6fb-bfb7-4b8b-80d0-58515bd1b3b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\JTOpenToolkit\jttk">
+      <UniqueIdentifier>{1b479ae0-de4e-42d2-b011-f238f5a3e7e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\JTOpenToolkit\plmxml">
+      <UniqueIdentifier>{d9aacd75-d3f7-4ac0-803f-2d62dc6ec2fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\JTOpenToolkit\plmxml\extensions">
+      <UniqueIdentifier>{3917bf86-b7d5-482b-95f5-8c9fea9db62a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\JTSDK">
+      <UniqueIdentifier>{10584bdc-fbd6-408b-9bf0-836b0352c56f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\JTSDK">
+      <UniqueIdentifier>{b1808732-0292-4f4e-98c6-2a462252da95}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkAnalyticCurve.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkAttrib.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkBoxSet.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkBrep.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkBundle.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkCADExporter.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkCADImporter.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkCae.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkClientData.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkCoedge.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkConfig.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkCrosshatch.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkCurve.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkCylinderSet.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkEdge.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkEntity.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkEntityFactory.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkEntityList.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkEntityStack.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkEntityTable.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkFace.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkFault.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkFeature.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkGeometry.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkGuid.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkHarness.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkHierarchy.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkLayers.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkLineStripSet.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkLoop.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkMotion.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkMotionExporter.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkNullShape.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkNURBSCurve.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkNURBSSurface.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkParser.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkPartTable.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkPMI.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkPMIEnums.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkPMIGlyph.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkPMIUtilities.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkPoint.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkPointSet.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkPolygonSet.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkPrim.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkProperty.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkPropertyFilter.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkPyramidSet.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkReference.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkReferenceMap.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkReferenceSets.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkRegion.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkSegment.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkShaderParam.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkShape.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkShell.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkSphereSet.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkStack.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkStandard.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkString.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkSurface.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkSysMonitor.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkTessAssociation.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkTessParams.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkTopology.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkTraverser.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkTriPrismSet.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkTriStripSet.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkUVCurve.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkVertex.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkVertexPool.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkWire.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkWrep.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkWrepWire.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTAttrib.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTBCurve.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTBlendSurf.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTBody.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTBSurf.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTCircle.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTCone.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTCurve.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTCylinder.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTEdge.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTEllipse.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTEntity.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTEntityFactory.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTFacade.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTFace.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTFaults.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTFin.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTGeometry.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTICurve.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTLine.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTLoop.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTMesh.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTMonikers.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTOffset.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTPlane.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTPoint.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTPolyline.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTRegion.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTSharingManager.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTShell.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTSPCurve.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTSphere.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTSpoke.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTSpun.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTSurface.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTSwept.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTTopology.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTTorus.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXTVertex.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\JtTk\JtkXYZCurve.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\jttk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\plmxml\plmxml.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\plmxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\plmxml\plmxml_allocator.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\plmxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\plmxml\plmxml_annotation60.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\plmxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\plmxml\plmxml_cl60.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\plmxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\plmxml\plmxml_classification60.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\plmxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\plmxml\plmxml_cm60.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\plmxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\plmxml\plmxml_constraint60.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\plmxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\plmxml\plmxml_delta60.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\plmxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\plmxml\plmxml_deprecated.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\plmxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\plmxml\plmxml_motion60.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\plmxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\plmxml\plmxml_mpm60.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\plmxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\plmxml\plmxml_mro60.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\plmxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\plmxml\plmxml_pdm60.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\plmxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\plmxml\plmxml_quality60.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\plmxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\plmxml\plmxml_scheduling60.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\plmxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\plmxml\plmxml_ship60.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\plmxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\plmxml\plmxml60.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\plmxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\plmxml\extensions\plmxml_business60.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\plmxml\extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\plmxml\extensions\plmxml_fd60.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\plmxml\extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\plmxml\extensions\plmxml_mechatronics60.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\plmxml\extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\plmxml\extensions\plmxml_ngp60.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\plmxml\extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\plmxml\extensions\plmxml_routelist60.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\plmxml\extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\plmxml\extensions\plmxml_ugs60.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\plmxml\extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JTOpenToolkit\10_5\include\plmxml\extensions\plmxml_vr60.h">
+      <Filter>Fichiers d%27en-tête\JTOpenToolkit\plmxml\extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\JTSDK\IConsumer.h">
+      <Filter>Fichiers d%27en-tête\JTSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\JTSDK\IErrorHandler.h">
+      <Filter>Fichiers d%27en-tête\JTSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\JTSDK\ILoader.h">
+      <Filter>Fichiers d%27en-tête\JTSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\JTSDK\Loader.h">
+      <Filter>Fichiers d%27en-tête\JTSDK</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\JTSDK\Loader.cpp">
+      <Filter>Fichiers sources\JTSDK</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

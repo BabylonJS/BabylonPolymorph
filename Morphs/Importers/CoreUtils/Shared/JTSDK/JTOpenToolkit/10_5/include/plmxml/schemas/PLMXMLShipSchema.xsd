@@ -1,0 +1,1036 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2018 Siemens Product Lifecycle Management Software Inc. All Rights Reserved.
+This software and related documentation are proprietary to 
+Siemens Product Lifecycle Management Software Inc.
+-->
+<xsd:schema targetNamespace="http://www.plmxml.org/Schemas/PLMXMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:plm="http://www.plmxml.org/Schemas/PLMXMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" xml:lang="en">
+  <xsd:include schemaLocation="PLMXMLSchema.xsd" />
+  <xsd:annotation>
+    <xsd:documentation source="http://www.plmxml.org/Schemas/PLMXMLSchema/History">
+      <plm:SchemaChange author="howardmu" date="2018-04-18" version="7.0.5.504">
+        <plm:Description>
+        Initial version
+        </plm:Description>
+      </plm:SchemaChange>
+    </xsd:documentation>
+    <xsd:documentation>
+
+                                PLM XML Ship Schema
+
+    </xsd:documentation>
+    <xsd:appinfo source="http://www.plmxml.org/Schemas/PLMXMLShipSchema">
+      <plm:SchemaInfo name="PLMXMLShipSchema.xsd" date="2018-04-18" version="6.0" status="development" />
+    </xsd:appinfo>
+  </xsd:annotation>
+  <!-- Ship -->
+  <xsd:complexType name="ShipType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Ship
+
+      Sub-elements:
+
+      RepresentationEntity: Inherited from ProductRevisionView. Represents the
+                        format independent geometry for the plates, stiffeners,
+                        edge reinforcements, hull form, superstructure,
+                        reference surfaces et cetera.
+      Representation:   Inherited from ProductRevisionView. Represents a model
+                        in a particular format containing the geometry for the
+                        plates, stiffeners, edge reinforcements, hull form,
+                        superstructure, reference surfaces et cetera. May
+                        consist of a union of CompoundRep sub-elements, each
+                        representing a single piece of geometry.
+      ShipData:         General information about the ship.
+      ShipStructure:    Information about the structure of the ship.
+      ClassData:        Information about the class of the ship.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ProductRevisionViewType">
+        <xsd:sequence>
+          <xsd:element name="ShipData" type="plm:ShipDataType" minOccurs="0" />
+          <xsd:element name="ShipStructure" type="plm:ShipStructureType" minOccurs="0" />
+          <xsd:element name="ClassData" type="plm:ClassDataType" minOccurs="0" />
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Ship" type="plm:ShipType" substitutionGroup="plm:ProductRevisionView" />
+  <!-- ShipData -->
+  <xsd:complexType name="ShipDataType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Ship Data
+
+      Sub-elements:
+
+      Identification:   The identification of the ship.
+      OwnerData:        Information about the owner of the ship.
+      ShipyardData:     Information about the shipyard where the ship was built.
+      Grid:             A grid of planes for the general arrangement of the
+                        ship.
+      MainDimensions:   The main dimensions of the ship.
+      ReferenceGeometry: The key and reference geometry of the ship.
+      StockDB:          The stock materials used for building the ship.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:sequence>
+          <xsd:element name="Identification" type="plm:IdentificationType" minOccurs="0" />
+          <xsd:element name="OwnerData" type="plm:OwnerDataType" minOccurs="0" />
+          <xsd:element name="ShipyardData" type="plm:ShipyardDataType" minOccurs="0" />
+          <xsd:element name="Grid" type="plm:GridType" minOccurs="0" />
+          <xsd:element name="MainDimensions" type="plm:MainDimensionsType" minOccurs="0" />
+          <xsd:element name="ReferenceGeometry" type="plm:ReferenceGeometryType" minOccurs="0" />
+          <xsd:element name="StockDB" type="plm:StockDBType" minOccurs="0" />
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- Identification -->
+  <xsd:complexType name="IdentificationType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Identification
+
+      Attributes:
+
+      name:             Inherited from AttribOwner. The name of the
+                        Identification.
+      vessel:           The type of vessel.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:attribute name="vessel" type="plm:VesselEnum" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- Vessel -->
+  <xsd:simpleType name="VesselEnum">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="barge" />
+      <xsd:enumeration value="bargeForDeckLoading" />
+      <xsd:enumeration value="bargeForLiquefiedGas" />
+      <xsd:enumeration value="bargeForOil" />
+      <xsd:enumeration value="bargePontoon" />
+      <xsd:enumeration value="bulkCarrier" />
+      <xsd:enumeration value="carCarrier" />
+      <xsd:enumeration value="carFerry" />
+      <xsd:enumeration value="cargoShipCarryingPassengers" />
+      <xsd:enumeration value="chemicalTanker" />
+      <xsd:enumeration value="chemicalTankerType1" />
+      <xsd:enumeration value="containerCarrier" />
+      <xsd:enumeration value="cruiseLiner" />
+      <xsd:enumeration value="dryCargoVessel" />
+      <xsd:enumeration value="ferry" />
+      <xsd:enumeration value="gasCarrier" />
+      <xsd:enumeration value="generalCargoCarrier" />
+      <xsd:enumeration value="highspeedcraftCargo" />
+      <xsd:enumeration value="highspeedcraftPassenger" />
+      <xsd:enumeration value="hydrofoil" />
+      <xsd:enumeration value="liquefiedGasTanker" />
+      <xsd:enumeration value="lNGCarrier" />
+      <xsd:enumeration value="lPGCarrier" />
+      <xsd:enumeration value="oilTanker" />
+      <xsd:enumeration value="oreCarrier" />
+      <xsd:enumeration value="passengerVessel" />
+      <xsd:enumeration value="productTanker" />
+      <xsd:enumeration value="refrigeratedCargoCarryingShip" />
+      <xsd:enumeration value="roroVessel" />
+      <xsd:enumeration value="tankerForRefrigeratedFruitJuice" />
+      <xsd:enumeration value="craneVessel" />
+      <xsd:enumeration value="dredger" />
+      <xsd:enumeration value="drillingVessel" />
+      <xsd:enumeration value="fireFighter" />
+      <xsd:enumeration value="fishingVessel" />
+      <xsd:enumeration value="floatingDock" />
+      <xsd:enumeration value="floatingHotel" />
+      <xsd:enumeration value="FPGO" />
+      <xsd:enumeration value="FPSO" />
+      <xsd:enumeration value="iceBreaker" />
+      <xsd:enumeration value="offshoreSupplyVessel" />
+      <xsd:enumeration value="oilProductionAndStorageVessel" />
+      <xsd:enumeration value="oilProductionVessel" />
+      <xsd:enumeration value="oilStorageVessel" />
+      <xsd:enumeration value="pilotBoat" />
+      <xsd:enumeration value="pipeLayingVessel" />
+      <xsd:enumeration value="pusher" />
+      <xsd:enumeration value="reefer" />
+      <xsd:enumeration value="sealer" />
+      <xsd:enumeration value="shuttleTanker" />
+      <xsd:enumeration value="sternTrawler" />
+      <xsd:enumeration value="supplyVessel" />
+      <xsd:enumeration value="tug" />
+      <xsd:enumeration value="wellStimulationVessel" />
+      <xsd:enumeration value="aircraftCarrier" />
+      <xsd:enumeration value="auxiliaryOiler" />
+      <xsd:enumeration value="corvette" />
+      <xsd:enumeration value="cruiser" />
+      <xsd:enumeration value="destroyer" />
+      <xsd:enumeration value="fleetAuxiliaryVessel" />
+      <xsd:enumeration value="frigate" />
+      <xsd:enumeration value="landingPlatformDock" />
+      <xsd:enumeration value="landingPlatformHelicopter" />
+      <xsd:enumeration value="mineWarfareShip" />
+      <xsd:enumeration value="patrolForceVessel" />
+      <xsd:enumeration value="serviceCraft" />
+      <xsd:enumeration value="submarine" />
+      <xsd:enumeration value="userDefined" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- OwnerData -->
+  <xsd:complexType name="OwnerDataType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Owner Data
+
+      Sub-elements:
+
+      OwningCompany:  The company that owns the ship.
+      OperatingCompany: The company that operates or manages the ship.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:sequence>
+          <xsd:element name="OwningCompany" type="plm:CompanyType" minOccurs="0" />
+          <xsd:element name="OperatingCompany" type="plm:CompanyType" minOccurs="0" />
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- Company -->
+  <xsd:complexType name="CompanyType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Company
+
+      Attributes:
+
+      name:             Inherited from Site. The name of the site.
+      ownerRef:         Inherited from Site. References an existing Organisation
+                        for the Company. The name attribute of the Organisation
+                        represents the name of the Company.
+      addressRef:       Inherited from Site. References an existing Address for
+                        the Company.
+      contactRef:       References an existing Person for the Company. The name
+                        attribute of the Person represents the contact for the
+                        Company.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:SiteType">
+        <xsd:attribute name="contactRef" type="plm:anyURIType" plm:refType="plm:Person" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ShipyardData -->
+  <xsd:complexType name="ShipyardDataType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Shipyard Data
+
+      Attributes:
+
+      shipName:         The name of the ship.
+      hullNumber:       The number of the hull of the ship.
+      designDate:       The date that the ship was designed.
+      buildDate:        The date that the ship was built.
+
+      Sub-elements:
+
+      DesignAuthority:  The company that approves the design of the ship.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:sequence>
+          <xsd:element name="DesignAuthority" type="plm:CompanyType" minOccurs="0" />
+        </xsd:sequence>
+        <xsd:attribute name="shipName" type="xsd:string" />
+        <xsd:attribute name="hullNumber" type="xsd:string" />
+        <xsd:attribute name="designDate" type="xsd:date" />
+        <xsd:attribute name="buildDate" type="xsd:date" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- Grid -->
+  <xsd:complexType name="GridType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Grid
+
+      Sub-elements:
+
+      Transverse:       Transverse planes of existing PlaneType complex type.
+      Longitudinal:     Longitudinal planes of existing PlaneType complex type.
+      Deck:             Deck planes of existing PlaneType complex type.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:sequence>
+          <xsd:element name="Transverse" type="plm:PlaneType" minOccurs="0" maxOccurs="unbounded" />
+          <xsd:element name="Longitudinal" type="plm:PlaneType" minOccurs="0" maxOccurs="unbounded" />
+          <xsd:element name="Deck" type="plm:PlaneType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- MainDimensions -->
+  <xsd:complexType name="MainDimensionsType">
+    <xsd:annotation>
+      <xsd:documentation>
+      The main dimensions of the ship in metres.
+
+      Attributes:
+
+      lengthOverall:    The overall length of the ship.
+      mouldedBreadth:   The moulded breadth of the ship.
+      mouldedDepth:     The moulded depth of the ship.
+      designDraft:      The design draught of the ship.
+      aftToFore:        Whether the Main Dimensions are measured aft-to-fore. If
+                        true, they are measured aft-to-fore. If false, they are
+                        measured fore-to-aft.
+      baseLine:         The base line of the ship.
+      waterLine:        The water line of the ship
+      aftPerpendicular: The aft perpendicular distance of the ship.
+      forwardPerpendicular: The forward perpendicular distance of the ship.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:attribute name="lengthOverall" type="xsd:double" />
+        <xsd:attribute name="mouldedBreadth" type="xsd:double" />
+        <xsd:attribute name="mouldedDepth" type="xsd:double" />
+        <xsd:attribute name="designDraft" type="xsd:double" />
+        <xsd:attribute name="aftToFore" type="xsd:boolean" />
+        <xsd:attribute name="baseLine" type="xsd:double" />
+        <xsd:attribute name="waterLine" type="xsd:double" />
+        <xsd:attribute name="aftPerpendicular" type="xsd:double" />
+        <xsd:attribute name="forwardPerpendicular" type="xsd:double" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ReferenceGeometry -->
+  <!-- GeometryBase complex type already exists. -->
+  <xsd:complexType name="ReferenceGeometryType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Reference Geometry
+
+      Sub-elements:
+
+      HullForm:         The surfaces of the hull.
+      Superstructure:   The surfaces of the superstructure.
+      ReferenceSurface: Reference surfaces.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:sequence>
+          <xsd:element name="HullForm" type="plm:HullFormType" minOccurs="0" />
+          <xsd:element name="Superstructure" type="plm:SuperstructureType" minOccurs="0" />
+          <xsd:element name="ReferenceSurface" type="plm:GDEReferenceType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- HullForm -->
+  <xsd:complexType name="HullFormType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Hull Form
+
+      A collection of trimmed surfaces that represent the hull.
+
+      Sub-elements:
+
+      SurfaceReference: References the surface geometry for the Hull Form.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:sequence>
+          <xsd:element name="SurfaceReference" type="plm:GDEReferenceType" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- Superstructure -->
+  <xsd:complexType name="SuperstructureType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Superstructure
+
+      A collection of trimmed surfaces that represent the superstructure.
+
+      Sub-elements:
+
+      SurfaceReference: References the surface geometry for the Superstructure.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:sequence>
+          <xsd:element name="SurfaceReference" type="plm:GDEReferenceType" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- StockDB -->
+  <xsd:complexType name="StockDBType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Stock DB
+
+      Sub-elements:
+
+      Stock:            The stock specifications.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:sequence>
+          <xsd:element name="Stock" type="plm:StockType" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- Stock -->
+  <xsd:complexType name="StockType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Stock
+
+      Attributes:
+
+      name:             Inherited from AttribOwner. The name of the Stock.
+      stockType:        The type of the Stock.
+
+      Sub-elements:
+
+      Parameter:        The parameters that specify the Stock.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:sequence>
+          <xsd:element name="Parameter" type="plm:UserDataElementType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="stockType" type="xsd:string" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ShipStructure -->
+  <xsd:complexType name="ShipStructureType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Ship Structure
+
+      Sub-elements:
+
+      StructureObject:  The objects comprising the structure of the ship.
+      Compartment:      The compartments within the ship.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:sequence>
+          <xsd:element name="StructureObject" type="plm:StructureObjectType" minOccurs="0" maxOccurs="unbounded" />
+          <xsd:element name="Compartment" type="plm:CompartmentType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- StructureObject -->
+  <xsd:complexType name="StructureObjectType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Structure Object
+
+      Attributes:
+
+      name:             Inherited from ProductRevisionView. The name of the
+                        Structure Object.
+      structureObjectType: The type of the Structure Object.
+
+      Sub-elements:
+
+      PlateSystem:      The Plate Systems comprising the Structure Object.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ProductRevisionViewType">
+        <xsd:sequence>
+          <xsd:element name="PlateSystem" type="plm:PlateSystemType" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="structureObjectType" type="plm:StructureObjectEnum" use="required" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- PlateSystem -->
+  <xsd:complexType name="PlateSystemType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Plate System
+
+      Attributes:
+
+      name:             Inherited from ProductRevisionView. The name of the
+                        Plate System.
+
+      Sub-elements:
+
+      Loop:             The Loops of the Plate System.
+      Edge:             The Edges of the Plate System.
+      StiffenerSystem:  Any Stiffener Systems of the Plate System.
+      EdgeReinforcementSystem: Any Edge Reinforcement Systems of the Plate
+                        System.
+      PlateSubsystem:   The Plate Subsystems comprising the Plate System.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ProductRevisionViewType">
+        <xsd:sequence>
+          <xsd:element name="Loop" type="plm:PlateLoopType" maxOccurs="unbounded" />
+          <xsd:element name="Edge" type="plm:PlateEdgeType" maxOccurs="unbounded" />
+          <xsd:element name="StiffenerSystem" type="plm:StiffenerSystemType" minOccurs="0" maxOccurs="unbounded" />
+          <xsd:element name="EdgeReinforcementSystem" type="plm:EdgeReinforcementSystemType" minOccurs="0" maxOccurs="unbounded" />
+          <xsd:element name="PlateSubsystem" type="plm:PlateSubsystemType" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- Loop -->
+  <xsd:complexType name="PlateLoopType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Loop
+
+      Attributes:
+
+      edgeRefs:         References the Edges of the Loop.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:attribute name="edgeRefs" type="plm:uriReferenceListType" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- Edge -->
+  <xsd:complexType name="PlateEdgeType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Edge
+
+      edgeType:         The type of the Edge.
+      adjacentPlateRefs: References the Plates or sets of Plates adjacent to the
+                        Edge.
+      reinforcementRef: References the Edge Reinforcement or set of Edge
+                        Reinforcements that reinforce the Edge.
+
+      Sub-elements:
+
+      CurveReference:   References the RepresentationEntity under the Plate
+                        System representing the format independent curve
+                        geometry for the Edge.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:sequence>
+          <!--<xsd:element name="reinforcement" minOccurs="0" />-->
+          <xsd:element name="CurveReference" type="plm:GDEReferenceType" minOccurs="0" />
+        </xsd:sequence>
+        <xsd:attribute name="edgeType" type="plm:EdgeEnum" use="required" />
+        <xsd:attribute name="adjacentPlateRefs" type="plm:uriReferenceListType" plm:refType="plm:Plate plm:PlateSubsystem" />
+        <xsd:attribute name="reinforcementRef" type="plm:anyURIType" plm:refType="plm:EdgeReinforcement plm:EdgeReinforcementSubsystemType" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- Edge -->
+  <xsd:simpleType name="EdgeEnum">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="perimeter" />
+      <xsd:enumeration value="cutout" />
+      <xsd:enumeration value="strakingSeam" />
+      <xsd:enumeration value="erectionSeam" />
+      <xsd:enumeration value="scantlingSeam" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- StiffenerSystem -->
+  <xsd:complexType name="StiffenerSystemType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Stiffener System
+
+      Attributes:
+
+      name:             Inherited from ProductRevisionView. The name of the
+                        Stiffener System.
+
+      Sub-elements:
+
+      StiffenerSubsystem: The Stiffener Subsystems comprising the Stiffener
+                        System.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ProductRevisionViewType">
+        <xsd:sequence>
+          <xsd:element name="StiffenerSubsystem" type="plm:StiffenerSubsystemType" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- StiffenerSubsystem -->
+  <xsd:complexType name="StiffenerSubsystemType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Stiffener Subsystem
+
+      Attributes:
+
+      name:             Inherited from ProductRevisionView. The name of the
+                        Stiffener Subsystem.
+      propertyRefs:     Inherited from ProductRevisionView. Can be used to
+                        reference a MaterialSpecification representing the
+                        material and a MaterialThickness representing the
+                        thickness.
+      instanceRefs:     Inherited from ProductRevisionView. Can reference
+                        ProductInstances of widely re-used parts such as
+                        brackets.
+      stockRef:         References the stock specification. Used in preference
+                        to propertyRefs.
+      mouldedSide:      Whether the Stiffener Subsystem lies on the moulded or
+                        the reverse side of the Plate System. If true, it lies
+                        on the moulded side. If false, it lies on the reverse
+                        side.
+      startToEnd:       If true, the Stiffener Subsystem is defined from start
+                        to end. If false, it is defined from end to start.
+
+      Sub-elements:
+
+      Stiffener:        The Stiffeners comprising the Stiffener Subsystem.
+      MountingAngle:    The direction of the web of the Stiffener Subsystem.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ProductRevisionViewType">
+        <xsd:sequence>
+          <xsd:element name="Stiffener" type="plm:StiffenerType" maxOccurs="unbounded" />
+          <xsd:element name="MountingAngle" type="plm:VectorFieldType" minOccurs="2" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="stockRef" type="plm:anyURIType" plm:refType="plm:Stock" />
+        <xsd:attribute name="mouldedSide" type="xsd:boolean" use="required" />
+        <xsd:attribute name="startToEnd" type="xsd:boolean" use="required" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- Stiffener -->
+  <xsd:complexType name="StiffenerType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Stiffener
+
+      Attributes:
+
+      name:             Inherited from ProductRevisionView. The name of the
+                        Stiffener.
+
+      Sub-elements:
+
+      Start:            The type of termination at the start of the Stiffener.
+      End:              The type of termination at the end of the Stiffener.
+      CurveReference:   References the RepresentationEntity under the Ship
+                        representing the format independent landing curve
+                        geometry for the Stiffener.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ProductRevisionViewType">
+        <xsd:sequence>
+          <xsd:element name="Start" type="plm:StiffenerTerminationType" />
+          <xsd:element name="End" type="plm:StiffenerTerminationType" />
+          <xsd:element name="CurveReference" type="plm:GDEReferenceType" minOccurs="0" />
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- StiffenerTermination -->
+  <xsd:complexType name="StiffenerTerminationType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Stiffener Termination
+
+      Attributes:
+
+      name:             Inherited from AttribOwner. The name of the Stiffener
+                        Termination.
+      terminationType:  The type of the Stiffener Termination.
+      adjacentRef:      References the object that the Stiffener Termination
+                        lies adjacent to.
+
+      Sub-elements:
+
+      Endcut:           The type of endcut of the Stiffener Termination.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:sequence>
+          <xsd:element name="Endcut" type="plm:ProfileEndcutType" minOccurs="0" maxOccurs="1" />
+        </xsd:sequence>
+        <xsd:attribute name="terminationType" type="plm:StiffenerTerminationEnum" />
+        <xsd:attribute name="adjacentRef" type="plm:anyURIType" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ProfileEndcutType -->
+  <xsd:complexType name="ProfileEndcutType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Profile Endcut
+
+      Attributes:
+
+      limitType:        The type of limit of the Profile Endcut.
+      connectionType:   The type of connection of the Profile Endcut.
+      flangeSection:    The flange section of the Profile Endcut.
+      webSection:       The web section of the Profile Endcut.
+      toeSection:       The toe section of the Profile Endcut.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:attribute name="limitType" type="plm:ProfileEndcutLimitEnum" />
+        <xsd:attribute name="connectionType" type="plm:ProfileEndcutConnectionEnum" />
+        <xsd:attribute name="flangeSection" type="xsd:string" />
+        <xsd:attribute name="webSection" type="xsd:string" />
+        <xsd:attribute name="toeSection" type="xsd:string" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ProfileEndcutLimit -->
+  <xsd:simpleType name="ProfileEndcutLimitEnum">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="squareCut" />
+      <xsd:enumeration value="neatTrim" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ProfileEndcutConnection -->
+  <xsd:simpleType name="ProfileEndcutConnectionEnum">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="none" />
+      <xsd:enumeration value="connected" />
+      <xsd:enumeration value="flangeFree" />
+      <xsd:enumeration value="sniped" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- StiffenerTermination -->
+  <xsd:simpleType name="StiffenerTerminationEnum">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="tee" />
+      <xsd:enumeration value="stiffenerStart" />
+      <xsd:enumeration value="stiffenerEnd" />
+      <xsd:enumeration value="plate" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- EdgeReinforcementSystem -->
+  <xsd:complexType name="EdgeReinforcementSystemType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Edge Reinforcement System
+
+      Attributes:
+
+      name:             Inherited from ProductRevisionView. The name of the Edge
+                        Reinforcement System.
+
+      Sub-elements:
+
+      EdgeReinforcementSubsystem: The Edge Reinforcement Subsystems comprising
+                        the Edge Reinforcement System.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ProductRevisionViewType">
+        <xsd:sequence>
+          <xsd:element name="EdgeReinforcementSubsystem" type="plm:EdgeReinforcementSubsystemType" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- EdgeReinforcementSubsystem -->
+  <xsd:complexType name="EdgeReinforcementSubsystemType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Edge Reinforcement Subsystem
+
+      Attributes:
+
+      name:             Inherited from ProductRevisionView. The name of the Edge
+                        Reinforcement Subsystem.
+      instanceRefs:     Inherited from ProductRevisionView. Can reference
+                        ProductInstances of widely re-used parts such as
+                        brackets.
+      propertyRefs:     Inherited from ProductRevisionView. Can be used to
+                        reference a MaterialSpecification representing the
+                        material and a MaterialThickness representing the
+                        thickness.
+      stockRef:         References the stock specification. Used in preference
+                        to propertyRefs.
+
+      Sub-elements:
+
+      EdgeReinforcement: The Edge Reinforcements comprising the Edge
+                        Reinforcement Subsystem.
+      MountingAngle:    The direction of the web of the Edge Reinforcement
+                        Subsystem.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ProductRevisionViewType">
+        <xsd:sequence>
+          <xsd:element name="EdgeReinforcement" type="plm:EdgeReinforcementType" maxOccurs="unbounded" />
+          <xsd:element name="MountingAngle" type="plm:VectorFieldType" minOccurs="2" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="stockRef" type="plm:anyURIType" plm:refType="plm:Stock" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- EdgeReinforcement -->
+  <xsd:complexType name="EdgeReinforcementType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Edge Reinforcement
+
+      Attributes:
+
+      name:             Inherited from ProductRevisionView. The name of the Edge
+                        Reinforcement.
+
+      Sub-elements:
+
+      CurveReference:   References the RepresentationEntity under the Ship
+                        representing the format independent landing curve
+                        geometry for the Edge Reinforcement.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ProductRevisionViewType">
+        <xsd:sequence>
+          <xsd:element name="CurveReference" type="plm:GDEReferenceType" minOccurs="0" />
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- PlateSubsystem -->
+  <xsd:complexType name="PlateSubsystemType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Plate Subsystem
+
+      Attributes:
+
+      name:             Inherited from ProductRevisionView. The name of the
+                        Plate Subsystem.
+      propertyRefs:     Inherited from ProductRevisionView. Can be used to
+                        reference a MaterialSpecification representing the
+                        material and a MaterialThickness representing the
+                        thickness.
+      instanceRefs:     Inherited from ProductRevisionView. Can reference
+                        ProductInstances of widely re-used parts such as
+                        brackets.
+      mouldedSide:      Whether the surface normal indicates the moulded side of
+                        the Plate Subsystem. If true, it indicates the moulded
+                        side. If false, it indicates the reverse side.
+      tightness:        The tightness of the Plate Subsystem.
+      stockRef:         References the stock specification. Used in preference
+                        to propertyRefs.
+
+      Sub-elements:
+
+      ProfileCutout:    Any Profile Cutouts of the PlateSubsystem.
+      Plate:            The Plates comprising the Plate Subsystem.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ProductRevisionViewType">
+        <xsd:sequence>
+          <xsd:element name="ProfileCutout" type="plm:ProfileCutoutType" minOccurs="0" />
+          <xsd:element name="Plate" type="plm:PlateType" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="mouldedSide" type="xsd:boolean" use="required" />
+        <xsd:attribute name="tightness" type="plm:TightnessEnum" />
+        <xsd:attribute name="stockRef" type="plm:anyURIType" plm:refType="plm:Stock" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ProfileCutout -->
+  <xsd:complexType name="ProfileCutoutType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Profile Cutout
+
+      Attributes:
+
+      name:             Inherited from AttribOwner. The name of the Profile
+                        Cutout.
+      profileCutoutType: The type of Profile Cutout.
+      stiffenerSubsystemRef: References the Stiffener Subsystem.
+
+      Sub-elements:
+
+      AdditionalCutoutHardware: Any Additional Cutout Harware of the Profile Cutout.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:sequence>
+          <xsd:element name="AdditionalCutoutHardware" type="plm:AdditionalCutoutHardwareType" minOccurs="0" />
+        </xsd:sequence>
+        <xsd:attribute name="profileCutoutType" type="xsd:string" />
+        <xsd:attribute name="stiffenerSubsystemRef" type="plm:anyURIType" plm:refType="plm:StiffenerSubsystem" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- AdditionalCutoutHardware -->
+  <xsd:complexType name="AdditionalCutoutHardwareType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Additional Cutout Hardware
+
+      Attributes:
+
+      name:             Inherited from AttribOwner. The name of the Additional
+                        Cutout Hardware.
+      additionalCutoutHardwareType: The type of Additional Cutout Hardware.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:attribute name="additionalCutoutHardwareType" type="xsd:string" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- Plate -->
+  <xsd:complexType name="PlateType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Plate
+
+      Attributes:
+
+      name:             Inherited from ProductRevisionView. The name of the
+                        Plate.
+
+      Sub-elements:
+
+      Loop:             The Loops of the Plate.
+      SurfaceReference: References the RepresentationEntity under the Ship
+                        representing the format independent surface geometry for
+                        the Plate.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ProductRevisionViewType">
+        <xsd:sequence>
+          <xsd:element name="Loop" type="plm:PlateLoopType" maxOccurs="unbounded" />
+          <xsd:element name="SurfaceReference" type="plm:GDEReferenceType" minOccurs="0" />
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- Tightness -->
+  <xsd:simpleType name="TightnessEnum">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="watertight" />
+      <xsd:enumeration value="oiltight" />
+      <xsd:enumeration value="airtight" />
+      <xsd:enumeration value="nontight" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- StructureObject -->
+  <xsd:simpleType name="StructureObjectEnum">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="deck" />
+      <xsd:enumeration value="frame" />
+      <xsd:enumeration value="transverseBulkhead" />
+      <xsd:enumeration value="longtitudinalBulkhead" />
+      <xsd:enumeration value="pillar" />
+      <xsd:enumeration value="bracket" />
+      <xsd:enumeration value="hull" />
+      <xsd:enumeration value="superstructure" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- Compartment -->
+  <xsd:complexType name="CompartmentType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Compartment
+
+      Attributes:
+
+      name:             Inherited from AttribOwner. The name of the Compartment.
+      function:         The function of the Compartment.
+      plateSubsystemRefs: A list of references to the PlateSubsystem elements
+                        contained in the Compartment.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:attribute name="function" type="plm:CompartmentFunctionEnum" />
+        <xsd:attribute name="plateSubsystemRefs" type="plm:uriReferenceListType" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- CompartmentFunction -->
+  <xsd:simpleType name="CompartmentFunctionEnum">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="accomodation" />
+      <xsd:enumeration value="cargo" />
+      <xsd:enumeration value="tank" />
+      <xsd:enumeration value="machinery" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ClassData -->
+  <xsd:complexType name="ClassDataType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Class Data
+
+      Attributes:
+
+      society:          The classification society.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:attribute name="society" type="plm:SocietyEnum" use="required" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- Society -->
+  <xsd:simpleType name="SocietyEnum">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="abs" />
+      <xsd:enumeration value="bv" />
+      <xsd:enumeration value="ccs" />
+      <xsd:enumeration value="dnv" />
+      <xsd:enumeration value="gl" />
+      <xsd:enumeration value="kr" />
+      <xsd:enumeration value="lr" />
+      <xsd:enumeration value="nkk" />
+      <xsd:enumeration value="rina" />
+      <xsd:enumeration value="rs" />
+      <xsd:enumeration value="iacs" />
+      <xsd:enumeration value="other" />
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

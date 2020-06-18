@@ -9,7 +9,6 @@
 #include <TranscoderDAE/DAEToAsset3DWriter.h>
 #include "TranscoderException.h"
 
-
 #include <COLLADASaxFWLLoader.h>
 #include <COLLADAFWRoot.h>
 
@@ -57,10 +56,10 @@ std::shared_ptr<Asset3D> Babylon::Transcoder::ImportDAE(
 
 		DAEToAsset3DWriter writer(resourceServer,options,cancellationToken) ;
 		COLLADASaxFWL::IErrorHandler* errorHandler = (COLLADASaxFWL::IErrorHandler*) &writer;
-		COLLADASaxFWL::Loader* loader = new COLLADASaxFWL::Loader(errorHandler);
-		loader->registerExternalReferenceDeciderCallbackFunction(ShouldBeLoaded);
+		COLLADASaxFWL::Loader loader(errorHandler);
+		loader.registerExternalReferenceDeciderCallbackFunction(ShouldBeLoaded);
 
-		COLLADAFW::Root root(loader, &writer);
+		COLLADAFW::Root root(&loader, &writer);
 		
 		if (!root.loadDocument(filename,buffer,s)) {
 			throw TranscoderResourceFailedException("unable to load document. " + filename);

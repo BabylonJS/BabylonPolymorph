@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2019 Siemens Product Lifecycle Management Software Inc. All Rights Reserved.
+This software and related documentation are proprietary to 
+Siemens Product Lifecycle Management Software Inc.
+-->
+<xsd:schema targetNamespace="http://www.plmxml.org/Schemas/PLMXMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:plm="http://www.plmxml.org/Schemas/PLMXMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:include schemaLocation="PLMXMLSchema.xsd"/>
+  <xsd:annotation>
+    <xsd:documentation source="http://www.plmxml.org/Schemas/PLMXMLSchema/History">
+      <plm:SchemaChange author="howardmu" date="2019-06-20" version="7.0.7.37">
+        <plm:Description>
+        Initial version.
+        </plm:Description>
+      </plm:SchemaChange>
+    </xsd:documentation>
+    <xsd:documentation>
+
+                                PLM XML Quality Schema.
+
+    </xsd:documentation>
+    <xsd:appinfo source="http://www.plmxml.org/Schemas/PLMXMLSchema">
+      <plm:SchemaInfo name="PLMXMLQualitySchema.xsd" date="2019-06-20" version="6.0" status="release" />
+    </xsd:appinfo>
+  </xsd:annotation>
+  <!-- -->
+  <!-- CharacteristicsGroup -->
+  <!-- -->
+  <xsd:simpleType name="CharacteristicsEnum">
+    <xsd:annotation>
+      <xsd:documentation>
+      Characteristics type.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="variable" />
+      <xsd:enumeration value="attributive" />
+      <xsd:enumeration value="visual" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:complexType name="CharacteristicsGroupType">
+    <xsd:annotation>
+      <xsd:documentation>
+      CharacteristicsGroup.
+
+      Attributes:
+
+      characteristicsType: The type of the collection of similar characteristics
+                        specifications under this CharacteristicsGroup.
+      actionRefs:       References the QualityActions to mitigate the potential
+                        failures related to this CharacteristicsGroup.
+      failureRefs:      References the potential failures associated with this
+                        CharacteristicsGroup.
+      specificationRefs: References a list of all the characteristics
+                        specifications related to this CharacteristicsGroup.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ManagedBase">
+        <xsd:attribute name="characteristicsType" type="plm:CharacteristicsEnum" default="variable" />
+        <xsd:attribute name="actionRefs" type="plm:uriReferenceListType" />
+        <xsd:attribute name="failureRefs" type="plm:uriReferenceListType" />
+        <xsd:attribute name="specificationRefs" type="plm:uriReferenceListType" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="CharacteristicsGroup" type="plm:CharacteristicsGroupType" substitutionGroup="plm:Managed" />
+  <!-- -->
+  <!-- MasterQualityObject -->
+  <!-- -->
+  <xsd:complexType name="MasterQualityObjectType">
+    <xsd:annotation>
+      <xsd:documentation>
+      MasterQualityObject.
+
+      Attributes:
+
+      basedOnId:        Version information for the based-on objects.
+      latest:           Whether the the given specification or failure object is
+                        the latest.
+      active:           Whether this MasterQualityObject is active.
+      basedOnSpecificationRefs: References a list of all the versioned
+                        characteristics specifications based on the given
+                        specification.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ManagedBase">
+        <xsd:attribute name="basedOnId" type="xsd:positiveInteger" default="1" />
+        <xsd:attribute name="latest" type="xsd:boolean" default="true" />
+        <xsd:attribute name="active" type="xsd:boolean" default="true" />
+        <xsd:attribute name="basedOnSpecificationRefs" type="plm:uriReferenceListType" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="MasterQualityObject" type="plm:MasterQualityObjectType" substitutionGroup="plm:Managed" />
+  <!-- -->
+  <!-- QualityAction -->
+  <!-- -->
+  <xsd:simpleType name="QualityActionStatusEnum">
+    <xsd:annotation>
+      <xsd:documentation>
+      Quality action status.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="template" />
+      <xsd:enumeration value="draft" />
+      <xsd:enumeration value="active" />
+      <xsd:enumeration value="confirmed" />
+      <xsd:enumeration value="completed" />
+      <xsd:enumeration value="cancelled" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="QualityActionEnum">
+    <xsd:annotation>
+      <xsd:documentation>
+      Quality action type.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="general" />
+      <xsd:enumeration value="program" />
+      <xsd:enumeration value="failureModeEffectsAnalysis" />
+      <xsd:enumeration value="dimension8" />
+      <xsd:enumeration value="controlPlan" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:complexType name="QualityActionType">
+    <xsd:annotation>
+      <xsd:documentation>
+      QualityAction.
+
+      Attributes:
+
+      actionItemId:     Object identifier.
+      qualityActionStatus: The qualitative, rather than chronological, status of
+                        this QualityAction.
+      qualityActionType: The type of this QualityAction to categorize and
+                        differentiate between different QualityAction types.
+      qualityActionSubType: The sub-type of this QualityAction to categorize and
+                        differentiate between different QualityAction sub-types.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ManagedBase">
+        <xsd:attribute name="actionItemId" type="xsd:string" />
+        <xsd:attribute name="qualityActionStatus" type="plm:QualityActionStatusEnum" default="draft" />
+        <xsd:attribute name="qualityActionType" type="plm:QualityActionEnum" use="optional" />
+        <xsd:attribute name="qualityActionSubType" type="plm:QualityActionEnum" use="optional" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="QualityAction" type="plm:QualityActionType" substitutionGroup="plm:Managed" />
+</xsd:schema>
