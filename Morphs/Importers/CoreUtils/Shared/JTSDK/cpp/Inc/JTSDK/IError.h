@@ -7,26 +7,31 @@
 
 namespace JTSDK
 {
+	class IError;
 
-	class IConsumer
+	/** Error class */
+	class IError
 	{
-	private:
+	public:
 
 	public:
 
-		IConsumer() {};
-		virtual ~IConsumer() {};
+		/** Constructor. */
+		IError();
+
+		/** Destructor. */
+		virtual ~IError();
 
 
 	private:
 
 		/** Disable default copy ctor. */
-		IConsumer(const IConsumer& pre) = delete;
+		IError(const IError& pre) = delete;
 
 		/** Disable default assignment operator. */
-		const IConsumer& operator = (const IConsumer& pre) = delete;
+		const IError& operator= (const IError& pre) = delete;
 
 	};
+	typedef IError* IErrorPtr;
 
-	typedef IConsumer* IConsumerPtr;
 }

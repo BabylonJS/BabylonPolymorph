@@ -6,16 +6,49 @@
 #pragma once
 
 #include "iloader.h"
-#include "ierrorhandler.h"
+#include "IErrorHandler.h"
+#include "IConsumer.h"
+#include <JtTk/JtkClientData.h>
+#include <JtTk/JtkHierarchy.h>
 
 namespace JTSDK
 {
+
+	/** 
+	 the context which is is passed to traverseGraph method.
+	 this is the only way we have to keep ref to the consumer.
+	 */
+	class LoaderContext : public JtkClientData {
+
+	public:
+		IConsumerPtr m_consumer;
+
+		JtkAssembly * m_currentAssembly;
+		JtkUnits * m_currentUnit;
+		JtkPart * m_currentPart;
+		JtkInstance * m_currentInstance;
+
+	protected:
+		LoaderContext(IConsumerPtr consumer) : JtkClientData(), m_consumer(consumer) {
+		}
+
+		~LoaderContext(){}
+
+		friend class Loader;
+	};
+
 	class Loader : public JTSDK::ILoader {
+	public:
+		static LoaderContext * createContext(IConsumerPtr consumer) {
+			return new LoaderContext(consumer);
+		}
+
 	private :
-		IErrorHandler* m_errorHandler;
+		IErrorHandlerPtr m_errorHandler;
 	public :
+
 		/** Constructor. */
-		Loader(IErrorHandler* errorHandler = nullptr) : ILoader(), m_errorHandler(errorHandler){
+		Loader(IErrorHandlerPtr errorHandler = nullptr) : ILoader(), m_errorHandler(errorHandler){
 		}
 
 		/** Destructor. */
@@ -25,7 +58,7 @@ namespace JTSDK
 			@param fileName The name of the file that should be loaded.
 			@param writer The writer that should be fed with data.
 			@return True, if loading succeeded, false otherwise.*/
-		bool loadDocument(const std::string& fileName, IConsumer * consumer);
+		bool loadDocument(unsigned char* Buffer, const int BuffLen, IConsumerPtr consumer);
 
 	private:
 		/** Disable default copy ctor. */

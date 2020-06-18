@@ -158,6 +158,7 @@
     <ClInclude Include="..\JTOpenToolkit\10_5\include\plmxml\plmxml_scheduling60.h" />
     <ClInclude Include="..\JTOpenToolkit\10_5\include\plmxml\plmxml_ship60.h" />
     <ClInclude Include="Inc\JTSDK\IConsumer.h" />
+    <ClInclude Include="Inc\JTSDK\IError.h" />
     <ClInclude Include="Inc\JTSDK\IErrorHandler.h" />
     <ClInclude Include="Inc\JTSDK\ILoader.h" />
     <ClInclude Include="Inc\JTSDK\Loader.h" />

@@ -57,7 +57,9 @@ std::shared_ptr<Asset3D> Babylon::Transcoder::ImportJT(
 		JTSDK::IConsumer * consumerPtr = nullptr;
 		JTSDK::IErrorHandler * errorHandlerPtr = nullptr;
 		JTSDK::Loader loader(errorHandlerPtr);
+		if (loader.loadDocument((unsigned char*)buffer, s, consumerPtr)) {
 
+		}
 		std::shared_ptr<Asset3D> asset = std::make_shared<Asset3D>();
 		return asset;
 	}

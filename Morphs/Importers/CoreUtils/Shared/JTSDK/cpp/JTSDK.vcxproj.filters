@@ -459,6 +459,9 @@
     <ClInclude Include="Inc\JTSDK\Loader.h">
       <Filter>Fichiers d%27en-tête\JTSDK</Filter>
     </ClInclude>
+    <ClInclude Include="Inc\JTSDK\IError.h">
+      <Filter>Fichiers d%27en-tête\JTSDK</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\JTSDK\Loader.cpp">

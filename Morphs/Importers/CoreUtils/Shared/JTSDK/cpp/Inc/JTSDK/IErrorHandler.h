@@ -35,5 +35,6 @@ namespace JTSDK
 		const IErrorHandler& operator= (const IErrorHandler& pre) = delete;
 
 	};
+	typedef IErrorHandler* IErrorHandlerPtr;
 
 } 

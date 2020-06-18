@@ -4,9 +4,6 @@
 *                                                       *
 ********************************************************/
 #pragma once
-
-#include<string>
-
 namespace JTSDK
 {
 	class IConsumer;
@@ -24,7 +21,7 @@ namespace JTSDK
 		@param fileName The name of the file that should be loaded.
 		@param writer The writer that should be fed with data.
 		@return True, if loading succeeded, false otherwise.*/
-		virtual bool loadDocument(const std::string& fileName, IConsumer* writer) = 0;
+		virtual bool loadDocument(unsigned char* Buffer, const int BuffLen, IConsumer * consumer) = 0;
 
 	private:
 
