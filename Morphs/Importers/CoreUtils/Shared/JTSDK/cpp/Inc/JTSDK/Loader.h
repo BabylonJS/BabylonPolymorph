@@ -20,19 +20,19 @@ namespace JTSDK
 	 */
 	class LoaderContext : public JtkClientData {
 
-	public:
+	private:
 		IConsumerPtr m_consumer;
-
-		JtkAssembly * m_currentAssembly;
-		JtkUnits * m_currentUnit;
-		JtkPart * m_currentPart;
-		JtkInstance * m_currentInstance;
+	public:
+		IConsumerPtr GetConsumer() {
+			return m_consumer;
+		}
 
 	protected:
 		LoaderContext(IConsumerPtr consumer) : JtkClientData(), m_consumer(consumer) {
 		}
 
 		~LoaderContext(){}
+
 
 		friend class Loader;
 	};

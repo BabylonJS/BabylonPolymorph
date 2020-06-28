@@ -14,117 +14,25 @@
 using namespace std;
 using namespace JTSDK;
 
-const char* printUnits(JtkUnits Units)
-{
-    switch (Units)
-    {
-    case JtkMICROMETERS:
-    {
-        return("micrometers");
-        break;
-    }
-    case JtkMILLIMETERS:
-    {
-        return("mm");
-        break;
-    }
-    case JtkCENTIMETERS:
-    {
-        return("cm");
-        break;
-    }
-    case JtkDECIMETERS:
-    {
-        return("decimeters");
-        break;
-    }
-    case JtkMETERS:
-    {
-        return("m");
-        break;
-    }
-    case JtkKILOMETERS:
-    {
-        return("km");
-        break;
-    }
-    case JtkINCHES:
-    {
-        return("in");
-        break;
-    }
-    case JtkFEET:
-    {
-        return("ft");
-        break;
-    }
-    case JtkYARDS:
-    {
-        return("yards");
-        break;
-    }
-    case JtkMILES:
-    {
-        return("mi");
-        break;
-    }
-    case JtkMILS:
-    {
-        return("mils");
-        break;
-    }
-    case JtkUNKNOWN:
-    {
-        return("unknown");
-        break;
-    }
-    default:
-    {
-        return("unknown (not assigned)");
-        break;
-    }
-    }
-}
-
-int handleNodes(JtkHierarchy* CurrNode, int Level, JtkClientData* data)
+int handleNodes(JtkHierarchy* currNode, int level, JtkClientData* data)
 {
     LoaderContext* contextPtr = (LoaderContext *) data;
-
-    // common data
-    int nodeId = -1;
-    CurrNode->getId(nodeId);
-    JtkString name = CurrNode->name();
-    
-    switch (CurrNode->typeID())
-    {
-        case JtkEntity::JtkPART:
+    IConsumerPtr consumer = contextPtr? contextPtr->GetConsumer() : nullptr;
+    if (consumer) {
+        switch (currNode->typeID())
         {
-            JtkUnits nodeUnits = JtkUNKNOWN;
-            ((JtkUnitHierarchy*)CurrNode)->getUnits(nodeUnits);
-            cout << CurrNode->typeIDName() << ": " << name
-                << " ( ver = " << CurrNode->version()
-                << ", id = " << nodeId
-                << ", units = " << printUnits(nodeUnits);
-
-            break;
-        }
-        case JtkEntity::JtkASSEMBLY:
-        {
-            JtkUnits nodeUnits = JtkUNKNOWN;
-            ((JtkUnitHierarchy*)CurrNode)->getUnits(nodeUnits);
-            cout << CurrNode->typeIDName() << ": " << name
-                << " ( ver = " << CurrNode->version()
-                << ", id = " << nodeId
-                << ", #children = " << ((JtkAssembly*)CurrNode)->numChildren()
-                << ", units = " << printUnits(nodeUnits);
-            break;
-        }
-        case JtkEntity::JtkINSTANCE:
-        {
-            cout << CurrNode->typeIDName() << ": " << name
-                << " ( id = " << nodeId
-                << " )" << endl;
-            break;
+            case JtkEntity::JtkASSEMBLY:
+            {
+                return consumer->ConsumeAssembly((JtkAssembly*)currNode);
+            }
+            case JtkEntity::JtkPART:
+            {
+                return consumer->ConsumePart((JtkPart*)currNode);
+            }
+             case JtkEntity::JtkINSTANCE:
+            {
+                return consumer->ConsumeInstance((JtkInstance*)currNode);
+            }
         }
     }
     /** 
@@ -173,7 +81,7 @@ bool JTSDK::Loader::loadDocument(unsigned char* Buffer, const int BuffLen, ICons
         importer->setBrepLoadOption(JtkCADImporter::JtkTESS_AND_BREP);
         importer->setXTBrepEditOption(JtkCADImporter::JtkXTBREP_FOR_EDIT_ON);
         importer->setShapeLoadOption(JtkCADImporter::JtkALL_LODS);
-
+ 
         JtkEntityList* faultsPtr = NULL;
         JtkEntityPtr<JtkHierarchy> root = importer->import(Buffer, BuffLen, faultsPtr);
         JtkEntityPtr<JtkEntityList> faults(faultsPtr);

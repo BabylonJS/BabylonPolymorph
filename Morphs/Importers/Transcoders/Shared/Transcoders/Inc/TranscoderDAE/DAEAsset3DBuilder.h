@@ -56,7 +56,7 @@ namespace Babylon
 				return m_cache;
 			}
 
-			inline DAEMaterialBuilder& ClearCache() {
+			inline DAEAsset3DBuilderWithCache& ClearCache() {
 				m_cache = nullptr;
 				return *this;
 			}

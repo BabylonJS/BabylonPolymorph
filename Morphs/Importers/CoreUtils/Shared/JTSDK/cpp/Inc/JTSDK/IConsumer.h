@@ -4,6 +4,7 @@
 *                                                       *
 ********************************************************/
 #pragma once
+#include <JtTk/JtkHierarchy.h>
 
 namespace JTSDK
 {
@@ -17,6 +18,9 @@ namespace JTSDK
 		IConsumer() {};
 		virtual ~IConsumer() {};
 
+		virtual int ConsumeAssembly(JtkAssembly* CurrNode) = 0;
+		virtual int ConsumePart(JtkPart* CurrNode) = 0;
+		virtual int ConsumeInstance(JtkInstance* CurrNode) = 0;
 
 	private:
 

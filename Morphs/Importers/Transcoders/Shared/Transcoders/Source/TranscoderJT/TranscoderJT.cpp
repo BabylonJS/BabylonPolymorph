@@ -4,9 +4,10 @@
 *                                                       *
 ********************************************************/
 #include "TranscodersPch.h"
+#include "TranscoderException.h"
 
 #include <TranscoderJT/TranscoderJT.h>
-#include "TranscoderException.h"
+#include <TranscoderJT/JTToAsset3DConsumer.h>
 
 #include <JTSDK/IConsumer.h>
 #include <JTSDK/IErrorHandler.h>
@@ -54,14 +55,14 @@ std::shared_ptr<Asset3D> Babylon::Transcoder::ImportJT(
 			throw TranscoderResourceFailedException("unable to read. " + filename);
 		}
 
-		JTSDK::IConsumer * consumerPtr = nullptr;
+		JTToAsset3DConsumer *  consumerPtr = new JTToAsset3DConsumer();
 		JTSDK::IErrorHandler * errorHandlerPtr = nullptr;
 		JTSDK::Loader loader(errorHandlerPtr);
-		if (loader.loadDocument((unsigned char*)buffer, s, consumerPtr)) {
-
+		std::shared_ptr<Asset3D> asset = nullptr;
+		if (loader.loadDocument((unsigned char*)buffer, s, (JTSDK::IConsumerPtr)consumerPtr)) {
+			asset = consumerPtr->ProduceAsset3D();
 		}
-		std::shared_ptr<Asset3D> asset = std::make_shared<Asset3D>();
-		return asset;
+		return asset ? asset: std::make_shared<Asset3D>();
 	}
 	catch (const std::exception& e) {
 		free(buffer);
