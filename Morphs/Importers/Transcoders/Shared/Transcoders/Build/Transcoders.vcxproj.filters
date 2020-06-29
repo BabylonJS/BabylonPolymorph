@@ -450,9 +450,6 @@
     <ClInclude Include="..\Inc\TranscoderJT\Asset3DBuilder.h">
       <Filter>Public Headers\Importers\ImporterJT</Filter>
     </ClInclude>
-    <ClInclude Include="..\Inc\TranscoderJT\GeometryInstanceBuilder.h">
-      <Filter>Public Headers\Importers\ImporterJT\Builders\Core</Filter>
-    </ClInclude>
     <ClInclude Include="..\Inc\TranscoderJT\MeshBuilder.h">
       <Filter>Public Headers\Importers\ImporterJT\Builders\Core</Filter>
     </ClInclude>

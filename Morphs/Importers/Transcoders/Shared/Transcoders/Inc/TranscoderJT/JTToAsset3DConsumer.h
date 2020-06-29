@@ -17,7 +17,8 @@ namespace Babylon
 
         class JTToAsset3DConsumer : JTSDK::IConsumer {
 
-            std::map<JTUniqueId, std::shared_ptr<MeshBuilder<JTToAsset3DConsumer>>> m_meshLibrary;
+            std::map<JTUniqueId, std::shared_ptr<MeshBuilder<JTToAsset3DConsumer>>> m_meshBuilderLibrary;
+            std::map<JTUniqueId, std::shared_ptr<Mesh>> m_meshLibrary;
             std::map<JTUniqueId, std::shared_ptr<SceneNode>> m_nodeLibrary;
 
         public:
@@ -26,8 +27,14 @@ namespace Babylon
             ~JTToAsset3DConsumer(){
             }
 
-            std::map<JTUniqueId, std::shared_ptr<MeshBuilder<JTToAsset3DConsumer>>>& GetMeshLibrary() {
+            std::map<JTUniqueId, std::shared_ptr<MeshBuilder<JTToAsset3DConsumer>>>& GetMeshBuilderLibrary() {
+                return m_meshBuilderLibrary;
+            }
+            std::map<JTUniqueId, std::shared_ptr<Mesh>>& GetMeshLibrary() {
                 return m_meshLibrary;
+            }
+            std::map<JTUniqueId, std::shared_ptr<SceneNode>>& GetNodeLibrary() {
+                return m_nodeLibrary;
             }
 
             int ConsumeAssembly(JtkAssembly* CurrNode);

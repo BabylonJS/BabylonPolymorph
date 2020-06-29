@@ -41,28 +41,6 @@ namespace Babylon
 			virtual std::shared_ptr<TAsset> Build(std::shared_ptr<TAsset> existingAsset = nullptr) = 0;
 		};
 
-
-		template<typename TAsset, typename TContext>
-		class Asset3DInstanceBuilder : public Asset3DBuilder<TAsset, TContext> {
-		private:
-			std::shared_ptr<Asset3DBuilder> m_model;
-		public:
-			Asset3DInstanceBuilder(std::shared_ptr<Asset3DBuilder<TAsset,TContext>> model) : Asset3DBuilder(model->GetContext()), m_model(model)
-			{
-			}
-
-			~Asset3DInstanceBuilder() {
-			}
-
-			std::shared_ptr<Asset3DBuilder> GetModel() {
-				return m_model;
-			}
-
-			virtual std::shared_ptr<TAsset> Build(std::shared_ptr<TAsset> existingAsset = nullptr) {
-				return m_model.Build(existingAsset);
-			}
-		};
-
 		template<typename TAsset, typename TContext>
 		class Asset3DBuilderWithCache : public Asset3DBuilder<TAsset,TContext> {
 		protected:
@@ -76,7 +54,7 @@ namespace Babylon
 
 			std::shared_ptr<TAsset> Build(std::shared_ptr<TAsset> existingAsset = nullptr) {
 				if (!m_cache) {
-					m_cache = BuildCache(std::shared_ptr<TAsset> existingAsset = nullptr);
+					m_cache = BuildCache(existingAsset);
 				}
 				return m_cache;
 			}

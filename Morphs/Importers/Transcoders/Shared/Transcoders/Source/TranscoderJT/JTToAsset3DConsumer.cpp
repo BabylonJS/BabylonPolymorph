@@ -9,14 +9,19 @@
 #include <JtkEntityFactory.h>
 
 #include <TranscoderJT/JTToAsset3DConsumer.h>
+#include <TranscoderJT/GeometryBuilder.h>
 #include <TranscoderJT/MeshBuilder.h>
 #include <TranscoderJT/TranscoderJTUtils.h>
 
 using namespace Babylon::Utils::Math;
 using namespace Babylon::Transcoder;
 
+
 namespace
 {
+
+    std::shared_ptr<MaterialBuilder<JTToAsset3DConsumer>> HandleMaterial(JTToAsset3DConsumer* consumer, JtkMaterial* jtkMaterial);
+
     template<typename T>
     std::vector<T> ToVector(const float* data, size_t count)
     {
@@ -31,7 +36,6 @@ namespace
 
         return collection;
     }
-
 
     std::shared_ptr<GeometryBuilder<JTToAsset3DConsumer>> ConsumeShape(JTToAsset3DConsumer* consumer, JtkShape* partShape, int LOD) {
 
@@ -97,7 +101,8 @@ namespace
                 }
             }
 
-            geomBuilderPtr->WithPositions(ToVector<Vector3>(Verts, VertCount))
+            geomBuilderPtr->WithTopology(GeometryTopology::kTriangles)
+                .WithPositions(ToVector<Vector3>(Verts, VertCount))
                 .WithNormals(ToVector<Vector3>(Norms, NormCount))
                 .WithColors(std::vector<uint32_t>(Colors,Colors+ColorCount))
                 .WithIndices(std::move(indices));
@@ -115,11 +120,50 @@ namespace
                     JtkEntityFactory::deleteMemory(Textures[i]);
                 }
             }
+
+            // MATERIALS are located into Attributes
+            JtkMaterial* m;
+            std::shared_ptr<MaterialBuilder<JTToAsset3DConsumer>> materialBuilderPtr = nullptr;
+            if (partShape->getAttrib(0, (JtkAttrib*&)m, JtkEntity::JtkMATERIAL)) {
+                materialBuilderPtr = HandleMaterial(consumer, m);
+                if (materialBuilderPtr) {
+                    geomBuilderPtr->WithMaterial(materialBuilderPtr);
+                }
+            }
         }
  
         return geomBuilderPtr;
     }
+
+#define SET_COLOR(colorType) if(v){ materialBuilderPtr->With##colorType(SetColorLayer(v));JtkEntityFactory::deleteMemory(v);v = nullptr;}
+   
+    std::shared_ptr<MaterialDescriptor::LayerInfo> SetColorLayer(float* v) {
+        std::shared_ptr<MaterialDescriptor::LayerInfo> layer = std::make_shared<LayerInfo>();
+        layer->SetColor(Babylon::Utils::Math::Color(*v, *(v + 1), *(v + 2), *(v + 3)));
+        return layer;
+    }
+
+    std::shared_ptr<MaterialBuilder<JTToAsset3DConsumer>> HandleMaterial(JTToAsset3DConsumer * consumer, JtkMaterial* jtkMaterial) {
+
+        auto materialBuilderPtr = std::make_shared<MaterialBuilder<JTToAsset3DConsumer>>(consumer);
+        // A four element floating point array whose elements respectively refer to the red, green, blue, and alpha aspects of the OpenGL color.
+        float* v = nullptr;
+        if (jtkMaterial->getAmbientColor(v)) {
+            SET_COLOR(Ambient);
+        }
+        if (jtkMaterial->getEmissionColor(v)) {
+            SET_COLOR(Emissive);
+        }
+        if (jtkMaterial->getDiffuseColor(v)) {
+            SET_COLOR(Diffuse);
+        }
+        if (jtkMaterial->getSpecularColor(v)) {
+            SET_COLOR(Specular);
+        }
+        return materialBuilderPtr;
+    }
 }
+
 
 int JTToAsset3DConsumer::ConsumeAssembly(JtkAssembly* node) {
 	return Jtk_OK;
@@ -128,52 +172,80 @@ int JTToAsset3DConsumer::ConsumeAssembly(JtkAssembly* node) {
 int JTToAsset3DConsumer::ConsumePart(JtkPart* node) {
 
     std::shared_ptr<MeshBuilder<JTToAsset3DConsumer>> meshBuilderPtr = std::make_shared<MeshBuilder<JTToAsset3DConsumer>>(this);
+
     JtkString name = node->name();
     if (!name.isEmpty()) {
         meshBuilderPtr->WithName(JtkString2String(name));
     }
-    int partNumShapeLODs = -1;
-    partNumShapeLODs = node->numPolyLODs();
-    for (int lod = 0; lod < partNumShapeLODs; lod++)
-    {
-        int   partNumShapes = -1;
-        partNumShapes = node->numPolyShapes(lod);
-        for (int shNum = 0; shNum < partNumShapes; shNum++)
-        {
-            JtkShape* partShape = NULL;
-            node->getPolyShape(partShape, lod, shNum);
-            if (partShape)
-            {
-                meshBuilderPtr->WithGeometry(ConsumeShape(this,partShape, lod));
-            }
-        }
-    }
 
-    // Register the model
+    // Register the builder model
     JTUniqueId id;
     if (node->getId(id)) {
-        GetMeshLibrary()[id]=meshBuilderPtr;
+
+        // MATERIALS are located into Attributes
+        JtkMaterial* m;
+        std::shared_ptr<MaterialBuilder<JTToAsset3DConsumer>> materialBuilderPtr = nullptr;
+        if (node->getAttrib(0, (JtkAttrib*&)m, JtkEntity::JtkMATERIAL)) {
+            materialBuilderPtr = HandleMaterial(this, m);
+        }
+
+        std::vector<std::shared_ptr< Asset3DBuilder<Geometry, JTToAsset3DConsumer>>> geometries;
+
+        // GEOMETRY
+        int partNumShapeLODs = -1;
+        partNumShapeLODs = node->numPolyLODs();
+        for (int lod = 0; lod < partNumShapeLODs; lod++)
+        {
+            int   partNumShapes = -1;
+            partNumShapes = node->numPolyShapes(lod);
+            for (int shNum = 0; shNum < partNumShapes; shNum++)
+            {
+                JtkShape* partShape = NULL;
+                node->getPolyShape(partShape, lod, shNum);
+                if (partShape)
+                {
+                    auto gb = ConsumeShape(this, partShape, lod);
+                    if (gb) {
+                        // register the material if none has been set
+                        if (materialBuilderPtr && !gb->GetMaterial()) {
+                            gb->WithMaterial(materialBuilderPtr);
+                        }
+                        geometries.push_back(gb);
+                    }
+                }
+            }
+        }
+
+        // apply geometries to mesh
+        meshBuilderPtr->WithGeometries(std::move(geometries));
+
+        // register the mesh builder
+        GetMeshBuilderLibrary()[id] = meshBuilderPtr;
+
+        // bake the geometry and register the meh
+        std::shared_ptr<Mesh> mesh = meshBuilderPtr->Build();
+        GetMeshLibrary()[id] = mesh;
+
+        // BEGIN TODO -> Move the code 
+        // build a node based on geometry
+        std::shared_ptr<SceneNode> nodePtr = std::make_shared<SceneNode>();
+        nodePtr->SetMesh(mesh);
+        nodePtr->SetName(meshBuilderPtr->GetName());
+
+        // apply tronsformation (located into Attributes)
+        JtkTransform* t;
+        if (node->getAttrib(0, (JtkAttrib*&)t, JtkEntity::JtkTRANSFORM)) {
+            nodePtr->SetTransform(toBabylonMatrix(t));
+        }
+
+        // register the node
+        GetNodeLibrary()[id] = nodePtr;
+        // END TODO -> Move the code 
     }
-
-    // build the associated node
-    // MATERIAL AND TRANSFORMATIONS are located into Attributes
-    std::shared_ptr<SceneNode> nodePtr = std::make_shared<SceneNode>();
-    nodePtr->SetMesh(meshBuilderPtr->Build());
-    nodePtr->SetName(meshBuilderPtr->GetName());
-
-    JtkTransform * t;
-    if (node->getAttrib(0, (JtkAttrib*&)t, JtkEntity::JtkTRANSFORM)) {
-        nodePtr->SetTransform(toBabylonMatrix(t));
-    }
-
-    JtkMaterial* m;
-    if (node->getAttrib(0, (JtkAttrib*&)m, JtkEntity::JtkMATERIAL)) {
-    }
-
-    m_nodeLibrary[id] = nodePtr;
 
 	return Jtk_OK;
 }
+
 
 int JTToAsset3DConsumer::ConsumeInstance(JtkInstance* node) {
     
@@ -183,7 +255,7 @@ int JTToAsset3DConsumer::ConsumeInstance(JtkInstance* node) {
         auto l = GetMeshLibrary()[id];
         if (l) {
             std::shared_ptr<SceneNode> nodePtr = std::make_shared<SceneNode>();
-            nodePtr->SetMesh(l->Build());
+            nodePtr->SetMesh(l);
             nodePtr->SetName(l->GetName());
 
             JtkTransform* t;
@@ -196,7 +268,7 @@ int JTToAsset3DConsumer::ConsumeInstance(JtkInstance* node) {
             }
 
             if (node->getId(id)) {
-                m_nodeLibrary[id] = nodePtr;
+                GetNodeLibrary()[id] = nodePtr;
             }
         }
     }

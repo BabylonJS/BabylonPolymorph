@@ -16,7 +16,7 @@ namespace Babylon
 		template<typename TContext>
 		class MeshBuilder : public Asset3DBuilder<Mesh,TContext> {
 
-			typedef std::vector<std::shared_ptr<GeometryBuilder<TContext>>> Geometries;
+			typedef std::vector<std::shared_ptr< Asset3DBuilder<Geometry, TContext>>> Geometries;
 
 		private:
 			Geometries m_geometries;
@@ -35,12 +35,12 @@ namespace Babylon
 				return mesh;
 			}
 
-			inline MeshBuilder& WithGeometries(std::vector<std::shared_ptr<GeometryBuilder<TContext>>>&& geometries) {
+			inline MeshBuilder& WithGeometries(std::vector<std::shared_ptr<Asset3DBuilder<Geometry, TContext>>>&& geometries) {
 				m_geometries = std::move(geometries);
 				return *this;
 			}
 
-			inline MeshBuilder& WithGeometry(std::shared_ptr<GeometryBuilder<TContext>> geometry) {
+			inline MeshBuilder& WithGeometry(std::shared_ptr<Asset3DBuilder<Geometry, TContext>> geometry) {
 				if (geometry) {
 					m_geometries.push_back(geometry);
 				}

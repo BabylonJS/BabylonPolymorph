@@ -161,7 +161,6 @@
     <ClInclude Include="..\Inc\TranscoderGLTF\TranscoderGLTF.h" />
     <ClInclude Include="..\Inc\TranscoderJT\Asset3DBuilder.h" />
     <ClInclude Include="..\Inc\TranscoderJT\GeometryBuilder.h" />
-    <ClInclude Include="..\Inc\TranscoderJT\GeometryInstanceBuilder.h" />
     <ClInclude Include="..\Inc\TranscoderJT\JTToAsset3DConsumer.h" />
     <ClInclude Include="..\Inc\TranscoderJT\MaterialBuilder.h" />
     <ClInclude Include="..\Inc\TranscoderJT\MeshBuilder.h" />

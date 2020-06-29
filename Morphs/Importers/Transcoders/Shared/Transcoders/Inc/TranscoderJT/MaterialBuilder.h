@@ -18,6 +18,7 @@ namespace Babylon
 #define WithDiffuse(l) WithLayer(LayerType::kDiffuse,(l))
 #define WithEmissive(l) WithLayer(LayerType::kEmissive,(l))
 #define WithSpecular(l) WithLayer(LayerType::kSpecularGlossiness,(l))
+#define WithAmbient(l) WithLayer(LayerType::kBaseColor,(l))
 
 	namespace Transcoder
 	{
@@ -32,7 +33,7 @@ namespace Babylon
 			std::array<std::shared_ptr<LayerInfo>, static_cast<size_t>(LayerType::kNumLayers)> m_layers;
 
 		public:
-			MaterialBuilder(TContext context) : Asset3DBuilderWithCache<MaterialDescriptor, TContext>(context) {
+			MaterialBuilder(TContext * context) : Asset3DBuilderWithCache<MaterialDescriptor, TContext>(context) {
 			}
 
 			std::shared_ptr<MaterialDescriptor> BuildCache(std::shared_ptr<MaterialDescriptor> existingAsset = nullptr) {

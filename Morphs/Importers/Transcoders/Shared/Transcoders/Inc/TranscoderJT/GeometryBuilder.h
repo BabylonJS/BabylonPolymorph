@@ -11,14 +11,24 @@
 #include <Asset3D/Geometry.h>
 
 #include <TranscoderJT/Asset3DBuilder.h>
+#include <TranscoderJT/MaterialBuilder.h>
 
 namespace Babylon
 {
     namespace Transcoder
     {
+#ifndef UV_CHANNEL_NONE
+#define UV_CHANNEL_NONE -1
+#endif
+#ifndef UV_CHANNEL_ZERO
+#define UV_CHANNEL_ZERO 0
+#endif
+#ifndef UV_CHANNEL_ONE
+#define UV_CHANNEL_ONE  1
+#endif
+
 		template<typename TContext>		
 		class GeometryBuilder : public Asset3DBuilder<Geometry, TContext> {
-
 
 		private:
 			GeometryTopology m_topo;
@@ -30,6 +40,12 @@ namespace Babylon
 			std::map<int16_t, std::vector<Babylon::Utils::Math::Vector2>> m_uvs;
 			std::vector<uint32_t> m_colors;
 
+
+			int16_t m_uvChannel0 = UV_CHANNEL_NONE;
+			int16_t m_uvChannel1 = UV_CHANNEL_NONE;
+			std::shared_ptr<MaterialBuilder<TContext>> m_materialBuilder;
+
+
 		public:
 			GeometryBuilder(TContext * context) : Asset3DBuilder<Geometry, TContext>(context)
 			{
@@ -38,7 +54,11 @@ namespace Babylon
 
 			std::shared_ptr<Geometry> Build(std::shared_ptr<Geometry> existingAsset = nullptr) {
 				 
-				std::shared_ptr<Geometry> geom = existingAsset ? existingAsset : std::make_shared<Geometry>();
+				std::shared_ptr<Geometry> geom = existingAsset;
+				if (!geom) {
+					std::shared_ptr<MaterialDescriptor> desc = m_materialBuilder ? m_materialBuilder->Build() : nullptr;
+					geom = std::make_shared<Geometry>(desc);
+				}
 
 				geom->SetTopology(m_topo);
 				if (m_indices.size()) {
@@ -60,6 +80,14 @@ namespace Babylon
 				if (m_colors.size()) {
 					geom->SetColors(m_colors);
 				}
+
+				if (m_uvChannel0 != UV_CHANNEL_NONE && m_uvs.find(m_uvChannel0) != m_uvs.end()) {
+					geom->SetUv0s(m_uvs[m_uvChannel0]);
+				}
+				if (m_uvChannel1 != UV_CHANNEL_NONE && m_uvs.find(m_uvChannel1) != m_uvs.end()) {
+					geom->SetUv1s(m_uvs[m_uvChannel1]);
+				}
+
 				return geom;
 			}
 
@@ -108,8 +136,8 @@ namespace Babylon
 				return m_uvs.size() != 0;
 			}
 
-			inline const std::string& GetMaterialName() {
-				return m_materialName;
+			inline const std::shared_ptr<MaterialBuilder<TContext>> GetMaterial() {
+				return m_materialBuilder;
 			}
 
 			inline const std::vector<uint32_t>& GetOriginalIndices() {
@@ -119,6 +147,24 @@ namespace Babylon
 			inline const std::vector<uint32_t>& GetIndices() {
 				return m_indices;
 			}
+
+     		inline GeometryBuilder& WithMaterial(std::shared_ptr<MaterialBuilder<TContext>> material) {
+				m_materialBuilder = material;
+				return *this;
+			}
+
+			inline GeometryBuilder& WithChannelO(int16_t channel) {
+				m_uvChannel0 = channel;
+				return *this;
+			}
+
+			inline GeometryBuilder& WithChannel1(int16_t channel) {
+				m_uvChannel1 = channel;
+				return *this;
+			}
+
+
+
 		};
 	}
 }

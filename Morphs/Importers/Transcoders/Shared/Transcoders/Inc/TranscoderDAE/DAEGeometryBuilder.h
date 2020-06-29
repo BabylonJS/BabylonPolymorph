@@ -15,9 +15,15 @@ namespace Babylon
 {
 	namespace Transcoder
 	{
+#ifndef UV_CHANNEL_NONE
 #define UV_CHANNEL_NONE -1
-#define UV_CHANNEL_ZERO  0
-#define UV_CHANNEL_ONE   1
+#endif
+#ifndef UV_CHANNEL_ZERO
+#define UV_CHANNEL_ZERO 0
+#endif
+#ifndef UV_CHANNEL_ONE
+#define UV_CHANNEL_ONE  1
+#endif
 
 		class DAEGeometryBuilder : public DAEAsset3DBuilder<Geometry> {
 
