@@ -39,11 +39,20 @@ namespace Babylon
 			}
 
 			inline std::shared_ptr<SceneNode> Build() {
-				return Build(std::make_unique<CircularMap>().get());
+				return Builded(Build(std::make_unique<CircularMap>().get(), nullptr));
 			}
 
-			std::shared_ptr<SceneNode> Build(CircularMap* map);
+			inline std::shared_ptr<SceneNode> Build(std::function<void (DAENodeBuilder*, std::shared_ptr<SceneNode>)> fnCallback) {
+				return Builded(Build(std::make_unique<CircularMap>().get(), fnCallback));
+			}
 
+			virtual std::shared_ptr<SceneNode> Builded(std::shared_ptr<SceneNode> ptr) {
+				return ptr;
+			}
+
+			std::shared_ptr<SceneNode> Build(CircularMap* map, std::function<void(DAENodeBuilder*, std::shared_ptr<SceneNode>)> fnCallback);
+
+			std::shared_ptr<SceneNode> DAENodeBuilder::BuildController();
 	
 			inline COLLADAFW::Node::NodeType GetType() {
 				return m_type;
@@ -56,6 +65,7 @@ namespace Babylon
 			inline const DAENodeBuilder * GetParent() {
 				return m_parent;
 			}
+
 
 			inline DAENodeBuilder& WithId(COLLADAFW::UniqueId id) {
 				m_id = id;
@@ -104,6 +114,8 @@ namespace Babylon
 				m_light = light;
 				return *this;
 			}
+
+
 		};
 	}
 }

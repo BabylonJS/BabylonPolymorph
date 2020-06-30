@@ -173,9 +173,11 @@ int JTToAsset3DConsumer::ConsumePart(JtkPart* node) {
 
     std::shared_ptr<MeshBuilder<JTToAsset3DConsumer>> meshBuilderPtr = std::make_shared<MeshBuilder<JTToAsset3DConsumer>>(this);
 
-    JtkString name = node->name();
-    if (!name.isEmpty()) {
-        meshBuilderPtr->WithName(JtkString2String(name));
+    JtkString jtkname = node->name();
+    std::string  name;
+    if (!jtkname.isEmpty()) {
+        name = JtkString2String(jtkname);
+        meshBuilderPtr->WithName(name);
     }
 
     // Register the builder model
@@ -187,6 +189,9 @@ int JTToAsset3DConsumer::ConsumePart(JtkPart* node) {
         std::shared_ptr<MaterialBuilder<JTToAsset3DConsumer>> materialBuilderPtr = nullptr;
         if (node->getAttrib(0, (JtkAttrib*&)m, JtkEntity::JtkMATERIAL)) {
             materialBuilderPtr = HandleMaterial(this, m);
+            if (materialBuilderPtr) {
+                materialBuilderPtr->WithName(name);
+            }
         }
 
         std::vector<std::shared_ptr< Asset3DBuilder<Geometry, JTToAsset3DConsumer>>> geometries;
@@ -207,7 +212,11 @@ int JTToAsset3DConsumer::ConsumePart(JtkPart* node) {
                     auto gb = ConsumeShape(this, partShape, lod);
                     if (gb) {
                         // register the material if none has been set
-                        if (materialBuilderPtr && !gb->GetMaterial()) {
+                        auto m = gb->GetMaterial();
+                        if (m) {
+                            // name the material 
+                            m->WithName(name + ".primitive" + std::to_string(shNum));
+                        } else {
                             gb->WithMaterial(materialBuilderPtr);
                         }
                         geometries.push_back(gb);

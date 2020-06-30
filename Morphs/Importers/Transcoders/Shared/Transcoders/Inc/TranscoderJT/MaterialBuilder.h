@@ -44,6 +44,7 @@ namespace Babylon
 						*(desc->AddLayer((LayerType)i)) = *m_layers[i];
 					}
 				}
+				desc->SetName(GetName());
 				return desc;
 			}
 

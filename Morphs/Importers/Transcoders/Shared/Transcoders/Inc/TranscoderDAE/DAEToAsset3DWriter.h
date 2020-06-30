@@ -37,6 +37,11 @@ namespace Babylon
 		struct DAEAnimationData;
 		struct DAESkin;
 
+		namespace Animation {
+			class Skeleton;
+		}
+
+
 		class DAEToAsset3DWriterContext {
 		public:
 			static const COLLADAFW::FileInfo::UpAxisType defaultUpAxis = COLLADAFW::FileInfo::UpAxisType::Y_UP;
@@ -55,7 +60,6 @@ namespace Babylon
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAEAnimationData>> m_animationData;
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAESkinData>> m_skinDataLibrary;
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<DAESkinController>> m_skinControllerLibrary;
-			std::vector<std::shared_ptr<DAESkeletonBuilder>> m_skeletonLibrary;
 
 			/// builders.
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<IDAEMeshBuilder>> m_geometryLibrary;
@@ -67,6 +71,7 @@ namespace Babylon
 
 
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<Asset3D>> m_visualSceneLibrary;
+			std::map<COLLADAFW::UniqueId, std::shared_ptr<Animation::Skeleton>> m_skeletonLibrary;
 			std::map<COLLADAFW::UniqueId, COLLADAFW::UniqueId> m_materialUIdToEffectIndex;
 			std::map<COLLADAFW::String, COLLADAFW::UniqueId> m_materialOriginalIdToEffectIndex;
 
@@ -98,7 +103,7 @@ namespace Babylon
 				return m_skinControllerLibrary;
 			}
 
-			std::vector<std::shared_ptr<DAESkeletonBuilder>>& getSkeletonLibrary() {
+			std::map<COLLADAFW::UniqueId,std::shared_ptr<Animation::Skeleton>>& getSkeletonLibrary() {
 				return m_skeletonLibrary;
 			}
 

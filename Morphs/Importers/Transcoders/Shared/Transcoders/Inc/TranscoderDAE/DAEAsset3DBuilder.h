@@ -36,6 +36,7 @@ namespace Babylon
 			}
 
 			virtual std::shared_ptr<T> Build() = 0 ;
+
 		};
 
 		template<typename T>

@@ -258,9 +258,6 @@
     <ClCompile Include="..\Source\TranscoderDAE\DAEAnimation.cpp">
       <Filter>Source\Importers\ImporterDAE</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\TranscoderDAE\DAESkeletonBuilder.cpp">
-      <Filter>Source\Importers\ImporterDAE\Builders\Animations</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\TranscoderDAE\DAESkinGeometryBuilder.cpp">
       <Filter>Source\Importers\ImporterDAE\Builders\Animations</Filter>
     </ClCompile>
@@ -405,9 +402,6 @@
     <ClInclude Include="..\Inc\TranscoderDAE\DAESkinGeometryBuilder.h">
       <Filter>Public Headers\Importers\ImporterDAE\Builders\Animations</Filter>
     </ClInclude>
-    <ClInclude Include="..\Inc\TranscoderDAE\DAESkeletonBuilder.h">
-      <Filter>Public Headers\Importers\ImporterDAE\Builders\Animations</Filter>
-    </ClInclude>
     <ClInclude Include="..\Inc\TranscoderDAE\DAEGeometryBuilder.h">
       <Filter>Public Headers\Importers\ImporterDAE\Builders\Core</Filter>
     </ClInclude>
@@ -464,6 +458,9 @@
     </ClInclude>
     <ClInclude Include="..\Inc\TranscoderJT\JTToAsset3DConsumer.h">
       <Filter>Public Headers\Importers\ImporterJT</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\TranscoderDAE\DAEJointBuilder.h">
+      <Filter>Public Headers\Importers\ImporterDAE\Builders\Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

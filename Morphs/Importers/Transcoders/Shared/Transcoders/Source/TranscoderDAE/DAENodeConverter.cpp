@@ -16,6 +16,7 @@
 #include <TranscoderDAE/DAECameraBuilder.h>
 #include <TranscoderDAE/DAELightBuilder.h>
 #include <TranscoderDAE/DAENodeBuilder.h>
+#include <TranscoderDAE/DAEJointBuilder.h>
 #include <TranscoderDAE/DAESkinGeometryBuilder.h>
 
 #include <Asset3D/Asset3D.h>
@@ -100,7 +101,19 @@ namespace {
 
 std::shared_ptr<DAENodeBuilder> DAENodeConverter::Convert(const COLLADAFW::Node* colladaNode) {
 
-	std::shared_ptr<DAENodeBuilder> builder = std::make_shared<DAENodeBuilder>(getContext());
+	std::shared_ptr<DAENodeBuilder> builder = nullptr;
+	
+	switch (colladaNode->getType()) {
+		case COLLADAFW::Node::NodeType::NODE: {
+			builder = std::make_shared<DAENodeBuilder>(getContext());
+			break;
+		}
+		case COLLADAFW::Node::NodeType::JOINT: {
+			builder = std::make_shared<DAEJointBuilder>(getContext());
+			break;
+		}
+	}
+	
 	builder->WithId(colladaNode->getUniqueId()).WithNodeType(colladaNode->getType()).WithName(NAME_OR_ID(colladaNode));
 	getContext()->getNodeLibrary()[colladaNode->getUniqueId()] = builder;
 
@@ -112,10 +125,11 @@ std::shared_ptr<DAENodeBuilder> DAENodeConverter::Convert(const COLLADAFW::Node*
 		builder->WithTransform(toBabylonMatrix(matrix));
 	}
 
+	/// GEOMETRY
+	/// --------
 	/// Note : because Asset3D node do NOT accept more than one Mesh, we might create direct children to hold differents meshes
 	std::vector<std::shared_ptr<Mesh>> meshes;
 
-	/// GEOMETRY
 	COLLADAFW::InstanceGeometryPointerArray colladaGeometries = colladaNode->getInstanceGeometries();
 	size_t countGeometry = colladaGeometries.getCount();
 	size_t meshCount = 0;
@@ -133,7 +147,8 @@ std::shared_ptr<DAENodeBuilder> DAENodeConverter::Convert(const COLLADAFW::Node*
 			COLLADAFW::MaterialBindingArray& colladaBindMaterials = colladaInstance->getMaterialBindings();
 			if (colladaBindMaterials.getCount()) {
 				mesh = BuildMeshWithBindingMaterial(colladaBindMaterials, meshBuilderPtr, getContext());
-			} else {
+			}
+			else {
 				mesh = BuildMeshWithDefaultMaterial(meshBuilderPtr, getContext());
 			}
 #else
@@ -143,7 +158,7 @@ std::shared_ptr<DAENodeBuilder> DAENodeConverter::Convert(const COLLADAFW::Node*
 				if (meshCount == 0) {
 					builder->WithMesh(mesh);
 					continue;
-				} 
+				}
 				// subsequent mesh will be saved on dedicated children
 				std::shared_ptr<DAENodeBuilder> tmp = std::make_shared<DAENodeBuilder>(m_context);
 				if (tmp) {
@@ -151,7 +166,8 @@ std::shared_ptr<DAENodeBuilder> DAENodeConverter::Convert(const COLLADAFW::Node*
 					builder->WithChild(tmp);
 				}
 				meshCount++;
-			} else {
+			}
+			else {
 				TRACE_WARN(DAENodeConverter, "Unable to build mesh %s", meshBuilderPtr->GetName());
 			}
 		}
@@ -177,7 +193,8 @@ std::shared_ptr<DAENodeBuilder> DAENodeConverter::Convert(const COLLADAFW::Node*
 			COLLADAFW::MaterialBindingArray& colladaBindMaterials = colladaInstance->getMaterialBindings();
 			if (colladaBindMaterials.getCount()) {
 				mesh = BuildMeshWithBindingMaterial(colladaBindMaterials, meshBuilderPtr, getContext());
-			} else {
+			}
+			else {
 				mesh = BuildMeshWithDefaultMaterial(meshBuilderPtr, getContext());
 			}
 #else
@@ -236,7 +253,8 @@ std::shared_ptr<DAENodeBuilder> DAENodeConverter::Convert(const COLLADAFW::Node*
 				tmp->WithCamera(cb->Build()).WithName(cb->GetName());
 				builder->WithChild(tmp);
 			}
-		} else {
+		}
+		else {
 			TRACE_WARN(DAENodeConverter, "Unable to find camera %s", colladaUid.toAscii());
 		}
 	}
@@ -262,12 +280,12 @@ std::shared_ptr<DAENodeBuilder> DAENodeConverter::Convert(const COLLADAFW::Node*
 				tmp->WithLight(lb->Build()).WithName(lb->GetName());
 				builder->WithChild(tmp);
 			}
-		} else {
+		}
+		else {
 			TRACE_WARN(DAENodeConverter, "Unable to find light %s", colladaUid.toAscii());
 		}
 	}
 #endif
-
 
 	/// HIERARCHY
 	const COLLADAFW::NodePointerArray colladaChildren = colladaNode->getChildNodes();

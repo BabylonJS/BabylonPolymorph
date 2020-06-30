@@ -10,9 +10,9 @@
 #include <TranscoderDAE/DAECoreConverter.h>
 #include <TranscoderDAE/DAENodeBuilder.h>
 #include <TranscoderDAE/DAEAnimation.h>
-#include <TranscoderDAE/DAESkeletonBuilder.h>
 
 #include <Asset3D/Asset3D.h>
+#include <Asset3D/Animation.h>
 
 #include "COLLADAFWVisualScene.h"
 
@@ -53,15 +53,14 @@ std::shared_ptr<Asset3D> DAEVisualSceneConverter::Convert(const COLLADAFW::Visua
 	}
 
 	/// skin
-	for (auto skeletonBuilder : getContext()->getSkeletonLibrary()) {
-		Animation::Skeleton sk = *(skeletonBuilder->Build());
-		scene->AddSkeleton(std::move(sk));
+	for (auto skeletonPair : getContext()->getSkeletonLibrary()) {
+		Animation::Skeleton skeleton = *skeletonPair.second; // local copy
+		scene->AddSkeleton(std::move(skeleton));
 	}
 
 	/// morphs
 
 	/// animations
-
 
 	return scene;
 }

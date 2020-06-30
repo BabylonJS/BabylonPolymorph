@@ -6,7 +6,6 @@
 #include "TranscodersPch.h"
 
 #include <TranscoderDAE/DAEAnimationConverter.h>
-#include <TranscoderDAE/DAESkeletonBuilder.h>
 #include <COLLADAFWAnimation.h>
 #include <COLLADAFWAnimationCurve.h>
 

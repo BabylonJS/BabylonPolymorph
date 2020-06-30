@@ -8,7 +8,6 @@
 #include <TranscoderDAE/DAEAnimation.h>
 #include <TranscoderDAE/DAEConverter.h>
 #include <TranscoderDAE/DAENodeAnimationBuilder.h>
-#include <TranscoderDAE/DAESkeletonBuilder.h>
 
 namespace Babylon
 {

@@ -15,7 +15,8 @@ using namespace Babylon::Transcoder;
 
 std::shared_ptr<Mesh> DAESkinGeometryBuilder::Build() {
 
-	int n = m_controller->data->getNumberOfComponents();
+	int n0 = m_controller->data->getNumberOfComponents();
+	int n = n0;
 	/// Asset3D do NOT support more than 4 joints/weights per vertex
 	if (n > MAX_JOINT_INFLUENCES) {
 		TRACE_WARN(DAESkinGeometryBuilder, "Asset 3D currently accept ONLY %x joints influences - given %x joints - extra items will be ignored.", MAX_JOINT_INFLUENCES, n);
@@ -46,7 +47,7 @@ std::shared_ptr<Mesh> DAESkinGeometryBuilder::Build() {
 			uint32_t index = indices[i];
 			float* weight = m_controller->data->weights[originalIndex];
 			uint32_t* joint = m_controller->data->jointIndices[originalIndex];
-			uint32_t offset = index * n;
+			uint32_t offset = index * n0; // we seek offset using original number of component
 
 			/// note : keeping in mind as indices are describnig faces, this should be repeated several time at the same offset
 			joints.insert(joints.begin() + offset, joint, joint + n);
