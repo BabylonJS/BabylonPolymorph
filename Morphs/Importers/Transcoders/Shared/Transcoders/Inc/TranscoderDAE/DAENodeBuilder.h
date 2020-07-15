@@ -52,8 +52,9 @@ namespace Babylon
 
 			std::shared_ptr<SceneNode> Build(CircularMap* map, std::function<void(DAENodeBuilder*, std::shared_ptr<SceneNode>)> fnCallback);
 
-			std::shared_ptr<SceneNode> DAENodeBuilder::BuildController();
-	
+			void BuildController(std::shared_ptr<SceneNode> node);
+			//std::shared_ptr<Mesh> BuildSkin(std::shared_ptr<DAESkinController> controller);
+
 			inline COLLADAFW::Node::NodeType GetType() {
 				return m_type;
 			}

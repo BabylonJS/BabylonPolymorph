@@ -23,10 +23,10 @@ std::shared_ptr<Mesh> DAESkinGeometryBuilder::Build() {
 		n = MAX_JOINT_INFLUENCES;
 	}
 
-	m_controller->mesh->Save();
+	m_controller->meshBuilder->Save();
 
 	/// assign weight and joint to underlying primitives
-	for (auto geom : m_controller->mesh->GetGeometries()) {
+	for (auto geom : m_controller->meshBuilder->GetGeometries()) {
 
 		/// get an ordered list of used vertex (POSITION semantic) inside this primitive
 		std::vector<uint32_t> mapping = geom->GetOriginalIndices();
@@ -47,19 +47,19 @@ std::shared_ptr<Mesh> DAESkinGeometryBuilder::Build() {
 			uint32_t index = indices[i];
 			float* weight = m_controller->data->weights[originalIndex];
 			uint32_t* joint = m_controller->data->jointIndices[originalIndex];
-			uint32_t offset = index * n0; // we seek offset using original number of component
 
-			/// note : keeping in mind as indices are describnig faces, this should be repeated several time at the same offset
-			joints.insert(joints.begin() + offset, joint, joint + n);
-			weights.insert(weights.begin() + offset, weight, weight + n);
+			for (int k = 0; k != n; k++) {
+				joints.push_back(joint[k]);
+				weights.push_back(weight[k]);
+			}
 		}
 
 		geom->WithJoints(std::move(joints), std::move(weights));
 	}
 
-	std::shared_ptr<Mesh> m = m_controller->mesh->Build();
-	m_controller->mesh->Restore();
+	std::shared_ptr<Mesh> mesh = m_controller->meshBuilder->Build();
+	m_controller->meshBuilder->Restore();
 
-	return m;
+	return mesh;
 }
 

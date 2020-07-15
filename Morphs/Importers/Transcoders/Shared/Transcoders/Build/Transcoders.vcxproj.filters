@@ -459,8 +459,5 @@
     <ClInclude Include="..\Inc\TranscoderJT\JTToAsset3DConsumer.h">
       <Filter>Public Headers\Importers\ImporterJT</Filter>
     </ClInclude>
-    <ClInclude Include="..\Inc\TranscoderDAE\DAEJointBuilder.h">
-      <Filter>Public Headers\Importers\ImporterDAE\Builders\Core</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

@@ -8,7 +8,6 @@
 
 
 #include <TranscoderDAE/DAENodeBuilder.h>
-#include <TranscoderDAE/DAEJointBuilder.h>
 #include <TranscoderDAE/DAEAnimation.h>
 
 DEFINE_TRACE_AREA(DAENodeBuilder, 0);
@@ -23,10 +22,13 @@ std::shared_ptr<SceneNode> DAENodeBuilder::Build(CircularMap* map, std::function
 		TRACE_WARN(DAENodeBuilder, "Circular reference detected %s", m_id.toAscii());
 		return nullptr;
 	}
+	map->push_back(this);
 
+	// build the node
 	std::shared_ptr<SceneNode> ptr = std::make_shared<SceneNode>();
 	ptr->SetName(GetName());
 
+	// do we have transform
 	if (m_transforms.size()) {
 		Babylon::Utils::Math::Matrix t = Babylon::Utils::Math::Matrix::Identity;
 		for (size_t i = 0; i != m_transforms.size(); i++) {
@@ -36,23 +38,27 @@ std::shared_ptr<SceneNode> DAENodeBuilder::Build(CircularMap* map, std::function
 		ptr->SetTransform(t);
 	}
 
+	// mesh is already baked - on next version, we gonna have a MeshInstanceBuilder
 	if (m_mesh) {
 		ptr->SetMesh(m_mesh);
 	}
 
+	// do we have camera binded
 	if (m_camera) {
 		ptr->SetCamera(m_camera);
 	}
 
+	// light is an extension, may be dismissed in futur version
 	if (m_light) {
 		ptr->SetLight(m_light);
 	}
 
+	// node instances
 	if (m_instances.size()) {
 		for (size_t i = 0; i != m_instances.size(); i++) {
 			std::shared_ptr<DAENodeBuilder> nb = GetContext()->getNodeLibrary()[m_instances[i]];
 			if (nb) {
-				std::shared_ptr<SceneNode> sn = nb->Build();
+				std::shared_ptr<SceneNode> sn = nb->Build(callback);
 				if (sn) {
 					ptr->AddChildNode(sn);
 				}
@@ -62,14 +68,12 @@ std::shared_ptr<SceneNode> DAENodeBuilder::Build(CircularMap* map, std::function
 		}
 	}
 
+	// skin 
 	if (m_controller.isValid()) {
-
-		std::shared_ptr<SceneNode> controllerNode = BuildController();
-		if (controllerNode) {
-			ptr->AddChildNode(controllerNode);
-		}
+		BuildController(ptr);
 	}
 
+	// hierarchy..
 	if (m_children.size()) {
 		for (size_t i = 0; i != m_children.size(); i++) {
 			std::shared_ptr<DAENodeBuilder> nb = m_children[i];
@@ -89,6 +93,57 @@ std::shared_ptr<SceneNode> DAENodeBuilder::Build(CircularMap* map, std::function
 	return ptr;
 }
 
+//
+//std::shared_ptr<Mesh> DAENodeBuilder::BuildSkin(std::shared_ptr<DAESkinController> controller) {
+//
+//	int n0 = controller->data->getNumberOfComponents();
+//	int n = n0;
+//	/// Asset3D do NOT support more than 4 joints/weights per vertex
+//	if (n > MAX_JOINT_INFLUENCES) {
+//		TRACE_WARN(DAENodeBuilder, "Asset 3D currently accept ONLY %x joints influences - given %x joints - extra items will be ignored.", MAX_JOINT_INFLUENCES, n);
+//		n = MAX_JOINT_INFLUENCES;
+//	}
+//
+//	controller->meshBuilder->Save();
+//
+//	/// assign weight and joint to underlying primitives
+//	for (auto geom : controller->meshBuilder->GetGeometries()) {
+//
+//		/// get an ordered list of used vertex (POSITION semantic) inside this primitive
+//		std::vector<uint32_t> mapping = geom->GetOriginalIndices();
+//		std::vector<uint32_t> indices = geom->GetIndices();
+//
+//		/**
+//		 * assign weigth & joints. We gona flatten array[][n].
+//		 */
+//		size_t size = controller->data->weights.size() * n;
+//		std::vector<float> weights;
+//		weights.reserve(size);
+//		std::vector<uint32_t> joints;
+//		joints.reserve(size);
+//
+//		for (int i = 0; i != mapping.size(); i++) {
+//
+//			uint32_t originalIndex = mapping[i];
+//			uint32_t index = indices[i];
+//			float* weight = controller->data->weights[originalIndex];
+//			uint32_t* joint = controller->data->jointIndices[originalIndex];
+//			uint32_t offset = index * n0; // we seek offset using original number of component
+//
+//			/// note : keeping in mind as indices are describnig faces, this should be repeated several time at the same offset
+//			joints.insert(joints.begin() + offset, joint, joint + n);
+//			weights.insert(weights.begin() + offset, weight, weight + n);
+//		}
+//
+//		geom->WithJoints(std::move(joints), std::move(weights));
+//	}
+//
+//	std::shared_ptr<Mesh> mesh = controller->meshBuilder->Build();
+//	controller->meshBuilder->Restore();
+//
+//	return mesh;
+//}
+
 /** 
  Build controller node which is 
  + node
@@ -96,15 +151,11 @@ std::shared_ptr<SceneNode> DAENodeBuilder::Build(CircularMap* map, std::function
    + skeleton nodes
  And register Skeleton objet to the context.
  */
-std::shared_ptr<SceneNode> DAENodeBuilder::BuildController() {
+void DAENodeBuilder::BuildController(std::shared_ptr<SceneNode> node) {
 
-	std::shared_ptr<SceneNode> ptr = std::make_shared<SceneNode>();
 	std::shared_ptr<DAESkinController> SkinController = GetContext()->getSkinControllerLibrary()[m_controller];
+	
 	if (SkinController) {
-
-		/// build the skin (underlying type is DAESkinGeometryBuilder)
-		std::shared_ptr<SceneNode> meshNode = ptr->CreateChildNode();
-		meshNode->SetMesh(SkinController->mesh->Build());
 
 		/// Deploying the joint implies to find the root of the skeleton -> ONLY ONE root is allowed so far
 		COLLADAFW::UniqueId rootId = findRoots(SkinController->joints, m_context)[0];
@@ -114,7 +165,7 @@ std::shared_ptr<SceneNode> DAENodeBuilder::BuildController() {
 			std::map<COLLADAFW::UniqueId, std::shared_ptr<SceneNode>> asset3DMap;
 			std::map<COLLADAFW::UniqueId, COLLADAFW::UniqueId> parentIndex;
 
-			// build the skeleton node, mapping the builded node with the ColladaOriginal id
+			// build the skeleton node, mapping the builded node and parents with the ColladaOriginal id using callback traverse function
 			std::shared_ptr<SceneNode> skeletonRootNode = skeletonRootNodeBuilder->Build([&]( DAENodeBuilder* builder, std::shared_ptr<SceneNode> nodePtr){
 				asset3DMap[builder->m_id] = nodePtr;
 				parentIndex[builder->m_id] = builder->m_id == rootId ? COLLADAFW::UniqueId::INVALID : builder->GetParent()->m_id;
@@ -122,7 +173,7 @@ std::shared_ptr<SceneNode> DAENodeBuilder::BuildController() {
 			
 			if (skeletonRootNode) {
 				//// register asset nodes
-				ptr->AddChildNode(skeletonRootNode);
+				node->AddChildNode(skeletonRootNode);
 
 				// build the skeleton
 				std::shared_ptr<Animation::Skeleton> skeletonPtr = std::make_shared<Animation::Skeleton>();
@@ -140,6 +191,10 @@ std::shared_ptr<SceneNode> DAENodeBuilder::BuildController() {
 					skeletonPtr->m_joints.push_back(j);
 				}
 				// register the asset3D skeleton into context.
+				// use the order of the skeleton declaration to set the index of skeleton, which will be translate as "skinId" attribute under gltfNode
+
+				/// bind the skin 
+				node->SetSkeletonID(GetContext()->getSkeletonLibrary().size());
 				GetContext()->getSkeletonLibrary()[m_controller] = skeletonPtr;
 			}
 			else {
@@ -150,7 +205,6 @@ std::shared_ptr<SceneNode> DAENodeBuilder::BuildController() {
 			TRACE_WARN(DAENodeBuilder, "Unable to find Skeleton root %s", rootId.toAscii());
 		}
 	}
-	return ptr;
 }
 
 

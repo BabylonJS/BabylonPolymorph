@@ -55,7 +55,7 @@ namespace Babylon
 
 		struct DAESkinController {
 			std::shared_ptr<DAESkinData> data;
-			std::shared_ptr<IDAEMeshBuilder> mesh;
+			std::shared_ptr<IDAEMeshBuilder> meshBuilder;
 			std::vector<COLLADAFW::UniqueId> joints;
 		};
 

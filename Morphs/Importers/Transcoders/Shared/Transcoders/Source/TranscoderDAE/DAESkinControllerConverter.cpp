@@ -17,7 +17,7 @@ using namespace Babylon::Transcoder;
 
 std::shared_ptr<DAESkinController> DAESkinControllerConverter::Convert(const COLLADAFW::SkinController* colladaController) {
 	
-	std::shared_ptr<DAESkinController> builder = std:: make_shared<DAESkinController>();
+	std::shared_ptr<DAESkinController> controller = std:: make_shared<DAESkinController>();
 
 	COLLADAFW::UniqueId skinControllerDataId = colladaController->getSkinControllerData();
 	std::shared_ptr<DAESkinData> data = getContext()->getSkinDataLibrary()[skinControllerDataId];
@@ -25,11 +25,11 @@ std::shared_ptr<DAESkinController> DAESkinControllerConverter::Convert(const COL
 	std::shared_ptr<IDAEMeshBuilder> mb = getContext()->getGeometryLibrary()[colladaController->getSource()];
 	if (!mb) {
 		TRACE_WARN(DAESkinControllerConverter, "Not able to found mesh source %s - Controller will be ignored.", colladaController->getSource().toAscii());
-		return builder;
+		return controller;
 	}
 
-	builder->mesh = mb;
-	builder->data =data;
+	controller->meshBuilder = mb; 
+	controller->data =data;
 
 #ifdef SKIN_NORMALIZE_WEIGHT
 	int n = data->getNumberOfComponents();
@@ -58,8 +58,8 @@ std::shared_ptr<DAESkinController> DAESkinControllerConverter::Convert(const COL
 	/// register joint index as Node COLLADA Unique ID. We can retreive it later using m_context->GetLibraryNode() in order to build the skeleton
 	const COLLADAFW::UniqueIdArray& jointIds = colladaController->getJoints();
 	for (size_t i = 0; i < jointIds.getCount(); i++) {
-		builder->joints.push_back(jointIds[i]);
+		controller->joints.push_back(jointIds[i]);
 	}
 
-	return builder;
+	return controller;
 }

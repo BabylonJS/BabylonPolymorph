@@ -31,7 +31,7 @@ namespace Babylon
 			}
 
 			const std::vector<std::shared_ptr<DAEGeometryBuilder>> GetGeometries(std::function<bool(const const std::shared_ptr<DAEGeometryBuilder>&)> predicate = nullptr) {
-				return m_controller->mesh->GetGeometries(predicate);
+				return m_controller->meshBuilder->GetGeometries(predicate);
 			}
 		};
 	}

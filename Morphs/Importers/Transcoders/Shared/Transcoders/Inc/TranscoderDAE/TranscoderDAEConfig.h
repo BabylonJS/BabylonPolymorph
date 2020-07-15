@@ -52,4 +52,4 @@ enum InvertYMode {
 
 /// Animation
 #define SKIN_NORMALIZE_WEIGHT /// ensure sum of weight equal to 1.
-#define MAX_JOINT_INFLUENCES 16  /// Max used by gltf is TYPE_MAT4 -> 16
+#define MAX_JOINT_INFLUENCES 4 /// Max used by gltf is TYPE_MAT4 -> 16

@@ -128,7 +128,6 @@
     <ClInclude Include="..\Inc\ExporterSTL\ExporterAsciiStl.h" />
     <ClInclude Include="..\Inc\ExporterTexture\ExporterTexture.h" />
     <ClInclude Include="..\Inc\TranscoderDAE\DAEAnimation.h" />
-    <ClInclude Include="..\Inc\TranscoderDAE\DAEJointBuilder.h" />
     <ClInclude Include="..\Inc\TranscoderDAE\DAENodeAnimationBuilder.h" />
     <ClInclude Include="..\Inc\TranscoderDAE\DAEAnimationConverter.h" />
     <ClInclude Include="..\Inc\TranscoderDAE\DAECameraBuilder.h" />

@@ -16,7 +16,6 @@
 #include <TranscoderDAE/DAECameraBuilder.h>
 #include <TranscoderDAE/DAELightBuilder.h>
 #include <TranscoderDAE/DAENodeBuilder.h>
-#include <TranscoderDAE/DAEJointBuilder.h>
 #include <TranscoderDAE/DAESkinGeometryBuilder.h>
 
 #include <Asset3D/Asset3D.h>
@@ -101,18 +100,7 @@ namespace {
 
 std::shared_ptr<DAENodeBuilder> DAENodeConverter::Convert(const COLLADAFW::Node* colladaNode) {
 
-	std::shared_ptr<DAENodeBuilder> builder = nullptr;
-	
-	switch (colladaNode->getType()) {
-		case COLLADAFW::Node::NodeType::NODE: {
-			builder = std::make_shared<DAENodeBuilder>(getContext());
-			break;
-		}
-		case COLLADAFW::Node::NodeType::JOINT: {
-			builder = std::make_shared<DAEJointBuilder>(getContext());
-			break;
-		}
-	}
+	std::shared_ptr<DAENodeBuilder> builder = std::make_shared<DAENodeBuilder>(getContext());
 	
 	builder->WithId(colladaNode->getUniqueId()).WithNodeType(colladaNode->getType()).WithName(NAME_OR_ID(colladaNode));
 	getContext()->getNodeLibrary()[colladaNode->getUniqueId()] = builder;
