@@ -83,9 +83,6 @@
     <ProjectReference Include="..\..\..\CoreUtils\Shared\DAESDK\DAESDK.vcxproj">
       <Project>{c41f6d22-f354-4d1f-a04d-a9d39e94f4c1}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\CoreUtils\Shared\JTSDK\cpp\JTSDK.vcxproj">
-      <Project>{968e240e-fbaf-4df2-a49e-19b02d59301b}</Project>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);</LibraryPath>
@@ -94,7 +91,7 @@
     <Link>
       <AdditionalOptions Condition="'$(Configuration)'=='Debug'">/NODEFAULTLIB:msvcrt.lib %(AdditionalOptions)</AdditionalOptions>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>d3d11.lib;dxgi.lib;Ws2_32.lib;ole32.lib;advapi32.lib;$(CoreUtilsSharedDirectory)JTSDK\JTOpenToolkit\10_5\lib\win_64_VS2017\JtTk105.lib;$(CoreUtilsSharedDirectory)JTSDK\JTOpenToolkit\10_5\lib\win_64_VS2017\plmxmlSDK.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;dxgi.lib;Ws2_32.lib;ole32.lib;advapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </AdditionalLibraryDirectories>
     </Link>

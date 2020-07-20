@@ -121,18 +121,6 @@
     <Filter Include="Source\Importers\ImporterDAE\Builders\Core">
       <UniqueIdentifier>{7ae63669-cb63-47d2-9b40-969dc2626cbe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Importers\ImporterJT">
-      <UniqueIdentifier>{4be5ee78-4fdc-4813-8da5-f38bfd0dee29}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Public Headers\Importers\ImporterJT">
-      <UniqueIdentifier>{2b4c90c8-b185-4c9b-b110-da183b9977ac}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Public Headers\Importers\ImporterJT\Builders">
-      <UniqueIdentifier>{4daaef34-40db-4f8c-8506-8263a3334b56}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Public Headers\Importers\ImporterJT\Builders\Core">
-      <UniqueIdentifier>{fec845fd-f64b-4bbd-a4e2-3d1956ec4ece}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -263,15 +251,6 @@
     </ClCompile>
     <ClCompile Include="..\Source\TranscoderDAE\DAENodeBuilder.cpp">
       <Filter>Source\Importers\ImporterDAE\Builders\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\TranscoderJT\TranscoderJT.cpp">
-      <Filter>Source\Importers\ImporterJT</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\TranscoderJT\JTToAsset3DConsumer.cpp">
-      <Filter>Source\Importers\ImporterJT</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\TranscoderJT\TranscoderJTUtils.cpp">
-      <Filter>Source\Importers\ImporterJT</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -434,30 +413,6 @@
     </ClInclude>
     <ClInclude Include="..\Inc\TranscoderDAE\DAEFXConverter.h">
       <Filter>Public Headers\Importers\ImporterDAE\Converters\FX</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Inc\TranscoderJT\TranscoderJT.h">
-      <Filter>Public Headers\Importers\ImporterJT</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Inc\TranscoderJT\GeometryBuilder.h">
-      <Filter>Public Headers\Importers\ImporterJT\Builders\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Inc\TranscoderJT\Asset3DBuilder.h">
-      <Filter>Public Headers\Importers\ImporterJT</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Inc\TranscoderJT\MeshBuilder.h">
-      <Filter>Public Headers\Importers\ImporterJT\Builders\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Inc\TranscoderJT\MaterialBuilder.h">
-      <Filter>Public Headers\Importers\ImporterJT\Builders\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Inc\TranscoderJT\TranscoderJTConfig.h">
-      <Filter>Public Headers\Importers\ImporterJT</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Inc\TranscoderJT\TranscoderJTUtils.h">
-      <Filter>Public Headers\Importers\ImporterJT</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Inc\TranscoderJT\JTToAsset3DConsumer.h">
-      <Filter>Public Headers\Importers\ImporterJT</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
