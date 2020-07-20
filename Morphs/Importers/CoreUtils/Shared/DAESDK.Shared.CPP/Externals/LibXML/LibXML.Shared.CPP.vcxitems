@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{a3e0531b-ea04-4885-b7ff-10d341414026}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\c14n.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\catalog.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\chvalid.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\debugXML.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\dict.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\DOCBparser.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\encoding.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\entities.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\error.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\globals.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\hash.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\HTMLparser.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\HTMLtree.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\legacy.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\list.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\parser.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\parserInternals.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\pattern.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\relaxng.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\SAX.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\SAX2.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\threads.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\tree.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\uri.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\valid.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\xinclude.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\xlink.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\xmlIO.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\xmlmemory.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\xmlmodule.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\xmlreader.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\xmlregexp.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\xmlsave.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\xmlschemas.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\xmlschemastypes.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\xmlstring.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\xmlunicode.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\xmlwriter.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\xpath.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\include\win32config.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\include\wsockcompat.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\Submodules\openCOLLADA\Externals\LibXML\libxml.h" />
+  </ItemGroup>
+</Project>

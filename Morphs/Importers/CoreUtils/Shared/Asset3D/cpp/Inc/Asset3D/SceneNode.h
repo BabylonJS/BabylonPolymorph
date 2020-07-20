@@ -20,6 +20,7 @@ namespace Babylon
         class MaterialDescriptor;
         class Mesh;
         class Camera;
+        class Light;
 
         class SceneNode : public ITraversableWithName
         {
@@ -85,6 +86,9 @@ namespace Babylon
             const std::shared_ptr<Camera> GetCamera() const;
             void SetCamera(std::shared_ptr<Camera> camera);
 
+            const std::shared_ptr<Light> GetLight() const;
+            void SetLight(std::shared_ptr<Light> light);
+
             const std::vector<float>& GetMorphWeights() const { return m_morphWeights; }
             void SetMorphWeights(const std::vector<float>& weights) { m_morphWeights = weights; }
 
@@ -100,6 +104,7 @@ namespace Babylon
             std::vector<std::shared_ptr<SceneNode>> m_children;
             std::shared_ptr<Mesh> m_mesh;
             std::shared_ptr<Camera> m_camera;
+            std::shared_ptr<Light> m_light;
             Animation::SkeletonID m_skeletonId = Animation::NullSkeletonID;
 
             std::vector<float> m_morphWeights;

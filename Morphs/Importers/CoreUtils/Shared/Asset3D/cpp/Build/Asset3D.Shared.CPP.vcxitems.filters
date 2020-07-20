@@ -19,6 +19,9 @@
     <Filter Include="Public Headers\Asset3D">
       <UniqueIdentifier>{68c90f84-8d14-4e4c-84ee-70b62535c798}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Public Headers\Asset3D\Extensions">
+      <UniqueIdentifier>{c7bfc980-e3bf-4e25-8ee5-48a305747e2d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Asset3D.cpp">
@@ -112,6 +115,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Asset3D\TexturePackingUtils.h">
       <Filter>Public Headers\Asset3D</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Inc\Asset3D\Light.h">
+      <Filter>Public Headers\Asset3D\Extensions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

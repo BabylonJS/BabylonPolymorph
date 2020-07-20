@@ -1,0 +1,480 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{12cd8971-a3f5-4e03-8c1f-973479affa09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{f050dddf-7f09-4359-894a-5b3266d8fe5e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWAnimationClip.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWAxisInfo.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWCamera.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWColor.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWConstants.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWEffect.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWEffectCommon.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWFileInfo.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWFloatOrDoubleArray.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWFormula.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWFormulas.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWGeometry.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWImage.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWInstanceKinematicsScene.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWKinematicsController.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWKinematicsModel.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWKinematicsScene.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWLight.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWLoaderUtils.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWMaterial.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWMatrix.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWMesh.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWMeshPrimitive.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWMorphController.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWNode.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWPrecompiledHeaders.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWRenderState.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWRoot.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWRotate.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWSampler.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWScale.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWSkinController.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWSkinControllerData.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWSpline.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWTexture.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWTransformation.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWTranslate.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWUniqueId.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWValidate.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\src\COLLADAFWVisualScene.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFW.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWAnimatable.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWAnimatableFloat.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWAnimation.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWAnimationClip.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWAnimationCurve.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWAnimationList.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWAnnotate.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWArray.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWArrayPrimitiveType.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWAxisInfo.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWCamera.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWCode.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWColor.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWColorOrTexture.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWConstants.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWController.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWEdge.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWEffect.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWEffectCommon.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWException.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWFileInfo.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWFloatOrDoubleArray.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWFloatOrParam.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWFormula.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWFormulaNewParam.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWFormulas.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWGeometry.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWHashFunctions.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWILoader.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWImage.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWImageSource.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWInclude.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWIndexList.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWInstanceBase.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWInstanceBindingBase.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWInstanceCamera.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWInstanceController.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWInstanceGeometry.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWInstanceKinematicsScene.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWInstanceLight.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWInstanceNode.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWInstanceSceneGraph.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWInstanceVisualScene.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWIWriter.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWJoint.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWJointPrimitive.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWKinematicsController.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWKinematicsModel.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWKinematicsScene.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWLibraryNodes.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWLight.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWLines.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWLinestrips.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWLoaderUtils.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWLookat.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWMaterial.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWMaterialBinding.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWMatrix.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWMesh.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWMeshPrimitive.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWMeshPrimitiveWithFaceVertexCount.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWMeshVertexData.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWModifier.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWMorphController.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWMotionProfile.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWNewParam.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWNode.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWObject.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWParam.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWPass.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWPassClear.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWPassOutput.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWPassTarget.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWPointerArray.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWPolygons.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWPolylist.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWPrerequisites.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWRenderDraw.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWRenderState.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWRenderStateStatic.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWRoot.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWRotate.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWSampler.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWScale.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWScene.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWSemantic.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWSetParam.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWShader.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWShaderBlinn.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWShaderConstantFX.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWShaderElement.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWShaderLambert.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWShaderPhong.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWShear.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWSkew.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWSkinController.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWSkinControllerData.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWSpline.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWStableHeaders.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWTarget.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWTargetableValue.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWTechnique.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWTexture.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWTextureCoordinateBinding.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWTransformation.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWTranslate.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWTriangles.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWTrifans.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWTristrips.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWTypes.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWUniqueId.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWValidate.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWValueType.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\Submodules\openCOLLADA\COLLADAFramework\include\COLLADAFWVisualScene.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

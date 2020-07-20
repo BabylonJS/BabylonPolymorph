@@ -1,0 +1,332 @@
+/********************************************************
+*                                                       *
+*   Copyright (C) Microsoft. All rights reserved.       *
+*                                                       *
+********************************************************/
+#include "TranscodersPch.h"
+
+#include <iostream>
+#include <TranscoderDAE/DAEToAsset3DWriter.h>
+#include <TranscoderDAE/DAECoreConverter.h>
+#include <TranscoderDAE/DAEFXConverter.h>
+#include <TranscoderDAE/DAEGeometryBuilder.h>
+#include <TranscoderDAE/DAESkinGeometryBuilder.h>
+#include <TranscoderDAE/DAECameraBuilder.h>
+#include <TranscoderDAE/DAEFXBuilder.h>
+#include <TranscoderDAE/DAEAnimationConverter.h>
+#include <TranscoderDAE/DAEAnimation.h>
+
+#include <Asset3D\Asset3D.h>
+
+#include <COLLADAFWGeometry.h>
+#include <COLLADAFWVisualScene.h>
+#include <COLLADAFWImage.h>
+#include <COLLADAFWEffect.h>
+#include <COLLADAFWLibraryNodes.h>
+#include <COLLADAFWLight.h>
+#include <COLLADAFWAnimation.h>
+#include <COLLADAFWAnimationCurve.h>
+#include <COLLADAFWSkinControllerData.h>
+
+#include <COLLADASaxFWLIError.h>
+
+using namespace Babylon::Transcoder; 
+using namespace Babylon::Framework;
+
+DAEToAsset3DWriterContext::DAEToAsset3DWriterContext(IResourceServer* resourceServer, const std::unordered_map<std::string, std::string>& options, ICancellationTokenPtr cancellationToken) :
+	m_options(options),
+	m_cancellationToken(cancellationToken),
+	m_resourceServer(resourceServer)
+{
+	setUpAxisType(defaultUpAxis);
+}
+
+DAEToAsset3DWriterContext::~DAEToAsset3DWriterContext() {
+}
+
+void DAEToAsset3DWriterContext::setUpAxisType(COLLADAFW::FileInfo::UpAxisType t) {
+	m_upAxis = t;
+	switch (t) {
+	case COLLADAFW::FileInfo::UpAxisType::X_UP: {
+		m_upAxisTransform = Babylon::Utils::Math::Matrix(
+			0, 1, 0, 0,
+			-1, 0, 0, 0,
+			0, 0, 1, 0,
+			0, 0, 0, 1
+		);
+		break;
+	}
+	case COLLADAFW::FileInfo::UpAxisType::Z_UP: {
+		m_upAxisTransform = Babylon::Utils::Math::Matrix(
+			1, 0, 0, 0,
+			0, 0, -1, 0,
+			0, 1, 0, 0,
+			0, 0, 0, 1
+		);
+		break;
+	}
+	case COLLADAFW::FileInfo::UpAxisType::Y_UP:
+	default: {
+		m_upAxisTransform = Babylon::Utils::Math::Matrix::Identity;
+		break;
+	}
+	}
+}
+
+
+
+DAEToAsset3DWriter::DAEToAsset3DWriter(IResourceServer* resourceServer, const std::unordered_map<std::string, std::string>& options, ICancellationTokenPtr cancellationToken) :
+	m_context(resourceServer, options, cancellationToken)
+{
+}
+
+DAEToAsset3DWriter::~DAEToAsset3DWriter() {
+}
+
+std::shared_ptr<Asset3D> DAEToAsset3DWriter::getAsset3D() {
+	
+	std::shared_ptr<Asset3D> root = nullptr;
+	auto l = m_context.getVisualSceneLibrary().find(m_context.getPrimarySceneId());
+	if (l != m_context.getVisualSceneLibrary().end()) {
+		root = l->second;
+	} else  if (m_context.getVisualSceneLibrary().size()) {
+		root = m_context.getVisualSceneLibrary().begin()->second;
+	} 
+	return root ? root: std::make_shared<Asset3D>();  /// ensure we return non null ptr !
+}
+
+
+
+
+/** If this method returns true, the loader stops parsing immediately. If severity is nor CRITICAL
+and this method returns false, the loader continues loading.*/
+bool DAEToAsset3DWriter::handleError(const COLLADASaxFWL::IError* error) {
+	return false;
+}
+
+/** This method will be called if an error in the loading process occurred and the loader cannot
+continue to to load. The writer should undo all operations that have been performed.
+@param errorMessage A message containing informations about the error that occurred.
+*/
+void DAEToAsset3DWriter::cancel(const COLLADAFW::String& errorMessage) {
+}
+
+/** This is the method called. The writer hast to prepare to receive data.*/
+void DAEToAsset3DWriter::start() {
+	/// nothing to do so far
+}
+
+/** This method is called after the last write* method. No other methods will be called after this.*/
+void DAEToAsset3DWriter::finish() {
+	/// nothing to do so far
+}
+
+/** When this method is called, the writer must write the global document asset.
+@return The writer should return true, if writing succeeded, false otherwise.*/
+bool DAEToAsset3DWriter::writeGlobalAsset(const COLLADAFW::FileInfo* asset) {
+
+	DAEToAsset3DWriterContextPtr ctx = getContext();
+	const COLLADAFW::FileInfo::ValuePairPointerArray& valuePairs = asset->getValuePairArray();
+	for (size_t i = 0; i < valuePairs.getCount(); i++) {
+		const COLLADAFW::FileInfo::ValuePair* valuePair = valuePairs[i];
+		const COLLADAFW::String& key = valuePair->first;
+		if (key == "authoring_tool") {
+			ctx->SetAuthoringTool(valuePair->second);
+		}
+	}	
+	ctx->setUpAxisType(asset->getUpAxisType());
+	ctx->setScaleMeter((float)asset->getUnit().getLinearUnitMeter());
+	return true;
+}
+
+/** When this method is called, the writer must write the scene.
+@return The writer should return true, if writing succeeded, false otherwise.*/
+bool DAEToAsset3DWriter::writeScene(const COLLADAFW::Scene* scene) {
+	m_context.setPrimarySceneId(scene->getInstanceVisualScene()->getInstanciatedObjectId());
+	return true;
+}
+
+/** When this method is called, the writer must write the entire visual scene.
+@return The writer should return true, if writing succeeded, false otherwise.*/
+bool DAEToAsset3DWriter::writeVisualScene(const COLLADAFW::VisualScene* visualScene) {
+	DAEVisualSceneConverter c(&m_context);
+	std::shared_ptr<Asset3D> s = c.GetNode(visualScene);
+	if (s) {
+		m_context.getVisualSceneLibrary()[visualScene->getUniqueId()] = s;
+	}
+	return true;
+}
+
+/** 
+ * When this method is called, the writer must handle all nodes contained in the library nodes.
+ * @return The writer should return true, if writing succeeded, false otherwise.
+ **/
+bool DAEToAsset3DWriter::writeLibraryNodes(const COLLADAFW::LibraryNodes* colladaLibraryNodes) {
+	
+	const COLLADAFW::NodePointerArray nodes = colladaLibraryNodes->getNodes();
+	int count = nodes.getCount();
+	if (count) {
+		DAENodeConverter c(&m_context);
+		for (int i = 0; i != count; i++) {
+			c.Convert(nodes[i]);
+		}
+	}
+	return true;
+}
+
+/** When this method is called, the writer must write the geometry.
+@return The writer should return true, if writing succeeded, false otherwise.*/
+bool DAEToAsset3DWriter::writeGeometry(const COLLADAFW::Geometry* geometry) {
+
+	switch (geometry->getType()) {
+		case COLLADAFW::Geometry::GEO_TYPE_MESH: {
+			DAEMeshConverter c( &m_context);
+			std::shared_ptr<DAEMeshBuilder> m = c.GetNode((COLLADAFW::Mesh*)geometry);
+			if (m) {
+				m_context.getGeometryLibrary()[geometry->getUniqueId()] = m;
+			}
+			break;
+		}
+		default: {
+			return false;
+		}
+	}
+	return true;
+}
+
+/** When this method is called, the writer must write the material.
+@return The writer should return true, if writing succeeded, false otherwise.*/
+bool DAEToAsset3DWriter::writeMaterial(const COLLADAFW::Material* colladaMaterial) {
+#ifdef _IMPORT_MATERIAL
+	/// Collada material is "just" a binding to effect
+	m_context.getMaterialUIdToEffectIndex()[colladaMaterial->getUniqueId()] = colladaMaterial->getInstantiatedEffect();
+	m_context.getMaterialOriginalIdToEffectIndex()[colladaMaterial->getOriginalId()] = colladaMaterial->getInstantiatedEffect();
+#endif
+	return true;
+}
+
+/** When this method is called, the writer must write the effect.
+@return The writer should return true, if writing succeeded, false otherwise.*/
+bool DAEToAsset3DWriter::writeEffect(const COLLADAFW::Effect* colladaEffect) {
+#ifdef _IMPORT_MATERIAL
+	DAEEffectConverter c(&m_context);
+	std::shared_ptr<DAEMaterialBuilder> material = c.GetNode(colladaEffect);
+	if (material) {
+		m_context.getEffectLibrary()[colladaEffect->getUniqueId()] = material;
+	}
+#endif
+	return true;
+}
+
+/** When this method is called, the writer must write the camera.
+@return The writer should return true, if writing succeeded, false otherwise.*/
+bool DAEToAsset3DWriter::writeCamera(const COLLADAFW::Camera* colladaCamera) {
+#ifdef _IMPORT_CAMERA
+	DAECameraConverter c(&m_context);
+	std::shared_ptr<DAECameraBuilder> b = c.GetNode(colladaCamera);
+	if (b) {
+		m_context.getCameraLibrary()[colladaCamera->getUniqueId()] = b;
+	}
+#endif
+	return true;
+}
+
+/** When this method is called, the writer must write the image.
+@return The writer should return true, if writing succeeded, false otherwise.*/
+bool DAEToAsset3DWriter::writeImage(const COLLADAFW::Image* colladaImage) {
+#ifdef _IMPORT_MATERIAL
+	DAEImageConverter c(&m_context);
+	std::shared_ptr<DAETextureBuilder> texture = c.GetNode(colladaImage);
+	if (texture) {
+		m_context.getImageLibrary()[colladaImage->getUniqueId()] = texture;
+	}
+#endif
+	return true;
+}
+
+/** When this method is called, the writer must write the light.
+@return The writer should return true, if writing succeeded, false otherwise.*/
+bool DAEToAsset3DWriter::writeLight(const COLLADAFW::Light* colladaLight) {
+#ifdef _IMPORT_LIGHT
+	DAELightConverter c(&m_context);
+	std::shared_ptr<DAELightBuilder> b = c.GetNode(colladaLight);
+	if (b) {
+		m_context.getLightLibrary()[colladaLight->getUniqueId()] = b;
+	}
+#endif
+	return true;
+}
+
+/** When this method is called, the writer must write the Animation.
+@return The writer should return true, if writing succeeded, false otherwise.*/
+bool DAEToAsset3DWriter::writeAnimation(const COLLADAFW::Animation* animation) {
+	DAEAnimationConverter c(&m_context);
+	std::shared_ptr<DAEAnimationData> s = c.GetNode(animation);
+	if (s) {
+		m_context.getAnimationData()[animation->getUniqueId()] = s;
+	}
+	return true;
+}
+
+/** When this method is called, the writer must write the AnimationList.
+@return The writer should return true, if writing succeeded, false otherwise.*/
+bool DAEToAsset3DWriter::writeAnimationList(const COLLADAFW::AnimationList* animationList) {
+	return true;
+}
+
+/** When this method is called, the writer must write the AnimationClip.
+@return The writer should return true, of writing succeeded, false otherwise.*/
+bool DAEToAsset3DWriter::writeAnimationClip(const COLLADAFW::AnimationClip* animationClip) {
+	return true;
+}
+
+/** When this method is called, the writer must write the skin controller data.
+@return The writer should return true, if writing succeeded, false otherwise.*/
+bool DAEToAsset3DWriter::writeSkinControllerData(const COLLADAFW::SkinControllerData* skinControllerData) {
+	DAESkinControllerDataConverter c(&m_context);
+	std::shared_ptr<DAESkinData> s = c.GetNode(skinControllerData);
+	if (s) {
+		m_context.getSkinDataLibrary()[skinControllerData->getUniqueId()] = s;
+	}
+	return true;
+}
+
+/** When this method is called, the writer must write the controller.
+@return The writer should return true, if writing succeeded, false otherwise.*/
+bool DAEToAsset3DWriter::writeController(const COLLADAFW::Controller* controller) {
+
+	switch (controller->getControllerType()) {
+	case COLLADAFW::Controller::CONTROLLER_TYPE_SKIN: {
+		DAESkinControllerConverter c(&m_context);
+		std::shared_ptr<DAESkinController> sc = c.GetNode((const COLLADAFW::SkinController*)controller);
+		if (sc) {
+			/// Register the controller data
+			m_context.getSkinControllerLibrary()[controller->getUniqueId()] = sc;
+			/// Construct and Register the Skin geometry builder
+			m_context.getGeometryLibrary()[controller->getUniqueId()] = std::make_shared<DAESkinGeometryBuilder>(&m_context, sc);
+		}
+
+		break;
+	}
+	case COLLADAFW::Controller::CONTROLLER_TYPE_MORPH: {
+		break;
+	}
+	}
+
+	return true;
+}
+
+/** When this method is called, the writer must write the formulas. All the formulas of the entire
+COLLADA file are contained in @a formulas.
+@return The writer should return true, if writing succeeded, false otherwise.*/
+bool DAEToAsset3DWriter::writeFormulas(const COLLADAFW::Formulas* formulas) {
+	/// nothing to do so far
+	return true;
+}
+
+/** When this method is called, the writer must write the kinematics scene.
+@return The writer should return true, if writing succeeded, false otherwise.*/
+bool DAEToAsset3DWriter::writeKinematicsScene(const COLLADAFW::KinematicsScene* kinematicsScene) {
+	/// nothing to do so far
+	return true;
+}

@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  
+  <Import Condition="'$(DAESDKImported)' == 'true'" Project="Error attempting to import CoreUtilsImported twice. Condition all imports on ([ProjectName]Imported) != true." />
+  <PropertyGroup Condition="'$(ProjectName)' != 'DAESDK'">
+    <DAESDKImported>true</DAESDKImported>
+  </PropertyGroup>
+
+  <ImportGroup>
+    <Import Condition="'$(RootPathsPropsImported)' != 'true'" Project="$(CanvasRootDirectory)RootPaths.props" />
+    <Import Project="$(CoreUtilsSharedDirectory)DAESDK\ColladaPath.props" />
+  </ImportGroup>
+
+  <ItemGroup Condition="'$(ProjectName)' != 'DAESDK' and ('$(ConfigurationType)' != 'StaticLibrary' or '$(BabylonDeploymentType)' != 'None')">
+    <ProjectReference Include="$(CoreUtilsSharedDirectory)DAESDK\DAESDK.vcxproj">
+      <Project>{85016D3D-44C3-4862-AD71-7045784B3C03}</Project>
+      <Name>DAESDK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyImports>false</UseLibraryDependencyImports>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemDefinitionGroup Condition="'$(ConfigurationType)' != 'StaticLibrary' and '$(ProjectName)' != 'DAESDK'">
+    <Link>
+      <AdditionalDependencies>
+        $(CanvasBuiltLibDirectory)DAESDK\DAESDK$(Suffix).lib;
+         %(AdditionalDependencies)
+      </AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+
+  <ItemDefinitionGroup Condition="'$(ProjectName)' != 'DAESDK' and '$(ConfigurationType)' == 'StaticLibrary' and '$(BabylonDeploymentType)' == 'Project'">
+    <Lib>
+      <AdditionalDependencies>
+        $(CanvasBuiltLibDirectory)DAESDK\DAESDK$(Suffix).lib;
+        %(AdditionalDependencies)
+      </AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+</Project>

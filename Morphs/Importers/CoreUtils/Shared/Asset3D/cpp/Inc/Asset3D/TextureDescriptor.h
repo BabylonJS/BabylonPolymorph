@@ -86,6 +86,7 @@ namespace Babylon
             bool HasAlphaChannel() const;
 
             void ConvertGrayscaleToNormalMap();
+            void InvertY();
 
         private:
             std::vector<uint8_t> EncodeTo(TextureContainer container, TextureEncoding encoding, uint32_t width, uint32_t height, uint8_t* data, TextureEncoding dataEncoding) const;

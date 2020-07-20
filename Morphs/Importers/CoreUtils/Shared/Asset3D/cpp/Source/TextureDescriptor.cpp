@@ -222,3 +222,33 @@ BGRAImage TextureDescriptor::EncodeToBGRA(uint32_t width, uint32_t height) const
 
     return result;
 }
+
+void TextureDescriptor::InvertY() {
+
+    /// NOTE : we may optimize memory comsumption when image is already stored as rawdada
+    auto bgra = EncodeToBGRA();
+
+    CanvasTex::Image image;
+    image.SetHeight(bgra.Height);
+    image.SetWidth(bgra.Width);
+    image.SetRowPitch(bgra.RowPitch);
+    image.SetSlicePitch(bgra.Data.size());
+    image.SetFormat(CanvasTex::TextureFormat::B8g8r8a8Unorm);
+    image.SetPixels(bgra.Data.data());
+
+    bool modified = Babylon::ImagingV2::ImagingComponent::InvertY(image);
+
+    if (modified)
+    {
+        //  Update the texture with the modified data
+        auto data = std::make_unique<uint8_t[]>(bgra.Data.size());
+        memcpy_s(data.get(), bgra.Data.size(), image.GetPixels(), bgra.Data.size());
+
+        m_data = std::move(data);
+        m_sizeInBytes = static_cast<uint32_t>(bgra.Data.size());
+        m_width = bgra.Width;
+        m_height = bgra.Height;
+        m_lineStrideInBytes = bgra.RowPitch;
+        m_format = Framework::TextureSegment::EFormat::kFormatBGRA32;
+    }
+}

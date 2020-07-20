@@ -6,12 +6,62 @@
     <RootNamespace>Babylon.Transcoder</RootNamespace>
     <BabylonConfigurationType>StaticLibrary</BabylonConfigurationType>
     <BabylonDeploymentType>Plugin</BabylonDeploymentType>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Prefast|ARM'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Prefast|x64'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Prefast|ARM64'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Prefast|Win32'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Performance|ARM64'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Performance|Win32'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Performance|x64'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Performance|ARM'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), Root.props))\Root.props" />
     <Import Project="$(CanvasConfigDirectory)Babylon.Configurations.props" />
     <Import Project="$(CanvasConfigDirectory)Babylon.Cpp.props" />
     <Import Project="$(TranscodersSharedDirectory)Transcoders\Build\Transcoders.vcxproj.projimport" />
+    <Import Project="$(CoreUtilsSharedDirectory)DAESDK\ColladaPath.props" />
   </ImportGroup>
   <ItemGroup>
     <None Include="packages.config">
@@ -19,6 +69,23 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Source\TranscoderDAE\DAEAnimation.cpp" />
+    <ClCompile Include="..\Source\TranscoderDAE\DAEAnimationConverter.cpp" />
+    <ClCompile Include="..\Source\TranscoderDAE\DAECameraConverter.cpp" />
+    <ClCompile Include="..\Source\TranscoderDAE\DAELightConverter.cpp" />
+    <ClCompile Include="..\Source\TranscoderDAE\DAEMorphConverter.cpp" />
+    <ClCompile Include="..\Source\TranscoderDAE\DAENodeBuilder.cpp" />
+    <ClCompile Include="..\Source\TranscoderDAE\DAENodeConverter.cpp" />
+    <ClCompile Include="..\Source\TranscoderDAE\DAESkinGeometryBuilder.cpp" />
+    <ClCompile Include="..\Source\TranscoderDAE\DAESkinControllerConverter.cpp" />
+    <ClCompile Include="..\Source\TranscoderDAE\DAESkinControllerDataConverter.cpp" />
+    <ClCompile Include="..\Source\TranscoderDAE\DAEToAsset3DWriter.cpp" />
+    <ClCompile Include="..\Source\TranscoderDAE\DAEImageConverter.cpp" />
+    <ClCompile Include="..\Source\TranscoderDAE\DAEEffectConverter.cpp" />
+    <ClCompile Include="..\Source\TranscoderDAE\DAEMeshConverter.cpp" />
+    <ClCompile Include="..\Source\TranscoderDAE\DAEVisualSceneConverter.cpp" />
+    <ClCompile Include="..\Source\TranscoderDAE\TranscoderDAE.cpp" />
+    <ClCompile Include="..\Source\TranscoderDAE\TranscoderDAEUtils.cpp" />
     <ClCompile Include="..\Source\TranscodersTelemetryHelper.cpp" />
     <ClCompile Include="..\Source\ExporterGLTF\Asset3DToGLTFConverter.cpp" />
     <ClCompile Include="..\Source\ExporterGLTF\ExporterGLB.cpp" />
@@ -56,6 +123,25 @@
     <ClInclude Include="..\Inc\ExporterOBJ\ExporterObj.h" />
     <ClInclude Include="..\Inc\ExporterSTL\ExporterAsciiStl.h" />
     <ClInclude Include="..\Inc\ExporterTexture\ExporterTexture.h" />
+    <ClInclude Include="..\Inc\TranscoderDAE\DAEAnimation.h" />
+    <ClInclude Include="..\Inc\TranscoderDAE\DAENodeAnimationBuilder.h" />
+    <ClInclude Include="..\Inc\TranscoderDAE\DAEAnimationConverter.h" />
+    <ClInclude Include="..\Inc\TranscoderDAE\DAECameraBuilder.h" />
+    <ClInclude Include="..\Inc\TranscoderDAE\DAECoreConverter.h" />
+    <ClInclude Include="..\Inc\TranscoderDAE\DAEFXBuilder.h" />
+    <ClInclude Include="..\Inc\TranscoderDAE\DAEGeometryBuilder.h" />
+    <ClInclude Include="..\Inc\TranscoderDAE\DAELightBuilder.h" />
+    <ClInclude Include="..\Inc\TranscoderDAE\DAEMeshBuilder.h" />
+    <ClInclude Include="..\Inc\TranscoderDAE\DAENodeBuilder.h" />
+    <ClInclude Include="..\Inc\TranscoderDAE\DAESkinGeometryBuilder.h" />
+    <ClInclude Include="..\Inc\TranscoderDAE\DAETextureBuilder.h" />
+    <ClInclude Include="..\Inc\TranscoderDAE\DAEToAsset3DWriter.h" />
+    <ClInclude Include="..\Inc\TranscoderDAE\DAEFXConverter.h" />
+    <ClInclude Include="..\Inc\TranscoderDAE\DAEConverter.h" />
+    <ClInclude Include="..\Inc\TranscoderDAE\DAEAsset3DBuilder.h" />
+    <ClInclude Include="..\Inc\TranscoderDAE\TranscoderDAE.h" />
+    <ClInclude Include="..\Inc\TranscoderDAE\TranscoderDAEConfig.h" />
+    <ClInclude Include="..\Inc\TranscoderDAE\TranscoderDAEUtils.h" />
     <ClInclude Include="..\Inc\TranscoderException.h" />
     <ClInclude Include="..\Inc\TranscoderGLTF\GLTFToAsset3DConverter.h" />
     <ClInclude Include="..\Inc\TranscoderGLTF\GLTFImportOptions.h" />
@@ -91,6 +177,11 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeLibrary Condition="'$(Configuration)' == 'Debug'">MultiThreadedDebugDLL</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</TreatWarningAsError>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(TranscodersSharedDirectory)Transcoders\source;$(CoreUtilsSharedDirectory)Earcut\cpp\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(TranscodersSharedDirectory)Transcoders\source;$(CoreUtilsSharedDirectory)Earcut\cpp\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalUsingDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(NativeExecutablePath);$(WindowsSDK_MetadataPath);$(WinmdUsingPath)%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</TreatWarningAsError>
     </ClCompile>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -10,6 +10,7 @@
 
 #include <memory>
 #include <istream>
+#include <string>
 
 namespace
 {
@@ -27,6 +28,7 @@ namespace Babylon
 
             inline size_t Read(char* outputBuffer, size_t bufferSize) const;
             inline void ReadLine(char* outputBuffer, size_t bufferSize) const;
+            inline size_t ReadFully_s(char* outputBuffer, size_t bufferSize) const;
             inline void Seek(int64_t moveOffset, uint32_t origin);
             inline size_t CharactersRead() const;
 
@@ -44,6 +46,7 @@ namespace Babylon
         };
     };
 };
+
 
 inline void Babylon::Transcoder::TranscoderTextStream::ReadLine(char* outputBuffer, size_t bufferSize) const
 {
@@ -66,6 +69,14 @@ inline size_t Babylon::Transcoder::TranscoderTextStream::Read(char* outputBuffer
     m_stream->read(outputBuffer, bufferSize);
     return static_cast<size_t>(m_stream->gcount());
 }
+
+inline size_t  Babylon::Transcoder::TranscoderTextStream::ReadFully_s(char* outputBuffer, size_t bufferSize) const {
+    BabylonAssert(outputBuffer != nullptr);
+    BabylonAssert(bufferSize > 0);
+    size_t s = bufferSize < m_size ? bufferSize : m_size;
+    return Read(outputBuffer, s);
+}
+
 
 inline void Babylon::Transcoder::TranscoderTextStream::Seek(int64_t moveOffset, uint32_t origin)
 {
