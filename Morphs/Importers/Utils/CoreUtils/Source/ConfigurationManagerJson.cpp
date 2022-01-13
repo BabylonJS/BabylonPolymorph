@@ -394,7 +394,7 @@ namespace Babylon
                                         SetObjectValue(value, property, key);
                                         auto outputKey = LexicalCast<std::string>(key);
                                         std::string output = "WARNING: Object stored in ConfigurationManager with key<" + outputKey + "> has no value. Property has been replaced with loaded value.\n";
-                                        TRACE_IMPORTANT(ConfigurationManager, output.c_str());
+                                        TRACE_IMPORTANT(ConfigurationManager, "%s", output.c_str());
                                     }
                                 }
                             }
@@ -411,7 +411,7 @@ namespace Babylon
                             {
                                 auto outputKey = LexicalCast<std::string>(key);
                                 std::string output = "WARNING: Object stored in ConfigurationManager with key<" + outputKey + "> was not replaced by loaded configuration due to an error.\n";
-                                TRACE_IMPORTANT(ConfigurationManager, output.c_str());
+                                TRACE_IMPORTANT(ConfigurationManager, "%s", output.c_str());
                             }
                             else
                             {
@@ -441,7 +441,7 @@ namespace Babylon
                                     // If code execution reaches here then key was found, but policy is 'Add'.
                                     output = "WARNING: Property with name <" + outputKey + "> is already in configuration and load policy is 'Add', so the new value was not loaded\n";
                                 }
-                                TRACE_IMPORTANT(ConfigurationManager, output.c_str());
+                                TRACE_IMPORTANT(ConfigurationManager, "%s", output.c_str());
                             }
                         }
                     }
