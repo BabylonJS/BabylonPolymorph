@@ -367,7 +367,7 @@ namespace Babylon
             catch (GeometryProcessingException const& geomExc)
             {
                 BabylonUnusedLocal(geomExc);
-                TRACE_IMPORTANT(GeometryUtils, geomExc.m_message.c_str());
+                TRACE_IMPORTANT(GeometryUtils, "%s", geomExc.m_message.c_str());
                 completionCallback(nullptr, callbackUserData);
                 return;
             }
@@ -530,7 +530,7 @@ namespace Babylon
             catch (GeometryProcessingException const& geomExc)
             {
                 BabylonUnusedLocal(geomExc);
-                TRACE_IMPORTANT(GeometryUtils, geomExc.m_message.c_str());
+                TRACE_IMPORTANT(GeometryUtils, "%s", geomExc.m_message.c_str());
                 completionCallback(nullptr, callbackUserData);
                 return;
             }
@@ -700,7 +700,7 @@ namespace Babylon
             catch (GeometryProcessingException const& geomExc)
             {
                 BabylonUnusedLocal(geomExc);
-                TRACE_IMPORTANT(GeometryUtils, geomExc.m_message.c_str());
+                TRACE_IMPORTANT(GeometryUtils, "%s", geomExc.m_message.c_str());
                 completionCallback(nullptr, nullptr, callbackUserData);
                 return;
             }
