@@ -106,7 +106,13 @@ std::shared_ptr<Asset3D> ImporterSKP::ImportToAsset3D(std::shared_ptr<std::istre
     m_progressReporter = progress;
 
     // Load the model from the buffer
-    SkpUtils::CheckResult(SUModelCreateFromBuffer(&m_suModel, data.get(), length));
+    SUModelLoadStatus m_LoadStatus;
+    SkpUtils::CheckResult(SUModelCreateFromBufferWithStatus(&m_suModel, data.get(), length, &m_LoadStatus));
+
+    if( m_LoadStatus ==  SUModelLoadStatus_Success_MoreRecent) {
+        TRACE_WARN( ImporterSKP, "Warning: Model was saved with newer version of SDK." );
+    }
+
     SkpUtils::CheckResult(SUTextureWriterCreate(&m_suTextureWriter));
     SkpUtils::CheckResult(SUModelGetRenderingOptions(m_suModel, &m_suRenderingOptions));
 
